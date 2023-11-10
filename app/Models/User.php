@@ -17,13 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
-       
-    ];
+    protected $guarded = [];
+    protected $table = 'users';
+    public function getAuthIdentifierName()
+    {
+        return 'username'; // Change 'email' to 'username'
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,7 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function enr() {
-        return $this->belongsTo(Enroll::class,'id','user_id');
+    public function enr()
+    {
+        return $this->belongsTo(Enroll::class, 'id', 'user_id');
     }
 }

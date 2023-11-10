@@ -195,7 +195,7 @@
 							<hr>
 						</li>
 						<!-- Links -->
-						<li><a class="dropdown-item" href="#"><i class="bi bi-person fa-fw me-2"></i>Edit Profile</a>
+						<li><a class="dropdown-item" href="https://abovemarts.com/profile"><i class="bi bi-person fa-fw me-2"></i>Edit Profile</a>
 						</li>
 						<li><a class="dropdown-item" href="#"><i class="bi bi-gear fa-fw me-2"></i>Account Settings</a>
 						</li>
@@ -330,12 +330,12 @@ Page content START -->
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Ebooks</a>
 											<a class="list-group-item" href="#"><i
 													class="bi bi-cart-check fa-fw me-2"></i>Wishlist</a>
-											<a class="list-group-item" href="#"><i
+											<a class="list-group-item" href="https://abovemarts.com/profile"><i
 													class="bi bi-pencil-square fa-fw me-2"></i>Edit Profile</a>
 											<a class="list-group-item" href="#"><i
 													class="bi bi-gear fa-fw me-2"></i>Settings</a>
-											<a class="list-group-item" href="#"><i
-													class="bi bi-trash fa-fw me-2"></i>Delete Profile</a>
+											{{-- <a class="list-group-item" href="#"><i
+													class="bi bi-trash fa-fw me-2"></i>Delete Profile</a> --}}
 											<a onclick='return confirm("Are you sure you want to sign out?")' class="list-group-item text-danger bg-danger-soft-hover" href="/logout"><i
 													class="fas fa-sign-out-alt fa-fw me-2"></i>Sign Out</a>
 										</div>

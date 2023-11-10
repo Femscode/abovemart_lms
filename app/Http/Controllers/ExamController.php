@@ -253,12 +253,14 @@ class ExamController extends Controller
         // dd($request->all(),$search);
         $data['user'] = $user =  Auth::user();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        // dd($request->search);
 
         $data['all_ebooks'] = Ebook::where('title', 'like', '%' . $request->search . '%')
-            ->orWhere('author', '%like%', $search)
-            ->orWhere('description', '%like%', $search)
+            ->orWhere('author', 'like', '%'.$search.'%')
+            ->orWhere('description', 'like','%'.$search.'%')
             ->paginate(9);
         $data['categories'] = EbookCategory::latest()->get();
+        // dd($data);
         return view('student.all_ebooks', $data);
     }
     public function searchEbookTitle(Request $request)

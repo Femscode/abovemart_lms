@@ -4,8 +4,6 @@
 
 @section('content')
 <style>
-			
-
 	/* .search-container {
 		width: 300px;
 		margin: 0 auto;
@@ -41,11 +39,11 @@
 	}
 </style>
 <div class="col-xl-9">
-@if($user->ebook_count < 1) 
-	<div class='m-2 alert alert-danger'>You have reached the maximum number of E-books you
+	@if($user->ebook_count < 1) <div class='m-2 alert alert-danger'>You have reached the maximum number of E-books you
 		can download/preview based on your account type, upgrade
-		now to have increased access. <br><a target="_blank" href='https://abovemarts.com/userpackages' class='btn btn-danger'>Upgrade</a>
-	</div>
+		now to have increased access. <br><a target="_blank" href='https://abovemarts.com/userpackages'
+			class='btn btn-danger'>Upgrade</a>
+</div>
 @endif
 
 <div class="card bg-transparent border rounded-3">
@@ -54,12 +52,15 @@
 		<h3 class="mb-0">All Available Ebooks</h3>
 	</div>
 
+
+
 	<div class="col-md-12">
-		
+
 		<form method='post' action='searchEbookStudent' class="rounded position-relative">@csrf
 			<div class="search-container">
-				<input required id="search-input" class="form-control bg-body" name='search' placeholder='Search for books, tutorials, manuals, and authors in 10,000+ files'
-					type="search" placeholder="Search" aria-label="Search">
+				<input required id="search-input" class="form-control bg-body" name='search'
+					placeholder='Search for books, tutorials, manuals, and authors in 10,000+ files' type="search"
+					placeholder="Search" aria-label="Search">
 				<ul id="suggestions"></ul>
 			</div>
 			<button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
@@ -74,7 +75,64 @@
 		<div class="row g-4">
 			<!-- Card item START -->
 			@foreach($all_ebooks as $ebook)
-			<div class="col-sm-6 col-lg-4">
+			<div class="card shadow p-2">
+				<div class="row g-0">
+					<div class="col-md-5">
+						@if($ebook->image !== null)
+						<img src="{{ asset('ebook_images/'.$ebook->image) }}" class="rounded-2" alt="Card image">
+						@else
+						<img src="{{ asset('ebook_images/pdf.png') }}" class="rounded-2" alt="Card image">
+						@endif
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<!-- Badge and rating -->
+							<div class="d-flex justify-content-between align-items-center mb-2">
+								<!-- Badge -->
+								<a href="#" class="badge text-bg-primary mb-2 mb-sm-0">Marketing</a>
+								<!-- Rating and wishlist -->
+								<div>
+									<span class="h6 fw-light me-3"><i
+											class="fas fa-star text-warning me-1"></i>4.5</span>
+									<a href="#" class="h6 fw-light"><i class="far fa-heart"></i></a>
+								</div>
+							</div>
+
+							<!-- Title -->
+							<h5 class="card-title"><a href="#">{{ $ebook->title }}</a></h5>
+							<p class="text-truncate">{{ Str::limit($ebook->cat->name,30) }} </p>
+
+							<!-- Info -->
+							<ul class="list-inline">
+								<li class="list-inline-item h6 fw-light mb-1 mb-sm-0"><i
+										class="far fa-clock text-danger me-2"></i>{{ Date('Y') }}</li>
+								<li class="list-inline-item h6 fw-light mb-1 mb-sm-0"><i
+										class="fas fa-table text-orange me-2"></i>100+ Pages</li>
+								<li class="list-inline-item h6 fw-light"><i
+										class="fas fa-signal text-success me-2"></i>2MB</li>
+							</ul>
+
+							<!-- Price and avatar -->
+							<div class="d-sm-flex justify-content-sm-between align-items-center">
+								<!-- Avatar -->
+								<div class="d-flex justify-content-between">
+									<span class="h6 fw-light mb-0"><i class="far fa-user text-danger me-2"></i>Author :
+										{{
+										$ebook->author ?? 'unknown' }}</span>
+								</div>
+								<!-- Price -->
+								<div class="mt-3 mt-sm-0">
+									<a href='/preview_ebook/{{ $ebook->uid }}'
+										class='btn btn-success btn-sm'>Preview</a>
+									<a href='/download_ebook/{{ $ebook->uid }}'
+										class='btn btn-danger btn-sm'>Download</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{-- <div class="col-sm-6 col-lg-4">
 				<div class="card shadow h-100">
 					<!-- Image -->
 					<div class="card-body pb-0">
@@ -83,9 +141,9 @@
 							<a href="#" class="badge bg-success bg-opacity-10 text-success">{{ $ebook->category }}</a>
 
 							@if($ebook->image !== null)
-							<img src='{{ asset('ebook_images/'.$ebook->image) }}' style='width:100px;height:100px'/>
+							<img src='{{ asset(' ebook_images/'.$ebook->image) }}' style='width:100px;height:100px'/>
 							@else
-							<img src='{{ asset('ebook_images/pdf.png') }}' style='width:100px;height:100px' />
+							<img src='{{ asset(' ebook_images/pdf.png') }}' style='width:100px;height:100px' />
 							@endif
 						</div>
 						<!-- Title -->
@@ -100,12 +158,13 @@
 						<div class="d-flex justify-content-between">
 							<span class="h6 fw-light mb-0"><i class="far fa-user text-danger me-2"></i>Author : {{
 								$ebook->author ?? 'unknown' }}</span>
-						</div><br>
+						</div>
+						<br>
 						<a href='/preview_ebook/{{ $ebook->uid }}' class='btn btn-success btn-sm'>Preview</a>
 						<a href='/download_ebook/{{ $ebook->uid }}' class='btn btn-danger btn-sm'>Download</a>
 					</div>
 				</div>
-			</div>
+			</div> --}}
 			@endforeach
 			<!-- Card item END -->
 
@@ -122,7 +181,7 @@
 @endsection
 @section('script')
 <script>
-const searchInput = document.getElementById('search-input');
+	const searchInput = document.getElementById('search-input');
 const suggestionsList = document.getElementById('suggestions');
 const apiUrl = '/searchEbookTitle';
 // const apiUrl = 'https://your-api-endpoint.com/search?q=';
@@ -148,7 +207,7 @@ searchInput.addEventListener('input', function () {
                 const suggestionItem = document.createElement('li');
                 suggestionItem.textContent = item.title +" by " + item.author;
                 suggestionItem.addEventListener('click', () => {
-                    searchInput.value = item.title +" by " + item.author;
+                    searchInput.value = item.title;
                     suggestionsList.style.display = 'none';
                 });
                 suggestionsList.appendChild(suggestionItem);

@@ -4,7 +4,7 @@
 
 <!-- Mirrored from eduport.webestica.com/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Mar 2022 17:47:37 GMT -->
 <head>
-	<title>Abovemart LMS</title>
+	<title>Abovemarts LMS</title>
 
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
@@ -42,7 +42,7 @@
 					<div class="p-3 p-lg-5">
 						<!-- Title -->
 						<div class="text-center">
-                            <h2>The Abovemart LMS.</h2>
+                            <h2>The Abovemarts LMS.</h2>
 							{{-- <p class="mb-0 h6 fw-light">Let's learn something new today!</p> --}}
 						</div>
 						<!-- SVG Image -->
@@ -86,10 +86,10 @@
 
 
                                 <div class="mb-4">
-									<label for="exampleInputEmail1" class="form-label">Email address *</label>
+									<label for="exampleInputEmail1" class="form-label">Username *</label>
 									<div class="input-group input-group-lg">
 										<span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="bi bi-envelope-fill"></i></span>
-										<input type="email" class="form-control border-0 bg-light rounded-end ps-1" name='email' placeholder="E-mail" id="exampleInputEmail1">
+										<input type="text" class="form-control border-0 bg-light rounded-end ps-1" name='username' placeholder="E-mail" id="exampleInputEmail1">
 									</div>
 								</div>
 								<!-- Password -->
@@ -111,7 +111,7 @@
 							<!-- Form END -->
 
 							<!-- Social buttons -->
-							<div class="row">
+							{{-- <div class="row">
 								<!-- Divider with text -->
 								<div class="position-relative my-4">
 									<hr>
@@ -125,11 +125,11 @@
 								<div class="col-xxl-6 d-grid">
 									<a href="#" class="btn bg-facebook mb-0"><i class="fab fa-fw fa-facebook-f me-2"></i>Signup with Facebook</a>
 								</div>
-							</div>
+							</div> --}}
 
 							<!-- Sign up link -->
 							<div class="mt-4 text-center">
-								<span>Don't have an account?<a href="/register"> Sign up here</a></span>
+								<span>Don't have an account?<a href="https://abovemarts.com/register"> Sign up here</a></span>
 							</div>
 						</div>
 					</div>
