@@ -42,7 +42,7 @@
 					<div class="p-3 p-lg-5">
 						<!-- Title -->
 						<div class="text-center">
-                            <h2>The Abovemarts LMS.</h2>
+                            <h2>The Abovemarts Academy.</h2>
 							{{-- <p class="mb-0 h6 fw-light">Let's learn something new today!</p> --}}
 						</div>
 						<!-- SVG Image -->
