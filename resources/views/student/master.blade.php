@@ -8,8 +8,8 @@
 	<!-- Meta Tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="Webestica.com">
-	<meta name="description" content="Learning Management System">
+	<meta name="author" content="learn.abovemarts.com">
+	<meta name="description" content="Abovemarts Learning Portal">
 
 	<!-- Favicon -->
 	{{-- <link rel="shortcut icon" href="assets/images/favicon.ico"> --}}
@@ -270,8 +270,9 @@ Page Banner START -->
 									</div>
 									<!-- Button -->
 									<div class="mt-2 mt-sm-0">
-										<a href="https://abovemarts.com/dashboard" target="_blank" class="btn btn-info mb-0">AboveMarts Backoffice</a>
-										<a href="/allcourses" class="btn btn-primary mb-0">View available courses</a>
+										<a href="https://abovemarts.com/dashboard" target="_blank" class="btn btn-info mb-2 mt-2">AboveMarts Backoffice</a>
+										<a href="/allcourses" class="btn btn-primary mb-2 mt-2">AboveMarts E-courses</a>
+										<a href="/allebooks" class="btn btn-success mb-2">AboveMarts E-Library</a>
 									</div>
 								</div>
 							</div>

@@ -10,7 +10,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Webestica.com">
-	<meta name="description" content="Eduport- LMS, Education and Course Theme">
+	<meta name="description" content="The Abovemarts Learning Portal">
 
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -89,7 +89,7 @@
 									<label for="exampleInputEmail1" class="form-label">Username *</label>
 									<div class="input-group input-group-lg">
 										<span class="input-group-text bg-light rounded-start border-0 text-secondary px-3"><i class="bi bi-envelope-fill"></i></span>
-										<input type="text" class="form-control border-0 bg-light rounded-end ps-1" name='username' placeholder="E-mail" id="exampleInputEmail1">
+										<input type="text" class="form-control border-0 bg-light rounded-end ps-1" name='username' placeholder="Username" id="exampleInputEmail1">
 									</div>
 								</div>
 								<!-- Password -->
