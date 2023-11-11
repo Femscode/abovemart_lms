@@ -346,9 +346,9 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();
-        $path = public_path() . '/ebooks/' . $ebook->file;
-        $data['pdfPath'] = $pdfPath = "../repositories/abovemart_lms/public/ebooks/". $ebook->file;
-        // $data['pdfPath'] = $pdfPath = asset('ebooks/' . $ebook->file);
+        $data['path'] = public_path() . '/ebooks/' . $ebook->file;
+        // $data['pdfPath'] = $pdfPath = "../repositories/abovemart_lms/public/ebooks/". $ebook->file;
+        $data['pdfPath'] = $pdfPath = asset('ebooks/' . $ebook->file);
 
         // You can use an iframe to embed the PDF in your HTML page
         return view('student.real_pdf_viewer', $data);
