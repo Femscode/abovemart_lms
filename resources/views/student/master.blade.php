@@ -257,7 +257,7 @@ Page Banner START -->
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												{{-- <span class="h6">0</span>
 												<span class="text-body fw-light">points</span> --}}
-												<span class='text-success'>{{ $user->point ?? "Basic" }}</span>
+												<span class='text-success'>{{ $user->point ?? "0" }} Points</span>
 											</li>
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												<span class="h6">0</span>
