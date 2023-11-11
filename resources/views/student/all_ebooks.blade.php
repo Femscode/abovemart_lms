@@ -124,7 +124,7 @@
 								<div class="mt-3 mt-sm-0">
 									<a href='/preview_ebook/{{ $ebook->uid }}'
 										class='btn btn-success btn-sm'>Preview</a>
-									<a href='/download_ebook/{{ $ebook->uid }}'
+									<a @if($user->rank == "Free Member") href="https://abovemarts.com/userpackages" @else href='/download_ebook/{{ $ebook->uid }}' @endif
 										class='btn btn-danger btn-sm'>Download</a>
 								</div>
 							</div>

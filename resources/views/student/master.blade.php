@@ -255,8 +255,9 @@ Page Banner START -->
 										<h1 class="my-1 fs-4">Welcome, {{ $user->name }}</h1>
 										<ul class="list-inline mb-0">
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
-												<span class="h6">0</span>
-												<span class="text-body fw-light">points</span>
+												{{-- <span class="h6">0</span>
+												<span class="text-body fw-light">points</span> --}}
+												<span class='text-success'>{{ $user->package ?? "Basic" }} Package</span>
 											</li>
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												<span class="h6">0</span>
