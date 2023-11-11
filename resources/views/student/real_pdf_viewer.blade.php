@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="col-xl-9">
-    <a onclick='window.history.back()' class='btn btn-info'>Back To Library</a>
+    <a onclick='window.history.back()' class='btn btn-info'>Back To Library {{ $pdfPath }}</a>
     <iframe src="{{ $pdfPath }}" width="100%" height="600"></iframe>
 </div>
 @endsection
