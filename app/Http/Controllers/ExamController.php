@@ -348,7 +348,7 @@ class ExamController extends Controller
         $ebook = Ebook::where('uid', $id)->firstOrFail();
         $data['path'] = public_path() . '/ebooks/' . $ebook->file;
         // $data['pdfPath'] = $pdfPath = "../repositories/abovemart_lms/public/ebooks/". $ebook->file;
-        $data['pdfPath'] = $pdfPath = 'ebooks/' . $ebook->file;
+        $data['pdfPath'] = $pdfPath = $ebook->file;
 
         // You can use an iframe to embed the PDF in your HTML page
         return view('student.real_pdf_viewer', $data);
