@@ -79,7 +79,8 @@
 				<div class="row g-0">
 					<div class="col-md-5">
 						@if($ebook->image !== null)
-						<img src="{{ asset('ebook_images/'.$ebook->image) }}" class="rounded-2" alt="Card image">
+						<img src="{{ public_path('ebook_images/'.$ebook->image) }}" class="rounded-2" alt="Card image">
+
 						@else
 						<img src="{{ asset('ebook_images/pdf.png') }}" class="rounded-2" alt="Card image">
 						@endif
