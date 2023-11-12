@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Ebook;
 use App\Models\Answer;
 use App\Models\Course;
+use App\Models\Enroll;
 use App\Models\Result;
 use App\Models\Question;
 use Barryvdh\DomPDF\PDF;
@@ -13,9 +14,10 @@ use App\Models\Assignment;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EbookCategory;
-use App\Models\Enroll;
 use App\Models\UploadedAssessment;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class ExamController extends Controller
 {
@@ -346,11 +348,16 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();
-        $data['path'] = public_path() . '/ebooks/' . $ebook->file;
-        // $data['pdfPath'] = $pdfPath = "../repositories/abovemart_lms/public/ebooks/". $ebook->file;
+        $data['path'] = $path =  public_path() . '/ebooks/' . $ebook->file;
+        $file = File::get($path);
+        $type = File::mimeType($path);
+    
+        return response($file)
+        ->header('Content-Type', $type)
+        ->header('Content-Disposition', 'inline; filename="' . '$filename' . '"');
+
         $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/abovemart_lms_files/public/ebooks/'.$ebook->file;
 
-        // You can use an iframe to embed the PDF in your HTML page
         return view('student.real_pdf_viewer', $data);
     }
     public function download_certificate($id)
