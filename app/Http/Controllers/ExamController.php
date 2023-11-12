@@ -295,15 +295,28 @@ class ExamController extends Controller
             $filename = $filefile->hashName();
             $filefile->move(public_path() . '/ebooks/', $filename);
             // dd($filename);
-            Ebook::create([
-                'uid' => Str::uuid(),
-                'user_id' => Auth::user()->id,
-                'title' => $request->title . ' ' . ++$key,
-                'category_id' => $request->category_id,
-                'file' => $filename,
-                'author' => $request->author ?? null,
-                'image' => $imageName ?? null
-            ]);
+            if($key == 1) {
+                Ebook::create([
+                    'uid' => Str::uuid(),
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'category_id' => $request->category_id,
+                    'file' => $filename,
+                    'author' => $request->author ?? null,
+                    'image' => $imageName ?? null
+                ]);
+            } else {
+                Ebook::create([
+                    'uid' => Str::uuid(),
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title . ' ' . ++$key,
+                    'category_id' => $request->category_id,
+                    'file' => $filename,
+                    'author' => $request->author ?? null,
+                    'image' => $imageName ?? null
+                ]);
+            }
+           
         }
 
         return redirect()->back()->with('message', 'Ebooks Created Successfully!');
