@@ -79,7 +79,7 @@
 				<div class="row g-0">
 					<div class="col-md-5">
 						@if($ebook->image !== null)
-						<img src="'http://learn.abovemarts.com/assets/images/ebook_images/'.{{ $ebook->image}}" class="rounded-2" alt="Card image">
+						<img src="http://learn.abovemarts.com/assets/images/ebook_images/{{ $ebook->image}}" class="rounded-2" alt="Card image">
 						{{-- <img src="{{ asset('ebook_images/'.$ebook->image) }}" class="rounded-2" alt="Card image"> --}}
 
 						@else
