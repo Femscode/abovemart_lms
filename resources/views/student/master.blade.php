@@ -252,7 +252,7 @@ Page Banner START -->
 								<!-- Profile info -->
 								<div class="col d-sm-flex justify-content-between align-items-center">
 									<div>
-										<h1 class="my-1 fs-4">Welcome, {{ $user->name }}</h1>
+										<h1 class="my-1 fs-4">Welcome, {{ $user->firstName }}</h1>
 										<ul class="list-inline mb-0">
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												{{-- <span class="h6">0</span>
@@ -272,7 +272,7 @@ Page Banner START -->
 									<!-- Button -->
 									<div class="mt-2 mt-sm-0">
 										<a href="https://abovemarts.com/dashboard" target="_blank" class="btn btn-info mb-2 mt-2">AboveMarts Backoffice</a>
-										<a href="/allcourses" class="btn btn-primary mb-2 mt-2">AboveMarts E-courses</a>
+										<a href="/allcourses" class="btn btn-primary mb-2 mt-2">AboveMarts E-Courses</a>
 										<a href="/allebooks" class="btn btn-success mb-2">AboveMarts E-Library</a>
 									</div>
 								</div>
