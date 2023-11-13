@@ -252,7 +252,7 @@ Page Banner START -->
 								<!-- Profile info -->
 								<div class="col d-sm-flex justify-content-between align-items-center">
 									<div>
-										<h1 class="my-1 fs-4">Welcome, {{ $user->firstName }}</h1>
+										<h1 class="my-1 fs-4">Welcome, {{ $user->firstName }} {{ $user->lastName }}</h1>
 										<ul class="list-inline mb-0">
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												{{-- <span class="h6">0</span>
