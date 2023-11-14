@@ -258,8 +258,8 @@ class ExamController extends Controller
         // dd($request->search);
 
         $data['all_ebooks'] = Ebook::where('title', 'like', '%' . $request->search . '%')
-            ->orWhere('author', 'like', '%'.$search.'%')
-            ->orWhere('description', 'like','%'.$search.'%')
+            ->orWhere('author', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
             ->paginate(9);
         $data['categories'] = EbookCategory::latest()->get();
         // dd($data);
@@ -269,9 +269,9 @@ class ExamController extends Controller
     {
         $search = $request->search;
         $ebooks = Ebook::where('title', 'like', '%' . $request->search . '%')
-        ->orWhere('author','like','%' . $request->search . '%')
-        ->orWhere('description','like','%' . $request->search . '%')
-        ->get();
+            ->orWhere('author', 'like', '%' . $request->search . '%')
+            ->orWhere('description', 'like', '%' . $request->search . '%')
+            ->get();
         return response()->json($ebooks);
     }
     public function createEbook(Request $request)
@@ -295,28 +295,15 @@ class ExamController extends Controller
             $filename = $filefile->hashName();
             $filefile->move(public_path() . '/ebooks/', $filename);
             // dd($filename);
-            if($key == 1) {
-                Ebook::create([
-                    'uid' => Str::uuid(),
-                    'user_id' => Auth::user()->id,
-                    'title' => $request->title,
-                    'category_id' => $request->category_id,
-                    'file' => $filename,
-                    'author' => $request->author ?? null,
-                    'image' => $imageName ?? null
-                ]);
-            } else {
-                Ebook::create([
-                    'uid' => Str::uuid(),
-                    'user_id' => Auth::user()->id,
-                    'title' => $request->title . ' ' . ++$key,
-                    'category_id' => $request->category_id,
-                    'file' => $filename,
-                    'author' => $request->author ?? null,
-                    'image' => $imageName ?? null
-                ]);
-            }
-           
+            Ebook::create([
+                'uid' => Str::uuid(),
+                'user_id' => Auth::user()->id,
+                'title' => $request->title . ' ' . ++$key,
+                'category_id' => $request->category_id,
+                'file' => $filename,
+                'author' => $request->author ?? null,
+                'image' => $imageName ?? null
+            ]);
         }
 
         return redirect()->back()->with('message', 'Ebooks Created Successfully!');
@@ -364,12 +351,12 @@ class ExamController extends Controller
         $data['path'] = $path =  public_path() . '/ebooks/' . $ebook->file;
         // $file = File::get($path);
         // $type = File::mimeType($path);
-    
+
         // return response($file)
         // ->header('Content-Type', $type)
         // ->header('Content-Disposition', 'inline; filename="' . '$filename' . '"');
 
-        $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/public/ebooks/'.$ebook->file;
+        $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/public/ebooks/' . $ebook->file;
 
         return view('student.real_pdf_viewer', $data);
     }
