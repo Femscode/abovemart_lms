@@ -279,7 +279,8 @@ class ExamController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'category_id' => 'required',
-            'file' => 'required'
+            'file' => 'required',
+            'author' => 'required',
         ]);
         if ($request->has('image')) {
             $image = $request->image;

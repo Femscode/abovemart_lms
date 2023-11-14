@@ -88,7 +88,7 @@
                             <th scope="col" class="border-0 rounded-start">Title</th>
                             {{-- <th scope="col" class="border-0">Instructor</th> --}}
                             <th scope="col" class="border-0">Category</th>
-                            <th scope="col" class="border-0">Added By</th>
+                            <th scope="col" class="border-0">Author</th>
                             <th scope="col" class="border-0">Date Added</th>
 
                             <th scope="col" class="border-0 rounded-end">Action</th>
@@ -111,7 +111,7 @@
                             </td>
                             <td>{{ $ebook->title }}</td>
                             <td>{{ $ebook->cat->name }}</td>
-                            <td>{{ $ebook->user->name ?? "No user" }}</td>
+                            <td>{{ $ebook->author }}</td>
                             <td>{{ Date('j F Y',strtotime($ebook->created_at)) }}</td>
 
 
