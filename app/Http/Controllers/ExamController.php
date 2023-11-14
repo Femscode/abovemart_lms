@@ -362,8 +362,8 @@ class ExamController extends Controller
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();
         $data['path'] = $path =  public_path() . '/ebooks/' . $ebook->file;
-        $file = File::get($path);
-        $type = File::mimeType($path);
+        // $file = File::get($path);
+        // $type = File::mimeType($path);
     
         // return response($file)
         // ->header('Content-Type', $type)
