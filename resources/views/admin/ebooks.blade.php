@@ -104,7 +104,7 @@
                             <!-- Table data -->
                             <td>
                                 @if($ebook->image !== null)
-                                <img src='{{ asset('ebook_images/'.$ebook->image) }}'/>
+                                <img src='{{ asset('public/ebook_images/'.$ebook->image) }}'/>
                                 @else 
                                 <img src='{{ asset('ebook_images/pdf.png') }}'/>
                                 @endif
