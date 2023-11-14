@@ -365,11 +365,11 @@ class ExamController extends Controller
         $file = File::get($path);
         $type = File::mimeType($path);
     
-        return response($file)
-        ->header('Content-Type', $type)
-        ->header('Content-Disposition', 'inline; filename="' . '$filename' . '"');
+        // return response($file)
+        // ->header('Content-Type', $type)
+        // ->header('Content-Disposition', 'inline; filename="' . '$filename' . '"');
 
-        $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/abovemart_lms_files/public/ebooks/'.$ebook->file;
+        $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/public/ebooks/'.$ebook->file;
 
         return view('student.real_pdf_viewer', $data);
     }
