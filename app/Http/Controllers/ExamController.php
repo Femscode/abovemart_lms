@@ -208,6 +208,9 @@ class ExamController extends Controller
     public function admin_ebooks()
     {
         $data['user'] = $user = Auth::user();
+        if($user->type == 0) {
+            return redirect('/dashboard');
+        }
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
         $data['categories'] = EbookCategory::latest()->get();
@@ -224,6 +227,17 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.all_ebooks', $data);
+    }
+
+    public function categories()
+    {
+        $data['user'] = $user = Auth::user();
+        $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
+        $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
+        $data['categories'] = EbookCategory::latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+
+        return view('admin.categories', $data);
     }
     public function allebooks()
     {
@@ -299,7 +313,7 @@ class ExamController extends Controller
             Ebook::create([
                 'uid' => Str::uuid(),
                 'user_id' => Auth::user()->id,
-                'title' => $request->title . ' ' . ++$key,
+                'title' => $request->title,
                 'category_id' => $request->category_id,
                 'file' => $filename,
                 'author' => $request->author ?? null,
@@ -308,6 +322,20 @@ class ExamController extends Controller
         }
 
         return redirect()->back()->with('message', 'Ebooks Created Successfully!');
+    }
+    public function createCategory(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',          
+        ]);
+       
+            EbookCategory::create([               
+                'user_id' => Auth::user()->id,
+                'name' => $request->name,                
+            ]);
+    
+
+        return redirect()->back()->with('message', 'Category Addeed Successfully!');
     }
     public function delete_ebook(Request $request)
     {
@@ -318,6 +346,17 @@ class ExamController extends Controller
             unlink($oldFilePath);
         }
         $ebook->delete();
+        return true;
+    }
+    public function delete_category(Request $request)
+    {
+        $id = $request->id;
+        $category = EbookCategory::find($id);
+        $ebooks = Ebook::where('category_id',$id)->delete();
+
+        // dd($ebooks);
+       
+        $category->delete();
         return true;
     }
     public function download_ebook($id)

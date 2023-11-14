@@ -9,40 +9,17 @@
     <!-- Title -->
     <div class="row mb-3">
         <div class="col-12 d-sm-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-2 mb-sm-0">My Ebooks</h1>
+            <h1 class="h3 mb-2 mb-sm-0">AboveMarts All Ebooks Categories ({{ count($categories) }})</h1>
             <div>
-            <a href="#" class="btn btn-sm btn-success mb-0" data-bs-toggle="modal" data-bs-target="#addCategory"><i
-                    class="bi bi-plus-circle me-2"></i>Add Categories</a>
             <a href="#" class="btn btn-sm btn-primary mb-0" data-bs-toggle="modal" data-bs-target="#addEbook"><i
                     class="bi bi-plus-circle me-2"></i>Add E-book</a>
+            <a href="#" class="btn btn-sm btn-success mb-0" data-bs-toggle="modal" data-bs-target="#addCategory"><i
+                    class="bi bi-plus-circle me-2"></i>Add Category</a>
             </div>
 
         </div>
     </div>
 
-    <!-- Course boxes START -->
-    <div class="row g-4 mb-4">
-        <!-- Course item -->
-        <div class="col-sm-6 col-lg-4">
-            <a href='/dashboard'>
-                <div class="text-center p-4 bg-primary bg-opacity-10 border border-primary rounded-3">
-                    <h6>My Ebooks</h6>
-                    <h2 class="mb-0 fs-1 text-primary">{{ count($ebooks) }}</h2>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-sm-6 col-lg-4">
-            <a href='/all_ebooks'>
-                <div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
-                    <h6>All Ebooks</h6>
-                    <h2 class="mb-0 fs-1 text-success">{{ count($all_ebooks) }}</h2>
-                </div>
-            </a>
-        </div>
-
-    </div>
-    <!-- Course boxes END -->
 
     <!-- Card START -->
     <div class="card bg-transparent border">
@@ -53,8 +30,8 @@
             <div class="row g-3 align-items-center justify-content-between">
                 <!-- Search bar -->
                 <div class="col-md-8">
-                    <form class="rounded position-relative">
-                        <input required class="form-control bg-body" type="search" placeholder="Search"
+                    <form method='post' action='searchEbook' class="rounded position-relative">@csrf
+                        <input required class="form-control bg-body" name='search' placeholder='Enter book title or category' type="search" placeholder="Search"
                             aria-label="Search">
                         <button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
                             type="submit"><i class="fas fa-search fs-6 "></i></button>
@@ -88,13 +65,11 @@
                     <!-- Table head -->
                     <thead>
                         <tr>
-                            <th scope="col" class="border-0 rounded-start">Image</th>
-                            <th scope="col" class="border-0 rounded-start">Title</th>
+                          
+                            <th scope="col" class="border-0 rounded-start">Id</th>
                             {{-- <th scope="col" class="border-0">Instructor</th> --}}
-                            <th scope="col" class="border-0">Category</th>
-                            <th scope="col" class="border-0">Author</th>
-                            <th scope="col" class="border-0">Date Added</th>
-
+                            <th scope="col" class="border-0">Name</th>
+                           
                             <th scope="col" class="border-0 rounded-end">Action</th>
                         </tr>
                     </thead>
@@ -103,27 +78,15 @@
                     <tbody>
 
                         <!-- Table row -->
-                        @foreach($ebooks as $ebook)
+                        @foreach($categories as $key => $category)
                         <tr>
-                            <!-- Table data -->
-                            <td>
-                                @if($ebook->image !== null)
-                                <img src='{{ asset('public/ebook_images/'.$ebook->image) }}'/>
-                                @else 
-                                <img src='{{ asset('ebook_images/pdf.png') }}'/>
-                                @endif
-                            </td>
-                            <td>{{ $ebook->title }}</td>
-                            <td>{{ $ebook->cat->name }}</td>
-                            <td>{{ $ebook->author }}</td>
-                            <td>{{ Date('j F Y',strtotime($ebook->created_at)) }}</td>
+                            <td>{{ ++$key }}</td>
+                          
+                            <td>{{ $category->name }}</td>
+                         
+                           <td>
 
-
-                            <td>
-
-                                <a href='preview_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-primary'>Preview</a>
-                                <a href='download_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info'>Download</a>
-                                <button id='delete_ebook' data-id='{{ $ebook->uid }}'
+                                 <button id='delete_ebook' data-id='{{ $category->id }}'
                                     class="btn btn-sm btn-danger-soft mb-0">Delete</button>
                             </td>
                         </tr>
@@ -270,8 +233,8 @@
 
     async function resetAccount(el, id) {
       const willUpdate = await swal({
-        title: "Confirm Ebook Delete",
-        text: `Are you sure you want to delete this E-Book?`,
+        title: "Please note that deleting this category will also delete all ebooks under them!",
+        // text: `Please note that deleting this category will also delete all ebooks under them!`,
         icon: "warning",
         confirmButtonColor: "#DD6B55",
         confirmButtonText: "Yes!",
@@ -282,7 +245,7 @@
         //performReset()
         performDelete(el, id);
       } else {
-        swal("Course will not be deleted  :)");
+        swal("Category will not be deleted  :)");
       }
     }
 
@@ -290,12 +253,12 @@
     function performDelete(el, id) {
 
       try {
-        $.get('{{ route("delete_ebook") }}?id=' + id,
+        $.get('{{ route("delete_category") }}?id=' + id,
           function(data, status) {
             console.log(status);
             console.table(data);
             if (status === "success") {
-              let alert = swal('success', "Course successfully deleted!.", 'success');
+              let alert = swal('success', "Category successfully deleted!.", 'success');
               $(el).closest("tr").remove();
               // alert.then(() => {
               // });

@@ -114,6 +114,8 @@
 						<!-- Menu item 6 -->
 						<li class="nav-item"> <a class="nav-link" href="/admin_ebooks"><i
 									class="far fa-chart-bar fa-fw me-2"></i>Ebooks</a></li>
+						<li class="nav-item"> <a class="nav-link" href="/categories"><i
+									class="fas fa-list fa-fw me-2"></i>Ebook Categories</a></li>
 
 						<!-- Menu item 7 -->
 						<li class="nav-item"> <a class="nav-link" href="#"><i

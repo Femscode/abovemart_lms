@@ -155,6 +155,10 @@
                         <input id='title' name='title' required class="form-control" type="text"
                             placeholder="Input course title">
                     </div>
+                    <div class="col-12">
+                        <label class="form-label">Display Image<span style='color:red'> (Optional)</span></label>
+                        <input id='file' name='image' class="form-control" type="file">
+                    </div>
 
                     <div class="col-12">
                         <label class="form-label">Category</label>
@@ -166,11 +170,17 @@
 
                         </select>
                     </div>
+                    <div class="col-12">
+                        <label class="form-label">Author</label>
+                        <input id='author' name='author' multiple required class="form-control" type="text">
+                    </div>
+
 
                     <div class="col-12">
                         <label class="form-label">Ebook File</label>
                         <input id='file' name='file[]' multiple required class="form-control" type="file">
                     </div>
+                   
 
 
 
@@ -184,6 +194,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
                 <button id='c_submita' type="submit" class="btn btn-success my-0">Create</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white" id="addCategoryLabel">Add Ebook Category</h5>
+                <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body">
+                <form action="/createCategory" method='post' class="row text-start g-3" enctype='multipart/form-data'>@csrf
+                    <!-- Question -->
+                    <div class="col-12">
+                        <label class="form-label">Category Name</label>
+                        <input id='title' name='name' required class="form-control" type="text"
+                            placeholder="Input Category Name">
+                    </div>
+                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
+                <button id='c_submita' type="submit" class="btn btn-success my-0">Add</button>
             </div>
             </form>
         </div>

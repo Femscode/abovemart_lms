@@ -70,13 +70,16 @@ Route::any('/view_uploaded_assessment/{user_id}/{ass_id}', [App\Http\Controllers
 
 //Admin Ebooks
 Route::any('/admin_ebooks', [App\Http\Controllers\ExamController::class, 'admin_ebooks'])->name('admin_ebooks');
+Route::any('/categories', [App\Http\Controllers\ExamController::class, 'categories'])->name('categories');
 Route::any('/all_ebooks', [App\Http\Controllers\ExamController::class, 'all_ebooks'])->name('all_ebooks');
 Route::any('/allebooks', [App\Http\Controllers\ExamController::class, 'allebooks'])->name('allebooks');
 Route::any('/createEbook', [App\Http\Controllers\ExamController::class, 'createEbook'])->name('createEbook');
+Route::any('/createCategory', [App\Http\Controllers\ExamController::class, 'createCategory'])->name('createCategory');
 Route::any('/searchEbook', [App\Http\Controllers\ExamController::class, 'searchEbook'])->name('searchEbook');
 Route::any('/searchEbookStudent', [App\Http\Controllers\ExamController::class, 'searchEbookStudent'])->name('searchEbookStudent');
 Route::any('/searchEbookTitle', [App\Http\Controllers\ExamController::class, 'searchEbookTitle'])->name('searchEbookTitle');
 Route::any('/delete_ebook', [App\Http\Controllers\ExamController::class, 'delete_ebook'])->name('delete_ebook');
+Route::any('/delete_category', [App\Http\Controllers\ExamController::class, 'delete_category'])->name('delete_category');
 Route::any('/download_ebook/{id}', [App\Http\Controllers\ExamController::class, 'download_ebook'])->name('download_ebook');
 Route::any('/preview_ebook/{id}', [App\Http\Controllers\ExamController::class, 'preview_ebook'])->name('preview_ebook');
 Route::any('/download_certificate/{id}', [App\Http\Controllers\ExamController::class, 'download_certificate'])->name('download_certificate');
