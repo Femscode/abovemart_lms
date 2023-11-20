@@ -208,7 +208,7 @@ class ExamController extends Controller
     public function admin_ebooks()
     {
         $data['user'] = $user = Auth::user();
-        if($user->type == 0) {
+        if ($user->type == 0) {
             return redirect('/dashboard');
         }
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
@@ -238,6 +238,18 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.categories', $data);
+    }
+    public function edit_ebook($id)
+    {
+        $data['user'] = $user = Auth::user();
+        $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
+        $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
+        $data['categories'] = EbookCategory::latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+
+        $data['ebook'] = Ebook::where('uid', $id)->first();
+
+        return view('admin.edit_ebook', $data);
     }
     public function allebooks()
     {
@@ -294,7 +306,7 @@ class ExamController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'file' => 'required',
-            'author' => 'required',
+            // 'author' => 'required',
         ]);
         if ($request->has('image')) {
             $image = $request->image;
@@ -317,26 +329,69 @@ class ExamController extends Controller
                 'category_id' => $request->category_id,
                 'file' => $filename,
                 'author' => $request->author ?? null,
-                'image' => $imageName ?? null
+                'image' => $imageName ?? null,
+                'description' => $request->description ?? null
             ]);
         }
 
         return redirect()->back()->with('message', 'Ebooks Created Successfully!');
     }
+    public function update_ebook(Request $request)
+    {
+
+        $this->validate($request, [
+            'title' => 'required',
+            'category_id' => 'required',
+            // 'file' => 'required',
+            // 'author' => 'required',
+        ]);
+        // dd($request->all());
+        $ebook = Ebook::find($request->id);
+        if ($request->has('image')) {
+            $image = $request->image;
+            $imageName = $image->hashName();
+            $image->move(public_path() . '/ebook_images/', $imageName);
+            $ebook->image = $imageName;
+        }
+
+        // dd($request->all());
+        if ($request->has('file')) {
+            $previous_file = $ebook->file;
+            $previous_file_path = public_path('/ebooks/') . $previous_file;
+
+            // Check if the file exists before attempting to delete
+            if (file_exists($previous_file_path)) {
+                // Delete the previous file
+                unlink($previous_file_path);
+            }           
+            $filefile = $request->file;
+            $filename = $filefile->hashName();
+            $filefile->move(public_path() . '/ebooks/', $filename);
+            $ebook->file = $filename;
+        }
+        $ebook->title = $request->title;
+        $ebook->description = $request->description;
+        $ebook->author = $request->author;
+        $ebook->save();
+
+
+        return redirect('/admin_ebooks')->with('message', 'Ebooks Updated Successfully!');
+    }
     public function createCategory(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',          
+            'name' => 'required',
         ]);
-       
-            EbookCategory::create([               
-                'user_id' => Auth::user()->id,
-                'name' => $request->name,                
-            ]);
-    
+
+        EbookCategory::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->name,
+        ]);
+
 
         return redirect()->back()->with('message', 'Category Addeed Successfully!');
     }
+
     public function delete_ebook(Request $request)
     {
         $id = $request->id;
@@ -352,10 +407,10 @@ class ExamController extends Controller
     {
         $id = $request->id;
         $category = EbookCategory::find($id);
-        $ebooks = Ebook::where('category_id',$id)->delete();
+        $ebooks = Ebook::where('category_id', $id)->delete();
 
         // dd($ebooks);
-       
+
         $category->delete();
         return true;
     }
@@ -398,6 +453,9 @@ class ExamController extends Controller
 
         $data['pdfPath'] = $pdfPath = 'https://learn.abovemarts.com/public/ebooks/' . $ebook->file;
 
+        if ($user->type == 1) {
+            return view('admin.real_pdf', $data);
+        }
         return view('student.real_pdf_viewer', $data);
     }
     public function download_certificate($id)

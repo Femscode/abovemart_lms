@@ -1,4 +1,4 @@
-@extends('student.master')
+@extends('admin.master')
 @section('head')
 @endsection 
 

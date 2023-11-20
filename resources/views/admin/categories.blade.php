@@ -126,7 +126,6 @@
     </div>
     <!-- Card END -->
 </div>
-
 <div class="modal fade" id="addEbook" tabindex="-1" aria-labelledby="addEbookLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -145,7 +144,12 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label">Display Image<span style='color:red'> (Optional)</span></label>
-                        <input id='file' name='image' class="form-control" type="file">
+                        <input id='file' name='image' accept="image/*" class="form-control" type="file">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea id='description' name='description' required class="form-control" type="text"
+                            placeholder="Input ebook description"></textarea>
                     </div>
 
                     <div class="col-12">
@@ -159,14 +163,14 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Author</label>
-                        <input id='author' name='author' multiple required class="form-control" type="text">
+                        <label class="form-label">Author<span class='text-danger'>(Optional)</span></label>
+                        <input id='author' name='author' class="form-control" type="text">
                     </div>
 
 
                     <div class="col-12">
                         <label class="form-label">Ebook File</label>
-                        <input id='file' name='file[]' multiple required class="form-control" type="file">
+                        <input id='file' name='file[]'  accept=".pdf, .doc, .docx" multiple required class="form-control" type="file">
                     </div>
                    
 
@@ -187,7 +191,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

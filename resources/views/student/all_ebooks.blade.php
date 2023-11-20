@@ -64,7 +64,7 @@
 				<ul id="suggestions"></ul>
 			</div>
 			<button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
-				type="submit"><i class="fas fa-search fs-6 "></i></button>
+				type="submit"><a class='btn btn-sm btn-success'><i class="fas fa-search fs-6 "></i>Search</a></button>
 		</form>
 	</div>
 
@@ -102,7 +102,7 @@
 
 							<!-- Title -->
 							<h5 class="card-title"><a href="#">{{ $ebook->title }}</a></h5>
-							<p class="text-truncate">{{ Str::limit($ebook->cat->name,30) }} </p>
+							<p class="text-truncate">{{ Str::limit($ebook->cat->name,30) }}<br> {{ Str::limit($ebook->description,50) }} </p>
 
 							<!-- Info -->
 							<ul class="list-inline">

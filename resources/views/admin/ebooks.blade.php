@@ -115,7 +115,7 @@
                             </td>
                             <td>{{ $ebook->title }}</td>
                             <td>{{ $ebook->cat->name }}</td>
-                            <td>{{ $ebook->author }}</td>
+                            <td>{{ $ebook->author ?? "Not added" }}</td>
                             <td>{{ Date('j F Y',strtotime($ebook->created_at)) }}</td>
 
 
@@ -123,6 +123,7 @@
 
                                 <a href='preview_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-primary'>Preview</a>
                                 <a href='download_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info'>Download</a>
+                                <a href='edit_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info-soft'>Edit</a>
                                 <button id='delete_ebook' data-id='{{ $ebook->uid }}'
                                     class="btn btn-sm btn-danger-soft mb-0">Delete</button>
                             </td>
@@ -164,6 +165,7 @@
     <!-- Card END -->
 </div>
 
+
 <div class="modal fade" id="addEbook" tabindex="-1" aria-labelledby="addEbookLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -182,7 +184,12 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label">Display Image<span style='color:red'> (Optional)</span></label>
-                        <input id='file' name='image' class="form-control" type="file">
+                        <input id='file' name='image' accept="image/*" class="form-control" type="file">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea id='description' name='description' required class="form-control" type="text"
+                            placeholder="Input ebook description"></textarea>
                     </div>
 
                     <div class="col-12">
@@ -196,14 +203,14 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Author</label>
-                        <input id='author' name='author' multiple required class="form-control" type="text">
+                        <label class="form-label">Author<span class='text-danger'>(Optional)</span></label>
+                        <input id='author' name='author' class="form-control" type="text">
                     </div>
 
 
                     <div class="col-12">
                         <label class="form-label">Ebook File</label>
-                        <input id='file' name='file[]' multiple required class="form-control" type="file">
+                        <input id='file' name='file[]'  accept=".pdf, .doc, .docx" multiple required class="form-control" type="file">
                     </div>
                    
 
@@ -224,7 +231,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
