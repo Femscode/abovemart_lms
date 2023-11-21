@@ -231,13 +231,13 @@
 Page Banner START -->
 		<section class="pt-0">
 			<div class="container-fluid px-0">
-				<div class="card bg-blue h-100px h-md-200px rounded-0"
+				<div class="card bg-blue h-200px h-md-200px rounded-0"
 					style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
-					<h4 style='color:white;text-align:center;font-size:15px;padding:10px'>Exciting news! Our E-Library is live, offering free access to a 
+					<h6 style='color:white;text-align:center;padding:10px'>Exciting news! Our E-Library is live, offering free access to a 
 						growing collection of e-books, audios, videos, and software. 
 						Explore the initial gems now, and stay tuned as we expand our virtual shelves
 						 with over 10,000+ resources. Thank you for your understanding and trust
-						  in our commitment to a robust E-Learning experience.</h4>
+						  in our commitment to a robust E-Learning experience.</h6>
 				</div>
 			</div>
 			<div class="container mt-n4">
@@ -255,6 +255,7 @@ Page Banner START -->
 									</div>
 								</div>
 								<!-- Profile info -->
+								{{-- <div class='alert alert-info col-md-12'>Exciting man</div> --}}
 								<div class="col d-sm-flex justify-content-between align-items-center">
 									<div>
 										<h1 class="my-1 fs-4">Welcome, {{ $user->firstName }} {{ $user->lastName }}</h1>
