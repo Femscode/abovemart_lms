@@ -231,10 +231,10 @@
 Page Banner START -->
 		<section class="pt-0">
 			<div class="container-fluid px-0">
-				<div class="card bg-blue h-100px h-md-200px rounded-0"
+				<div class="card bg-blue rounded-0"
 					style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
+					<h4 style='color:white;text-align:center;font-size:20px;padding:10px'>Exciting News! Our E-Library is now live, bringing you a wealth of knowledge with free access to e-books, audios, videos, and software. While we've started with a few gems, we're on a mission to upload over 10,000+ resources. We appreciate your patience as we expand our virtual shelves daily. Feel free to explore what's already available, and stay tuned for a growing collection of enriching content. Thank you for your understanding and trust in our commitment to providing a robust E-Learning experience.</h4>
 				</div>
-				<h4 style='color:white;text-align:center;font-size:20px;padding:10px'>Exciting News! Our E-Library is now live, bringing you a wealth of knowledge with free access to e-books, audios, videos, and software. While we've started with a few gems, we're on a mission to upload over 10,000+ resources. We appreciate your patience as we expand our virtual shelves daily. Feel free to explore what's already available, and stay tuned for a growing collection of enriching content. Thank you for your understanding and trust in our commitment to providing a robust E-Learning experience.</h4>
 			</div>
 			<div class="container mt-n4">
 				<div class="row">
