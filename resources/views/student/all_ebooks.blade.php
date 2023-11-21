@@ -102,7 +102,7 @@
 
 							<!-- Title -->
 							<h5 class="card-title"><a href="#">{{ $ebook->title }}</a></h5>
-							<p class="text-truncate">{{ Str::limit($ebook->cat->name,30) }}<br> {{ Str::limit($ebook->description,50) }} </p>
+							<p class="text-truncate">{{ Str::limit($ebook->cat->name,50) }}<br> {{ Str::limit($ebook->description,250) }} </p>
 
 							<!-- Info -->
 							<ul class="list-inline">
