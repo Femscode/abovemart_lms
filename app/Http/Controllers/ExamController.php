@@ -11,6 +11,7 @@ use App\Models\Result;
 use App\Models\Question;
 use Barryvdh\DomPDF\PDF;
 use App\Models\Assignment;
+use App\Models\CourseCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EbookCategory;
@@ -213,7 +214,7 @@ class ExamController extends Controller
         }
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.ebooks', $data);
@@ -223,7 +224,7 @@ class ExamController extends Controller
         $data['user'] = $user = Auth::user();
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.all_ebooks', $data);
@@ -234,17 +235,27 @@ class ExamController extends Controller
         $data['user'] = $user = Auth::user();
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.categories', $data);
+    }
+    public function course_categories()
+    {
+        $data['user'] = $user = Auth::user();
+        $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
+        $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+
+        return view('admin.course_categories', $data);
     }
     public function edit_ebook($id)
     {
         $data['user'] = $user = Auth::user();
         $data['ebooks'] = Ebook::where('user_id', $user->id)->latest()->orderBy('category_id')->get();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $data['ebook'] = Ebook::where('uid', $id)->first();
@@ -255,7 +266,7 @@ class ExamController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->paginate(9);
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('student.all_ebooks', $data);
@@ -272,7 +283,7 @@ class ExamController extends Controller
             ->orWhere('description', '%like%', $search)
             ->get();
 
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         return view('admin.all_ebooks', $data);
     }
     public function searchEbookStudent(Request $request)
@@ -287,7 +298,7 @@ class ExamController extends Controller
             ->orWhere('author', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '%' . $search . '%')
             ->paginate(9);
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         // dd($data);
         return view('student.all_ebooks', $data);
     }
@@ -391,6 +402,20 @@ class ExamController extends Controller
 
         return redirect()->back()->with('message', 'Category Addeed Successfully!');
     }
+    public function createCourseCategory(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        CourseCategory::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->name,
+        ]);
+
+
+        return redirect()->back()->with('message', 'Category Addeed Successfully!');
+    }
 
     public function delete_ebook(Request $request)
     {
@@ -439,7 +464,7 @@ class ExamController extends Controller
         $user->save();
 
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->paginate(9);
-        $data['categories'] = EbookCategory::latest()->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();

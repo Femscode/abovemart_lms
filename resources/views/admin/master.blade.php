@@ -13,7 +13,8 @@
 	<meta name="description" content="Abovemarts Learning Portal">
 
 	<!-- Favicon -->
-	{{-- <link rel="shortcut icon" href="assets/images/favicon.ico"> --}}
+	{{--
+	<link rel="shortcut icon" href="assets/images/favicon.ico"> --}}
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Google Font -->
@@ -26,11 +27,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/font-awesome/css/all.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/choices/css/choices.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/overlay-scrollbar/css/OverlayScrollbars.min.css')}}">
+	<link rel="stylesheet" type="text/css"
+		href="{{ asset('assets/vendor/overlay-scrollbar/css/OverlayScrollbars.min.css')}}">
 
 	<!-- Theme CSS -->
 	<link id="style-switch" rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}">
-    @yield('header')
+	@yield('header')
 
 </head>
 
@@ -64,8 +66,8 @@
 
 						<!-- Title -->
 						<li class="nav-item"> <a class="nav-link" href="/profile"><i
-							class="fas fa-user fa-fw me-2"></i>Profile</a></li>
-						
+									class="fas fa-user fa-fw me-2"></i>Profile</a></li>
+
 
 						<!-- menu item 2 -->
 						<li class="nav-item">
@@ -74,18 +76,18 @@
 								<i class="bi bi-basket fa-fw me-2"></i>Courses
 							</a>
 							<!-- Submenu -->
-							<ul class="nav collapse flex-column" id="collapsepage"
-								data-bs-parent="#navbar-sidebar">
+							<ul class="nav collapse flex-column" id="collapsepage" data-bs-parent="#navbar-sidebar">
 								<li class="nav-item"> <a class="nav-link active" href="/dashboard">All
 										Courses</a></li>
-								<li class="nav-item"> <a class="nav-link" href="#">Course
+								<li class="nav-item"> <a class="nav-link" href="/course_categories">Course
 										Category</a></li>
-								{{-- <li class="nav-item"> <a class="nav-link" href="/announcement">Announcements</a></li> --}}
+								{{-- <li class="nav-item"> <a class="nav-link" href="/announcement">Announcements</a>
+								</li> --}}
 							</ul>
 						</li>
 
 						<!-- Menu item 3 -->
-						
+
 
 						<!-- Menu item 4 -->
 						<li class="nav-item">
@@ -96,12 +98,12 @@
 							<!-- Submenu -->
 							<ul class="nav collapse flex-column" id="collapseinstructors"
 								data-bs-parent="#navbar-sidebar">
-								
-                                        @foreach($courses as $course)
-                                        <li class="nav-item"> <a class="nav-link"
-                                                href="/students/{{ $course->id }}">{{ $course->title }}</a></li>
-                                        @endforeach
-							
+
+								@foreach($courses as $course)
+								<li class="nav-item"> <a class="nav-link" href="/students/{{ $course->id }}">{{
+										$course->title }}</a></li>
+								@endforeach
+
 							</ul>
 						</li>
 
@@ -120,10 +122,10 @@
 						<!-- Menu item 7 -->
 						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="fas fa-user-cog fa-fw me-2"></i>Certificates</a></li>
-						
+
 
 						<!-- Menu item 8 -->
-					
+
 
 						<!-- Title -->
 					</ul>
@@ -257,13 +259,16 @@
 																</div>
 															</div>
 															<div>
-																<p class="text-body small m-0">Congratulate <b>{{ $user->name }}</b>, you are now an instructor in <b>Abovemart LMS</b></p>
-																
+																<p class="text-body small m-0">Congratulate <b>{{
+																		$user->name }}</b>, you are now an instructor in
+																	<b>Abovemart LMS</b>
+																</p>
+
 															</div>
 														</a>
 													</li>
 
-												
+
 
 												</ul>
 											</div>
@@ -361,13 +366,11 @@
 
 								<div class="col-12">
 									<label class="form-label">Category</label>
-									<select id='category' class='form-control'>
-										<option value='Marketing'>Marketing</option>
-										<option value='Digital Network'>Digital Network</option>
-										<option value='Programming'>Programming</option>
-										<option value='Graphic Design'>Graphic Design</option>
-										<option value='Cyber Security'>Cyber Security</option>
-										<option value='Personal Development'>Personal Development</option>
+									<select id='category' required class='form-control'>
+										<option>--Select Category--</option>
+										@foreach($categories as $category)
+										<option value='{{ $category->id }}'>{{ $category->name }}</option>
+										@endforeach
 									</select>
 								</div>
 

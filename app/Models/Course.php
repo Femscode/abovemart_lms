@@ -10,4 +10,8 @@ class Course extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'courses';
+
+    public function cat() {
+        return $this->belongsTo(CourseCategory::class, 'category','id');
+    }
 }

@@ -9,10 +9,8 @@
     <!-- Title -->
     <div class="row mb-3">
         <div class="col-12 d-sm-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-2 mb-sm-0">AboveMarts All Ebooks Categories ({{ count($categories) }})</h1>
+            <h1 class="h3 mb-2 mb-sm-0">AboveMarts All Course Categories ({{ count($categories) }})</h1>
             <div>
-            <a href="#" class="btn btn-sm btn-primary mb-0" data-bs-toggle="modal" data-bs-target="#addEbook"><i
-                    class="bi bi-plus-circle me-2"></i>Add E-book</a>
             <a href="#" class="btn btn-sm btn-success mb-0" data-bs-toggle="modal" data-bs-target="#addCategory"><i
                     class="bi bi-plus-circle me-2"></i>Add Category</a>
             </div>
@@ -82,7 +80,7 @@
                         <tr>
                             <td>{{ ++$key }}</td>
                           
-                            <td>{{ $category->name }} ({{ count($category->ebook) }} Books)</td>
+                            <td>{{ $category->name }} ({{ count($category->all_course) }} Course)</td>
                          
                            <td>
 
@@ -126,81 +124,17 @@
     </div>
     <!-- Card END -->
 </div>
-<div class="modal fade" id="addEbook" tabindex="-1" aria-labelledby="addEbookLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white" id="addEbookLabel">Add Ebook</h5>
-                <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="bi bi-x-lg"></i></button>
-            </div>
-            <div class="modal-body">
-                <form action="/createEbook" method='post' class="row text-start g-3" enctype='multipart/form-data'>@csrf
-                    <!-- Question -->
-                    <div class="col-12">
-                        <label class="form-label">Title/Name</label>
-                        <input id='title' name='title' required class="form-control" type="text"
-                            placeholder="Input course title">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Display Image<span style='color:red'> (Optional)</span></label>
-                        <input id='file' name='image' accept="image/*" class="form-control" type="file">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Description</label>
-                        <textarea id='description' name='description' required class="form-control" type="text"
-                            placeholder="Input ebook description"></textarea>
-                    </div>
 
-                    <div class="col-12">
-                        <label class="form-label">Category</label>
-                        <select id='category' name='category_id' class='form-control'>
-                            <option>--Select Category--</option>
-                            @foreach($categories as $category)
-                            <option value='{{ $category->id }}'>{{ $category->name }}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label">Author<span class='text-danger'>(Optional)</span></label>
-                        <input id='author' name='author' class="form-control" type="text">
-                    </div>
-
-
-                    <div class="col-12">
-                        <label class="form-label">Ebook File</label>
-                        <input id='file' name='file[]'  accept=".pdf, .doc, .docx" multiple required class="form-control" type="file">
-                    </div>
-                   
-
-
-
-
-
-
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
-                <button id='c_submita' type="submit" class="btn btn-success my-0">Create</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white" id="addCategoryLabel">Add Ebook Category</h5>
+                <h5 class="modal-title text-white" id="addCategoryLabel">Add Course Category</h5>
                 <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="bi bi-x-lg"></i></button>
             </div>
             <div class="modal-body">
-                <form action="/createCategory" method='post' class="row text-start g-3" enctype='multipart/form-data'>@csrf
+                <form action="/createCourseCategory" method='post' class="row text-start g-3" enctype='multipart/form-data'>@csrf
                     <!-- Question -->
                     <div class="col-12">
                         <label class="form-label">Category Name</label>

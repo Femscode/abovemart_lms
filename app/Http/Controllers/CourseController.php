@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Assignment;
 use Illuminate\Support\Str;
 use App\Models\Announcement;
+use App\Models\CourseCategory;
 use App\Models\SectionVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,7 @@ class CourseController extends Controller
         $data['user'] = Auth::user();
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
 
         if (Auth::user()->type == 1) {
 

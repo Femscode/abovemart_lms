@@ -147,7 +147,7 @@
 
 							<!-- Table data -->
 							<td> <span class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">{{
-									$course->category }}</span> </td>
+									$course->cat->name ?? "not specified" }}</span> </td>
 
 							<!-- Table data -->
 							<td>${{ number_format($course->price) }}</td>
