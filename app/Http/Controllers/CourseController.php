@@ -59,7 +59,7 @@ class CourseController extends Controller
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
-
+     
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
@@ -72,6 +72,7 @@ class CourseController extends Controller
         $data['user'] = Auth::user();
         $data['courses'] = Course::latest()->get();
         $data['ann'] = Announcement::latest()->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
         $data['assignments'] = Assignment::latest()->get();
         $data['course_enrolled'] = $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
         $status = [];

@@ -439,6 +439,14 @@ class ExamController extends Controller
         $category->delete();
         return true;
     }
+    public function delete_course_category(Request $request)
+    {
+        $id = $request->id;
+        $category = CourseCategory::find($id);      
+        $ebooks = Course::where('category', $id)->delete();       
+        $category->delete();
+        return true;
+    }
     public function download_ebook($id)
     {
 
@@ -482,6 +490,14 @@ class ExamController extends Controller
             return view('admin.real_pdf', $data);
         }
         return view('student.real_pdf_viewer', $data);
+    }
+    public function live_preview($id)
+    {
+
+      
+        $data['ebook'] = $ebook = Ebook::where('uid', $id)->firstOrFail();
+      
+        return view('student.live_preview', $data);
     }
     public function download_certificate($id)
     {

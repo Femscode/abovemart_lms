@@ -170,7 +170,7 @@
 
     async function resetAccount(el, id) {
       const willUpdate = await swal({
-        title: "Please note that deleting this category will also delete all ebooks under them!",
+        title: "Please note that deleting this category will also delete all courses under them!",
         // text: `Please note that deleting this category will also delete all ebooks under them!`,
         icon: "warning",
         confirmButtonColor: "#DD6B55",
@@ -190,7 +190,7 @@
     function performDelete(el, id) {
 
       try {
-        $.get('{{ route("delete_category") }}?id=' + id,
+        $.get('{{ route("delete_course_category") }}?id=' + id,
           function(data, status) {
             console.log(status);
             console.table(data);

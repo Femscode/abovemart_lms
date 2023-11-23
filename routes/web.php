@@ -8,6 +8,8 @@ use App\Models\Assignment;
 
 // route for the courses
 Route::view('mycertificate','certificate.third_certificate');
+Route::any('/live_preview/{id}', [App\Http\Controllers\ExamController::class, 'live_preview'])->name('live_preview');
+
 Auth::routes();
 
 Route::any('run_uid', function() {
@@ -84,6 +86,7 @@ Route::any('/edit_ebook/{id}', [App\Http\Controllers\ExamController::class, 'edi
 Route::any('/update_ebook', [App\Http\Controllers\ExamController::class, 'update_ebook'])->name('update_ebook');
 Route::any('/delete_ebook', [App\Http\Controllers\ExamController::class, 'delete_ebook'])->name('delete_ebook');
 Route::any('/delete_category', [App\Http\Controllers\ExamController::class, 'delete_category'])->name('delete_category');
+Route::any('/delete_course_category', [App\Http\Controllers\ExamController::class, 'delete_course_category'])->name('delete_course_category');
 Route::any('/download_ebook/{id}', [App\Http\Controllers\ExamController::class, 'download_ebook'])->name('download_ebook');
 Route::any('/preview_ebook/{id}', [App\Http\Controllers\ExamController::class, 'preview_ebook'])->name('preview_ebook');
 Route::any('/download_certificate/{id}', [App\Http\Controllers\ExamController::class, 'download_certificate'])->name('download_certificate');

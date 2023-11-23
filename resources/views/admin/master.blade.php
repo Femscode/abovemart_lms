@@ -368,9 +368,9 @@
 									<label class="form-label">Category</label>
 									<select id='category' required class='form-control'>
 										<option>--Select Category--</option>
-										@foreach($categories as $category)
+										@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
 										<option value='{{ $category->id }}'>{{ $category->name }}</option>
-										@endforeach
+									@endforeach
 									</select>
 								</div>
 
