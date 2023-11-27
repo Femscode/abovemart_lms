@@ -508,7 +508,7 @@
 					<!-- Description -->
 
 					<!-- Buttons -->
-					<div class="col-6 mt-3">
+					{{-- <div class="col-6 mt-3">
 						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 							<!-- Free button -->
 							<input type="radio" value='0' class="btn-check" name="options" id="option1" checked="">
@@ -519,7 +519,7 @@
 							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0"
 								for="option2">Premium</label>
 						</div>
-					</div>
+					</div> --}}
 
 			</div>
 			<div class="modal-footer">

@@ -548,7 +548,7 @@
 							$("#editslashedprice").val(data.slashed_price)
 							$("#editduration").val(data.duration)
 						
-							$("#editcourse_img").attr('src','/courseimage/'+data.image+'')
+							$("#editcourse_img").attr('src','https://learn.abovemarts.com/public/courseimage/'+data.image+'')
 						
 						})
 					})
