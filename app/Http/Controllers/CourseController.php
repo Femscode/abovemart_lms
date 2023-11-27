@@ -56,8 +56,8 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
-        $data['ann'] = Announcement::latest()->get();
-        $data['assignments'] = Assignment::latest()->get();
+        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
      
         if (Auth::user()->type == 1) {
