@@ -55,13 +55,7 @@ Page content START -->
 								</div>
 			
 								<!-- Card body -->
-								<div class="card-body pb-3">
-									<!-- Buttons and price -->
-									<div class="text-center">
-										<!-- Buttons -->
-										<a href="/preview_ebook/{{ $ebook->uid }}" class="btn btn-light mb-0"><i class="bi bi-bookmark me-2"></i>Preview Book</a>
-									</div>
-								</div>
+							
 							</div>
 							<!-- Card END -->
 
@@ -127,10 +121,18 @@ Page content START -->
 								<span class="h6">4.5 </span>
 							</li>
 						</ul>
+
+						
 						<!-- List END -->
 					</div>
 				</div>
-
+				<div class="card-body pb-3">
+					<!-- Buttons and price -->
+					<div class="text-center">
+						<!-- Buttons -->
+						<a href="/preview_ebook/{{ $ebook->uid }}" class="btn btn-light mb-0"><i class="bi bi-bookmark me-2"></i>Preview Book</a>
+					</div>
+				</div>
 			</div>
 			<!-- Main content END -->
 		</div> <!-- Row END -->

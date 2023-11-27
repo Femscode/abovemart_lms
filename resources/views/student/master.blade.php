@@ -416,8 +416,12 @@ Footer END -->
 
 	<!-- Template Functions -->
 	<script src="assets/js/functions.js"></script>
+	
+	<script src="{{ asset('assets/jquery.js')}}"></script>
+	<script src="{{ asset('assets/sweetalert.js')}}"></script>
 	<script> 
 	$(document).ready(function() {
+		
 		@if (session('message'))
             			swal('Success!',"{{ session('message') }}",'success');
         			@endif

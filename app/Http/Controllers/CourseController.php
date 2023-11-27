@@ -387,6 +387,7 @@ class CourseController extends Controller
             'description' => $request->description,
             'duration' => $request->duration,
             'price' => $request->price,
+            'slashed_price' => $request->slashed_price,
             'category' => $request->category,
             'image' => $imageName,
         ]);
@@ -415,6 +416,7 @@ class CourseController extends Controller
         $course->description = $request->description;
         $course->duration = $request->duration;
         $course->price = $request->price;
+        $course->slashed_price = $request->slashed_price;
         $course->category = $request->category;
 
         $course->save();
@@ -429,13 +431,18 @@ class CourseController extends Controller
         $course->delete();
         return 'course deleted';
     }
-    public function enroll($user_id, $course_id)
+    public function enroll($course_id)
     {
-        Enroll::create([
-            'user_id' => $user_id,
-            'course_id' => $course_id
-        ]);
-        $course = Course::find($course_id);
-        return redirect()->back()->with('message', "You have been enrolled for the course:" . $course->title);
+        $course = Course::where('uid',$course_id)->first();
+        $user = Auth::user();
+        if($course->price == 0) {
+            Enroll::create([
+                'user_id' => $user->id,
+                'course_id' => $course->id
+            ]);
+            return redirect('/dashboard')->with('message', "You have been enrolled for the course:" . $course->title);
+        }
+        
+        return redirect()->back()->with('message', "You cannot enroll for this course because it requires payment!");
     }
 }

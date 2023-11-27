@@ -384,13 +384,19 @@
 								<div class="col-6">
 									<label class="form-label">Duration(Hrs)</label>
 									<input id='duration' required class="form-control" type="text"
-										placeholder="Input course title">
+										placeholder="Input course duration">
 								</div>
 
 								<div class="col-6">
 									<label class="form-label">Price($)</label>
 									<input id='price' required class="form-control" type="text"
-										placeholder="Input course title">
+										placeholder="Enter 0 if the course is free">
+								</div>
+								
+								<div class="col-12">
+									<label class="form-label">Slashed <s>Price</s> ($)</label>
+									<input id='slashed_price' required class="form-control" type="text"
+										placeholder="Enter 0 if the course is free">
 								</div>
 
 
@@ -438,11 +444,10 @@
 								<div class="col-12">
 									<label class="form-label">Category</label>
 									<select id='editcategory' class='form-control'>
-										<option value='Marketing'>Marketing</option>
-										<option value='Digital Network'>Digital Network</option>
-										<option value='Programming'>Programming</option>
-										<option value='Graphic Design'>Graphic Design</option>
-										<option value='Content Writing'>Content Writing</option>
+										<option>--Select Category--</option>
+										@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
+										<option value='{{ $category->id }}'>{{ $category->name }}</option>
+									@endforeach
 									</select>
 								</div>
 
@@ -456,13 +461,18 @@
 								<div class="col-6">
 									<label class="form-label">Duration(Hrs)</label>
 									<input id='editduration' required class="form-control" type="text"
-										placeholder="Input course title">
+										placeholder="Input course duration">
 								</div>
 
 								<div class="col-6">
 									<label class="form-label">Price($)</label>
 									<input id='editprice' required class="form-control" type="text"
-										placeholder="Input course title">
+										placeholder="Enter 0 is the course is free">
+								</div>
+								<div class="col-12">
+									<label class="form-label">Slashed <s>Price($)</s></label>
+									<input id='editslashedprice' required class="form-control" type="text"
+										placeholder="Enter 0 is the course is free">
 								</div>
 
 
@@ -535,6 +545,7 @@
 							$("#editdescription").val(data.description)
 							$("#editcategory").val(data.category)
 							$("#editprice").val(data.price)
+							$("#editslashedprice").val(data.slashed_price)
 							$("#editduration").val(data.duration)
 						
 							$("#editcourse_img").attr('src','/courseimage/'+data.image+'')
@@ -552,6 +563,7 @@
 							fd.append('category', $("#category").val());
 							fd.append('duration', $("#duration").val());
 							fd.append('price', $("#price").val());
+							fd.append('slashed_price', $("#slashed_price").val());
 							if(image[0] != undefined) {
            						 fd.append('image', image[0]);
            					 }
@@ -595,6 +607,7 @@
 							fd.append('category', $("#editcategory").val());
 							fd.append('duration', $("#editduration").val());
 							fd.append('price', $("#editprice").val());
+							fd.append('slashed_price', $("#editslashedprice").val());
 							if(image[0] != undefined) {
            						 fd.append('image', image[0]);
            					 }

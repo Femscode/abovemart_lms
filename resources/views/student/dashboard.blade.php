@@ -118,8 +118,10 @@
 								<div class="d-flex align-items-center">
 									<!-- Image -->
 									<div class="w-100px">
-										<img src="/courseimage/{{ $course->image}}" class="rounded"
+										<img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="rounded"
 											alt="">
+										{{-- <img src="/courseimage/{{ $course->image}}" class="rounded"
+											alt=""> --}}
 									</div>
 									<div class="mb-0 ms-2">
 										<!-- Title -->

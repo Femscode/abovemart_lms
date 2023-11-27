@@ -121,7 +121,7 @@
 
                             <td>
 
-                                <a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Live Preview</a>
+                                <a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Share</a>
                                 <a href='preview_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-primary'>Preview</a>
                                 <a href='download_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info'>Download</a>
                                 <a href='edit_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info-soft'>Edit</a>

@@ -117,7 +117,8 @@
 								<div class="d-flex align-items-center position-relative">
 									<!-- Image -->
 									<div class="w-60px">
-										<img src="/courseimage/{{ $course->image}}" class="rounded" alt="">
+										<img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="rounded" alt="">
+										{{-- <img src="/courseimage/{{ $course->image}}" class="rounded" alt=""> --}}
 									</div>
 									<!-- Title -->
 									<h6 class="mb-0 ms-2">
@@ -150,7 +151,14 @@
 									$course->cat->name ?? "not specified" }}</span> </td>
 
 							<!-- Table data -->
-							<td>${{ number_format($course->price) }}</td>
+							<td>
+								@if($course->price == 0)
+								<label class="btn-primary-soft-check border-0 m-0"
+								for="option1">Free</label>
+								@else 
+								${{ number_format($course->price) }} <s>${{ number_format($course->slashed_price) }}</s>
+								@endif
+							</td>
 
 							<!-- Table data -->
 							{{-- <td> <span class="badge bg-warning bg-opacity-15 text-warning">Pending</span>

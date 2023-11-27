@@ -124,7 +124,7 @@
 								</div>
 								<!-- Price -->
 								<div class="mt-3 mt-sm-0">
-									<a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Live Preview</a>
+									<a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Share</a>
                                 
 									<a href='/preview_ebook/{{ $ebook->uid }}'
 										class='btn btn-success btn-sm'>Preview</a>
