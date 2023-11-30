@@ -188,22 +188,36 @@ class CourseController extends Controller
         //     'video' => ''
         // ])
         // dd($request->all());
-        foreach ($request->video as $key => $video) {
-            $videofile = $video;
-            $ext = $video->extension();
-            $filename = $videofile->hashName();
-            $videofile->move(public_path() . '/sectionvideos/', $filename);
-            // dd($filename);
+        if($request->has('video')) {
+            foreach ($request->video as $key => $video) {
+                $videofile = $video;
+                $ext = $video->extension();
+                $filename = $videofile->hashName();
+                $videofile->move(public_path() . '/sectionvideos/', $filename);
+                // dd($filename);
+                SectionVideo::create([
+                    'user_id' => Auth::user()->id,
+                    'course_id' => $request->course_id,
+                    'section_id' => $request->section_id,
+                    'status' => $request->options,
+                    'ext' => $ext,
+                    'title' => $request->title . ' ' . ++$key,
+                    'video' => $filename
+                ]);
+            }
+        } else {
             SectionVideo::create([
                 'user_id' => Auth::user()->id,
                 'course_id' => $request->course_id,
                 'section_id' => $request->section_id,
                 'status' => $request->options,
-                'ext' => $ext,
-                'title' => $request->title . ' ' . ++$key,
-                'video' => $filename
+                'ext' => 'drive',
+                'link' => $request->link,
+                'title' => $request->title,
+                'video' => null
             ]);
         }
+      
         return redirect()->back()->with('message', 'Materials Uploaded Successfully');
         return 'video uploaded successfully';
     }
@@ -371,6 +385,16 @@ class CourseController extends Controller
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
         return view('student.allcourses', $data);
+    }
+    public function live_preview($id)
+    {
+
+      
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        $data['sections'] = Section::where('course_id', $course->id)->get();
+        $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
+       
+        return view('student.course_preview', $data);
     }
 
     public function createcourse(Request $request)

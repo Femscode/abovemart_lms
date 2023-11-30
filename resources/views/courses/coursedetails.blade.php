@@ -147,8 +147,13 @@
 									</div>
 									<!-- Edit and cancel button -->
 									<div>
+										@if($video->video == null)
+										<a href="{{ $video->link }}" class="btn btn-sm btn btn-info-soft">View</a>
+										@else
 										<a href="/downloadsectionvideo/{{ $video->id }}"
 											class="btn btn-sm btn btn-info-soft">View</a>
+
+										@endif
 										<a href="#" class="btn btn-sm btn-success-soft btn-round me-1 mb-1 mb-md-0"><i
 												class="far fa-fw fa-edit"></i></a>
 										<button id='delete_topic' data-id={{ $video->id }}
@@ -210,8 +215,9 @@
 									</div>
 									<!-- Edit and cancel button -->
 									<div>
-										@if($ass->type == 'objectives') 
-										<a href="/create_question/{{ $ass->uid }}" class="btn btn-sm btn btn-info-soft">Create Question</a>
+										@if($ass->type == 'objectives')
+										<a href="/create_question/{{ $ass->uid }}"
+											class="btn btn-sm btn btn-info-soft">Create Question</a>
 										@else
 										<a href="/viewass/{{ $ass->id }}" class="btn btn-sm btn btn-info-soft">View</a>
 										@endif
@@ -234,8 +240,8 @@
 									data-bs-toggle="modal" data-bs-target="#addTopic"><i
 										class="bi bi-plus-circle me-2"></i>Add
 									topic</a>
-								<a onclick='populate_c({{ $section->id}})' data-bs-toggle="modal" data-bs-target="#addQuestion"
-									class='btn btn-info btn-sm mb-0'>Create Assignment</a>
+								<a onclick='populate_c({{ $section->id}})' data-bs-toggle="modal"
+									data-bs-target="#addQuestion" class='btn btn-info btn-sm mb-0'>Create Assignment</a>
 								<a href='/announcement' class='btn btn-warning btn-sm mb-0'>Create Announcement</a>
 								<a onclick='return confirm("Are you sure you want to delete this section");'
 									class='btn btn-danger btn-sm mb-0' href='/deletesection/{{ $section->id }}'>Delete
@@ -302,11 +308,11 @@
 			<div class="modal-body">
 				<form id='create_ann' class="row text-start g-3" enctype='multipart/form-data'>
 					<!-- Question -->
-					
+
 					<div class="col-12">
 						<label class="form-label">Title</label>
-						<input type='hidden' id='course_id' value='{{ $course->id }}'/>
-						<input type='hidden' id='my_section_id' value=''/>
+						<input type='hidden' id='course_id' value='{{ $course->id }}' />
+						<input type='hidden' id='my_section_id' value='' />
 						<input id='title' required class="form-control" type="text"
 							placeholder="Input assignment title">
 					</div>
@@ -318,7 +324,8 @@
 					</div>
 					<div class='row ml-4'>
 						<div class="form-check col-md-4">
-							<input name='type' class="type form-check-input" checked type="radio" id="file_radio" value="file">
+							<input name='type' class="type form-check-input" checked type="radio" id="file_radio"
+								value="file">
 							<label class="form-check-label" for="inlineCheckbox1">Files/Videos</label>
 						</div>
 						<div class="form-check col-md-4">
@@ -326,7 +333,8 @@
 							<label class="form-check-label" for="inlineCheckbox2">Links</label>
 						</div>
 						<div class="form-check col-md-4">
-							<input name='type' class="type form-check-input" type="radio" id="obj_radio" value="objectives">
+							<input name='type' class="type form-check-input" type="radio" id="obj_radio"
+								value="objectives">
 							<label class="form-check-label" for="inlineCheckbox2">Q & A (Objectives)</label>
 						</div>
 					</div>
@@ -340,7 +348,8 @@
 						<input id='link' placeholder="https://..." class="form-control" type='text' />
 					</div>
 					<div style='display:none' id='obj_field' class="col-12 mt-3">
-						<div class='alert alert-info'>Please note that you'll need to proceed to create questions for this assignment.</div>
+						<div class='alert alert-info'>Please note that you'll need to proceed to create questions for
+							this assignment.</div>
 					</div>
 
 
@@ -370,7 +379,7 @@
 					<!-- Question -->
 					<div class="col-12">
 						<label class="form-label">Title</label>
-						
+
 						<input id='edittitle' required class="form-control" type="text"
 							placeholder="Input course title">
 					</div>
@@ -434,7 +443,7 @@
 						class="bi bi-x-lg"></i></button>
 			</div>
 			<div class="modal-body">
-				<form class="row text-start g-3" method='post' action='{{ route('createsection') }}'>@csrf
+				<form class="row text-start g-3" method='post' action='{{ route(' createsection') }}'>@csrf
 					<!-- Course name -->
 					<div class="col-12">
 						<label class="form-label">Section Title <span class="text-danger">*</span></label>
@@ -498,12 +507,28 @@
 						<input class="form-control" name='course_id' type="hidden" value="{{ $course->id }}">
 						<input class="form-control" name='section_id' type="hidden" id='section_id' value="">
 					</div>
-
+					<div class='col-md-6'>
+						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+							<!-- Free button -->
+							<input type="radio" value='0' class="btn-check" name="options" id="option1" checked="">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">Upload
+								Resource</label>
+							<!-- Premium button -->
+							<input type="radio" value='1' class="btn-check" name="options" id="option2">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option2">Drive
+								Link</label>
+						</div>
+					</div>
 					<!-- Video link -->
-					<div class="col-md-12 mt-3">
+					<div id='video_link' class="col-md-12 mt-3">
 						<label class="form-label">Videos/PDFS/DOCS</label>
 						<input class="form-control" multiple='multiple' type="file" name='video[]'
 							placeholder="Enter Video link">
+					</div>
+					<div style='display:none' id='drive_link' class="col-md-12 mt-3">
+						<label class="form-label">Drive Link</label>
+						<input class="form-control" multiple='multiple' type="text" name='link'
+							placeholder="Enter Drive link">
 					</div>
 					<!-- Description -->
 
@@ -705,6 +730,16 @@ $("#file_radio").click(function() {
 		$("#link_field").hide()
 		$("#obj_field").show()
 	})
+	$("#option1").click(function() {
+		$("#drive_link").hide()
+		$("#video_link").show()	
+	})
+	$("#option2").click(function() {
+		$("#drive_link").show()
+		$("#video_link").hide()	
+	})
+
+	
 })
 function populate_c(section_id) {
 	

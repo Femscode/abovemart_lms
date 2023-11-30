@@ -31,7 +31,7 @@
 								<a href="#" class="text-danger"><i class="fas fa-heart"></i></a>
 							</div>
 							<!-- Title -->
-							<h5 class="card-title fw-normal"><a href="#">{{ $course->title }}</a></h5>
+							<h5 class="card-title fw-normal"><a href="/preview_course/{{ $course->uid }}">{{ $course->title }}</a></h5>
 							<p class="mb-2 text-truncate-2">{{ Str::limit($course->description,1000) }}</p>
 							<!-- Rating star -->
 							{{-- <ul class="list-inline mb-0">
@@ -56,6 +56,7 @@
 							</label>
 								@endif
 							</div><br>
+							<a href='/preview_course/{{ $course->uid }}' class='btn btn-secondary btn-sm'>Preview Course</a>
 							@if($course->price == 0)
 							
 							<a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enrol Now</a>

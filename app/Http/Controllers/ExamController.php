@@ -316,7 +316,7 @@ class ExamController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'category_id' => 'required',
-            'file' => 'required',
+            // 'file' => 'required',
             // 'author' => 'required',
         ]);
         if ($request->has('image')) {
@@ -325,25 +325,41 @@ class ExamController extends Controller
             $image->move(public_path() . '/ebook_images/', $imageName);
         }
 
-        // dd($request->all());
 
-        foreach ($request->file as $key => $file) {
-            $filefile = $file;
-            $ext = $file->extension();
-            $filename = $filefile->hashName();
-            $filefile->move(public_path() . '/ebooks/', $filename);
+        if ($request->has('file')) {
+            foreach ($request->file as $key => $file) {
+                $filefile = $file;
+                $ext = $file->extension();
+                $filename = $filefile->hashName();
+                $filefile->move(public_path() . '/ebooks/', $filename);
+                // dd($filename);
+                Ebook::create([
+                    'uid' => Str::uuid(),
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'category_id' => $request->category_id,
+                    'file' => $filename,
+                    'author' => $request->author ?? null,
+                    'image' => $imageName ?? null,
+                    'description' => $request->description ?? null
+                ]);
+            }
+        } else {
             // dd($filename);
             Ebook::create([
                 'uid' => Str::uuid(),
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'category_id' => $request->category_id,
-                'file' => $filename,
+                'file' => null,
+                'link' => $request->link,
                 'author' => $request->author ?? null,
                 'image' => $imageName ?? null,
                 'description' => $request->description ?? null
             ]);
         }
+
+
 
         return redirect()->back()->with('message', 'Ebooks Created Successfully!');
     }
@@ -370,15 +386,25 @@ class ExamController extends Controller
             $previous_file = $ebook->file;
             $previous_file_path = public_path('/ebooks/') . $previous_file;
 
+
             // Check if the file exists before attempting to delete
-            if (file_exists($previous_file_path)) {
+            if (file_exists($previous_file_path) && is_file($previous_file_path)) {
                 // Delete the previous file
                 unlink($previous_file_path);
-            }           
+            }
             $filefile = $request->file;
             $filename = $filefile->hashName();
             $filefile->move(public_path() . '/ebooks/', $filename);
             $ebook->file = $filename;
+        }
+        if ($request->has('link')) {
+            $ebook->link = $request->link;
+            $previous_file = $ebook->file;
+            $previous_file_path = public_path('/ebooks/') . $previous_file;
+            if (file_exists($previous_file_path) && is_file($previous_file_path)) {
+                unlink($previous_file_path);
+            }
+            $ebook->file = null;
         }
         $ebook->title = $request->title;
         $ebook->description = $request->description;
@@ -442,8 +468,8 @@ class ExamController extends Controller
     public function delete_course_category(Request $request)
     {
         $id = $request->id;
-        $category = CourseCategory::find($id);      
-        $ebooks = Course::where('category', $id)->delete();       
+        $category = CourseCategory::find($id);
+        $ebooks = Course::where('category', $id)->delete();
         $category->delete();
         return true;
     }
@@ -455,9 +481,16 @@ class ExamController extends Controller
         if ($user->ebook_count < 1) {
             return redirect()->back()->with('message', 'Book cannot be download, kindly upgrade your plan!');
         }
-        $user->ebook_count -= 1;
-        $user->save();
+        if($user->type !== 1) {
+
+            $user->ebook_count -= 1;
+            $user->save();
+        }
+      
         $ebook = Ebook::where('uid', $id)->firstOrFail();
+        if($ebook->file == 'null') {
+            return redirect()->back()->with('message', "No file for this ebook");
+        }
         $path = public_path() . '/ebooks/' . $ebook->file;
         return response()->download($path);
     }
@@ -468,14 +501,20 @@ class ExamController extends Controller
         if ($user->ebook_count < 1) {
             return redirect()->back()->with('message', 'Book cannot be download, kindly upgrade your plan!');
         }
-        $user->ebook_count -= 1;
-        $user->save();
+        if($user->type !== 1) {
+
+            $user->ebook_count -= 1;
+            $user->save();
+        }
 
         $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->paginate(9);
         $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();
+        if($ebook->file == null) {
+            return redirect($ebook->link);
+        }
         $data['path'] = $path =  public_path() . '/ebooks/' . $ebook->file;
         // $file = File::get($path);
         // $type = File::mimeType($path);
@@ -494,9 +533,9 @@ class ExamController extends Controller
     public function live_preview($id)
     {
 
-      
+
         $data['ebook'] = $ebook = Ebook::where('uid', $id)->firstOrFail();
-      
+
         return view('student.live_preview', $data);
     }
     public function download_certificate($id)

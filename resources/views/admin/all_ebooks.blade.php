@@ -95,12 +95,15 @@
 
 
                             <td>
+                                @if($ebook->file == null) 
                                 <a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Share</a>
-                                
-                                <a href='preview_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-primary'>Preview</a>
+                                <a href='{{ $ebook->link }}' class='btn btn-sm btn-primary'>Preview</a>
                                 <a href='download_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-info'>Download</a>
-                                {{-- <button id='delete_ebook' data-id='{{ $ebook->uid }}'
-                                    class="btn btn-sm btn-danger-soft mb-0">Delete</button> --}}
+                                @else 
+                                <a href='live_preview/{{ $ebook->uid }}' class='btn btn-sm btn-primary-soft'>Share</a>
+                                <a href='preview_ebook/{{ $ebook->uid }}' class='btn btn-sm btn-primary'>Preview</a>
+                                @endif
+                              
                             </td>
                         </tr>
                         @endforeach
@@ -182,10 +185,28 @@
                     </div>
 
 
-                    <div class="col-12">
+                    <div class='col-md-6'>
+						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+							<!-- Free button -->
+							<input type="radio" value='0' class="btn-check" name="options" id="option1" checked="">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">Upload
+								Resource</label>
+							<!-- Premium button -->
+							<input type="radio" value='1' class="btn-check" name="options" id="option2">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option2">Drive
+								Link</label>
+						</div>
+					</div>
+                    <div id='video_link' class="col-12">
                         <label class="form-label">Ebook File</label>
-                        <input id='file' name='file[]'  accept=".pdf, .doc, .docx" multiple required class="form-control" type="file">
+                        <input id='file' name='file[]'  accept=".pdf, .doc, .docx" multiple class="form-control" type="file">
                     </div>
+
+                    <div style='display:none' id='drive_link' class="col-md-12 mt-3">
+						<label class="form-label">Drive Link</label>
+						<input class="form-control" multiple='multiple' type="text" name='link'
+							placeholder="Enter Drive link">
+					</div>
                    
 
 
@@ -266,7 +287,14 @@
         swal("Course will not be deleted  :)");
       }
     }
-
+    $("#option1").click(function() {
+		$("#drive_link").hide()
+		$("#video_link").show()	
+	})
+	$("#option2").click(function() {
+		$("#drive_link").show()
+		$("#video_link").hide()	
+	})
 
     function performDelete(el, id) {
 

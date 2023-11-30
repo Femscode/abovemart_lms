@@ -9,6 +9,7 @@ use App\Models\Assignment;
 // route for the courses
 Route::view('mycertificate','certificate.third_certificate');
 Route::any('/live_preview/{id}', [App\Http\Controllers\ExamController::class, 'live_preview'])->name('live_preview');
+Route::any('/preview_course/{id}', [App\Http\Controllers\CourseController::class, 'live_preview'])->name('preview_course');
 
 Auth::routes();
 
