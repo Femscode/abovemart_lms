@@ -172,9 +172,9 @@ aria-hidden="true">
                                                     @if($video->status == 0)
 
                                                     @else
-                                                    <a href="#"
+                                                    <a href="{{ $video->link }}"
                                                         class="btn btn-secondary-soft btn-round btn-sm mb-0 stretched-link position-static">
-                                                        <i class="fas fa-lock"></i>
+                                                        {{-- <i class="fas fa-lock"></i> --}}
                                                     </a>
                                                     @endif
                                                 </div>
@@ -220,8 +220,8 @@ aria-hidden="true">
                                                     @endif
                                                     @else
                                                     <a href='{{ $course->link }}' class="btn btn-sm btn btn-secondary-soft">
-                                                         {{-- <i
-                                                            class="fas fa-lock"></i> --}}
+                                                         <i
+                                                            class="fas fa-check"></i>
                                                         </a>
 
                                                     @endif
