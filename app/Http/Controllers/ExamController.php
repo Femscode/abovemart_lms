@@ -397,7 +397,8 @@ class ExamController extends Controller
             $filefile->move(public_path() . '/ebooks/', $filename);
             $ebook->file = $filename;
         }
-        if ($request->has('link')) {
+        if ($request->has('link') && $request->link !== null) {
+           
             $ebook->link = $request->link;
             $previous_file = $ebook->file;
             $previous_file_path = public_path('/ebooks/') . $previous_file;

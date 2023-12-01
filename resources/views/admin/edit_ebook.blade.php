@@ -63,12 +63,12 @@
                 Link</label>
             </div>
           </div>
-          <div id='video_link' class="col-12">
+          <div id='video_link' @if($ebook->file == null) style='display:none' @endif class="col-12">
             <label class="form-label">Ebook File</label>
             <input id='file' name='file' accept=".pdf, .doc, .docx" multiple class="form-control" type="file">
           </div>
 
-          <div style='display:none' id='drive_link' class="col-md-12 mt-3">
+          <div @if($ebook->link == null) style='display:none' @endif id='drive_link' class="col-md-12 mt-3">
             <label class="form-label">Drive Link</label>
             <input class="form-control" multiple='multiple' value='{{ $ebook->link }}' type="text" name='link' placeholder="Enter Drive link">
           </div>
