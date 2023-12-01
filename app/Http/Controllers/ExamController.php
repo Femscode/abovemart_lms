@@ -450,7 +450,7 @@ class ExamController extends Controller
         $id = $request->id;
         $ebook = Ebook::where('uid', $id)->firstOrFail();
         $oldFilePath = public_path('ebooks/' . $ebook->file);
-        if (file_exists($oldFilePath)) {
+        if (file_exists($oldFilePath)  && is_file($oldFilePath)) {
             unlink($oldFilePath);
         }
         $ebook->delete();
