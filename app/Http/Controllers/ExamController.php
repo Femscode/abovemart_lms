@@ -396,6 +396,7 @@ class ExamController extends Controller
             $filename = $filefile->hashName();
             $filefile->move(public_path() . '/ebooks/', $filename);
             $ebook->file = $filename;
+            $ebook->link = null;
         }
         if ($request->has('link') && $request->link !== null) {
            
