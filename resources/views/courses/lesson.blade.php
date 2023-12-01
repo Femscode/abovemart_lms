@@ -219,8 +219,10 @@ aria-hidden="true">
 
                                                     @endif
                                                     @else
-                                                    <a class="btn btn-sm btn btn-secondary-soft"> <i
-                                                            class="fas fa-lock"></i></a>
+                                                    <a href='{{ $course->link }}' class="btn btn-sm btn btn-secondary-soft">
+                                                         {{-- <i
+                                                            class="fas fa-lock"></i> --}}
+                                                        </a>
 
                                                     @endif
 
