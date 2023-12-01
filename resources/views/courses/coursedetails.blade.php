@@ -443,7 +443,7 @@
 						class="bi bi-x-lg"></i></button>
 			</div>
 			<div class="modal-body">
-				<form class="row text-start g-3" method='post' action='{{ route(' createsection') }}'>@csrf
+				<form class="row text-start g-3" method='post' action='{{ route('createsection') }}'>@csrf
 					<!-- Course name -->
 					<div class="col-12">
 						<label class="form-label">Section Title <span class="text-danger">*</span></label>
