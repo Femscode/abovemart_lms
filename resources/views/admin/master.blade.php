@@ -11,6 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="learn.abovemarts.com">
 	<meta name="description" content="Abovemarts Learning Portal">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 	<!-- Favicon -->
 	{{--
@@ -357,16 +358,17 @@
 						</div>
 						<div class="modal-body">
 							<form id='create_course' class="row text-start g-3" enctype='multipart/form-data'>
+							{{-- <form method='post' action='/createcourse' class="row text-start g-3" enctype='multipart/form-data'>@csrf --}}
 								<!-- Question -->
 								<div class="col-12">
 									<label class="form-label">Title</label>
-									<input id='title' required class="form-control" type="text"
+									<input id='title' name='title' required class="form-control" type="text"
 										placeholder="Input course title">
 								</div>
 
 								<div class="col-12">
 									<label class="form-label">Category</label>
-									<select id='category' required class='form-control'>
+									<select id='category' name='category' required class='form-control'>
 										<option>--Select Category--</option>
 										@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
 										<option value='{{ $category->id }}'>{{ $category->name }}</option>
@@ -374,28 +376,28 @@
 									</select>
 								</div>
 
-								<div class="col-12 mt-3">
+								<div class="col-12 mt-3 mb-6">
 									<label class="form-label">Description</label>
-									<textarea id='description' required class="form-control" rows="4"
-										placeholder="Input course description" spellcheck="false"></textarea>
+									<div id='description' name='description' required class="editor form-control" rows="4"
+										placeholder="Input course description" spellcheck="false"></div>
 								</div>
 
 
 								<div class="col-6">
 									<label class="form-label">Duration(Hrs)</label>
-									<input id='duration' required class="form-control" type="text"
+									<input id='duration' name='duration' required class="form-control" type="text"
 										placeholder="Input course duration">
 								</div>
 
 								<div class="col-6">
 									<label class="form-label">Price($)</label>
-									<input id='price' required class="form-control" type="text"
+									<input id='price' name='price' required class="form-control" type="text"
 										placeholder="Enter 0 if the course is free">
 								</div>
 								
 								<div class="col-12">
 									<label class="form-label">Slashed <s>Price</s> ($)</label>
-									<input id='slashed_price' required class="form-control" type="text"
+									<input id='slashed_price' name='slashed_price' required class="form-control" type="text"
 										placeholder="Enter 0 if the course is free">
 								</div>
 
@@ -403,7 +405,7 @@
 								<div class="col-12">
 									<label class="form-label">Course Display Image</label>
 
-									<input id='image' required class="form-control" type="file" accept="image/*"
+									<input id='image' name='image' required class="form-control" type="file" accept="image/*"
 										placeholder="Input course title">
 								</div>
 
@@ -451,10 +453,10 @@
 									</select>
 								</div>
 
-								<div class="col-12 mt-3">
+								<div class="col-12 mt-3 mb-6">
 									<label class="form-label">Description</label>
-									<textarea id='editdescription' required class="form-control" rows="4"
-										placeholder="Input course description" spellcheck="false"></textarea>
+									<div id='editdescription' required class="editoredit form-control" rows="4"
+										placeholder="Input course description" spellcheck="false"></div>
 								</div>
 
 
@@ -518,9 +520,20 @@
 	<script src="{{ asset('assets/js/functions.js')}}"></script>
 	<script src="{{ asset('assets/jquery.js')}}"></script>
 	<script src="{{ asset('assets/sweetalert.js')}}"></script>
-
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+   
 </body>
 <script>
+	 var quill = new Quill('.editor', {
+        theme: 'snow',
+		readOnly: false // 'snow' is the standard theme with a white background
+    });
+	// quill.clipboard.dangerouslyPasteHTML(data.description);
+	 var quilledited = new Quill('.editoredit', {
+        theme: 'snow',
+		readOnly: false // 'snow' is the standard theme with a white background
+    });
+	// quilledited.clipboard.dangerouslyPasteHTML(data.description);
 	$(document).ready(function() {
                     $.ajaxSetup({
                         headers: {
@@ -542,7 +555,8 @@
 							console.log(data)
 							$("#course_id").val(data.id)
 							$("#edittitle").val(data.title)
-							$("#editdescription").val(data.description)
+							// $("#editdescription").html(data.description)
+							quilledited.clipboard.dangerouslyPasteHTML(data.description)
 							$("#editcategory").val(data.category)
 							$("#editprice").val(data.price)
 							$("#editslashedprice").val(data.slashed_price)
@@ -559,7 +573,8 @@
 							fd = new FormData();
 							image = $("#image")[0].files;
 							fd.append('title',  $("#title").val());
-							fd.append('description', $("#description").val());
+							fd.append('description', quill.root.innerHTML);
+							// fd.append('description', $("#description").val());
 							fd.append('category', $("#category").val());
 							fd.append('duration', $("#duration").val());
 							fd.append('price', $("#price").val());
@@ -603,7 +618,7 @@
 							image = $("#editimage")[0].files;
 							fd.append('id',  $("#course_id").val());
 							fd.append('title',  $("#edittitle").val());
-							fd.append('description', $("#editdescription").val());
+							fd.append('description', quilledited.root.innerHTML);
 							fd.append('category', $("#editcategory").val());
 							fd.append('duration', $("#editduration").val());
 							fd.append('price', $("#editprice").val());

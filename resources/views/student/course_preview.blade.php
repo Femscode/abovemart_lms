@@ -262,7 +262,8 @@ Page content START -->
                                             <div class="col-md-6">
 
                                                 <div id='imagecontent'>
-                                                    <img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="rounded" alt="">
+                                                    <img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}"
+                                                        class="rounded" alt="">
                                                 </div>
 
 
@@ -308,7 +309,7 @@ Page content START -->
                                                             role="tabpanel" aria-labelledby="course-pills-tab-1">
                                                             <!-- Course detail START -->
                                                             <h5 class="mb-3">Course Description</h5>
-                                                            {{ $course->description }}
+                                                            {!! $course->description !!}
                                                             <!-- List content -->
 
 
@@ -782,7 +783,11 @@ Page content START -->
                                                         <!-- Price and share button -->
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <!-- Price -->
-                                                            <h3 class="fw-bold mb-0 me-2">${{ number_format($course->price, 2) }} <span class='text-danger'><s>${{ number_format($course->slashed_price, 2) }}</s></span></h3>
+                                                            <h3 class="fw-bold mb-0 me-2">${{
+                                                                number_format($course->price, 2) }} <span
+                                                                    class='text-danger'><s>${{
+                                                                        number_format($course->slashed_price, 2)
+                                                                        }}</s></span></h3>
                                                             <!-- Share button with dropdown -->
                                                             <div class="dropdown">
                                                                 <a href="#"
@@ -794,23 +799,41 @@ Page content START -->
                                                                 <!-- dropdown button -->
                                                                 <ul class="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded"
                                                                     aria-labelledby="dropdownShare">
-                                                                    <li><a class="dropdown-item" href="https://twitter.com/intent/tweet?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
+                                                                    <li><a class="dropdown-item"
+                                                                            href="https://twitter.com/intent/tweet?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
                                                                                 class="fab fa-twitter-square me-2"></i>Twitter</a>
                                                                     </li>
-                                                                    <li><a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=https://learn.abovemarts.com/preview_course/{{ $course->uid }}&quote={{ $course->title }}"><i
+                                                                    <li><a class="dropdown-item"
+                                                                            href="https://www.facebook.com/sharer/sharer.php?u=https://learn.abovemarts.com/preview_course/{{ $course->uid }}&quote={{ $course->title }}"><i
                                                                                 class="fab fa-facebook-square me-2"></i>Facebook</a>
                                                                     </li>
-                                                                    <li><a class="dropdown-item" href="https://api.whatsapp.com/send?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
+                                                                    <li><a class="dropdown-item"
+                                                                            href="https://api.whatsapp.com/send?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
                                                                                 class="fab fa-whatsapp me-2"></i>Whatsapp</a>
                                                                     </li>
-                                                                    
+
                                                                 </ul>
                                                             </div>
                                                         </div>
 
                                                         <!-- Buttons -->
                                                         <div class="mt-3 d-grid">
-                                                            <a href="#" class="btn btn-primary">Buy now</a>
+                                                            @if(Auth::check())
+
+                                                            @if(Auth::user()->package == "Basic" || Auth::user()->package == "Bronze"
+                                                            )
+                                                            <a href='https://abovemarts.com/userpackages'
+                                                                class='btn btn-success btn-sm'>Upgrade To Access
+                                                                Course</a>
+                                                            @else
+                                                            <a href='/enroll/{{ $course->uid }}'
+                                                                class='btn btn-success btn-sm'>Enroll Now</a>
+                                                                @endif
+                                                                @else 
+                                                                <a href='https://abovemarts.com/login'
+                                                                    class='btn btn-success btn-sm'>Login To Enroll</a>
+
+                                                            @endif
                                                         </div>
                                                         <!-- Divider -->
                                                         <hr>
@@ -830,14 +853,14 @@ Page content START -->
                                                                         class="fas fa-fw fa-clock text-primary"></i>Duration</span>
                                                                 <span>{{ $course->duration }} Hrs</span>
                                                             </li>
-                                                          
+
                                                             <li
                                                                 class="list-group-item px-0 d-flex justify-content-between">
                                                                 <span class="h6 fw-light mb-0"><i
                                                                         class="fas fa-fw fa-globe text-primary"></i>Language</span>
                                                                 <span>English</span>
                                                             </li>
-                                                           
+
                                                             <li
                                                                 class="list-group-item px-0 d-flex justify-content-between">
                                                                 <span class="h6 fw-light mb-0"><i
@@ -848,7 +871,7 @@ Page content START -->
                                                         <!-- Divider -->
 
 
-                                                   
+
                                                     </div>
                                                     <!-- Course info END -->
                                                 </div>
@@ -1179,7 +1202,9 @@ Footer START -->
                         </li>
                         <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
                         </li>
-                        <li class="list-inline-item ms-2"><a href="https://twitter.com/intent/tweet?text={{ $course->title }}&url={{ $course->uid }}"><i class="text-white fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item ms-2"><a
+                                href="https://twitter.com/intent/tweet?text={{ $course->title }}&url={{ $course->uid }}"><i
+                                    class="text-white fab fa-twitter"></i></a></li>
                     </ul>
                 </div>
             </div>
