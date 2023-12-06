@@ -823,8 +823,7 @@ Page content START -->
                                                             @if(Auth::user()->package == "Basic" || Auth::user()->package == "Bronze"
                                                             )
                                                             <a href='https://abovemarts.com/userpackages'
-                                                                class='btn btn-success btn-sm'>Upgrade To Access
-                                                                Course</a>
+                                                                class='btn btn-success btn-sm'>Upgrade For Scholarship</a>
                                                             @else
                                                             <a href='/enroll/{{ $course->uid }}'
                                                                 class='btn btn-success btn-sm'>Enroll Now</a>
