@@ -15,6 +15,7 @@ use App\Models\CourseCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EbookCategory;
+use App\Models\Giveaway;
 use App\Models\UploadedAssessment;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
@@ -218,6 +219,41 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         return view('admin.ebooks', $data);
+    }
+    public function admin_giveaway()
+    {
+        $data['user'] = $user = Auth::user();
+        if ($user->type == 0) {
+            return redirect('/dashboard');
+        }
+        $data['giveaways'] = Giveaway::where('user_id', $user->id)->latest()->get();
+        $data['all_ebooks'] = Ebook::latest()->orderBy('category_id')->get();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+
+        return view('admin.giveaway', $data);
+    }
+    public function admin_createGiveaway(Request $request) {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+        Giveaway::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'participant' => $request->no_of_participant,
+            'user_id' => Auth::user()->id,
+            'no_of_lucky_numbers' => $request->no_of_lucky_numbers,
+        ]);
+        return redirect()->back()->with('message','Giveaway Created Successfully');
+        dd($request->all());
+    }
+    public function admin_check_giveaway($id) {
+        $data['user'] = $user = Auth::user();
+        $data['giveaway'] = Giveaway::where('id',$id)->first();
+        $data['categories'] = EbookCategory::orderBy('name')->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+
+        return view('admin.check_giveaway',$data);
     }
     public function all_ebooks()
     {

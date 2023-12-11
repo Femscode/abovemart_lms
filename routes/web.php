@@ -73,6 +73,9 @@ Route::any('/view_uploaded_assessment/{user_id}/{ass_id}', [App\Http\Controllers
 
 //Admin Ebooks
 Route::any('/admin_ebooks', [App\Http\Controllers\ExamController::class, 'admin_ebooks'])->name('admin_ebooks');
+Route::any('/giveaway', [App\Http\Controllers\ExamController::class, 'admin_giveaway'])->name('admin_giveaway');
+Route::any('/createGiveaway', [App\Http\Controllers\ExamController::class, 'admin_createGiveaway'])->name('admin_createGiveaway');
+Route::any('/check_giveaway/{id}', [App\Http\Controllers\ExamController::class, 'admin_check_giveaway'])->name('admin_check_giveaway');
 Route::any('/course_categories', [App\Http\Controllers\ExamController::class, 'course_categories'])->name('course_categories');
 Route::any('/categories', [App\Http\Controllers\ExamController::class, 'categories'])->name('categories');
 Route::any('/all_ebooks', [App\Http\Controllers\ExamController::class, 'all_ebooks'])->name('all_ebooks');
