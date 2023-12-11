@@ -14,7 +14,7 @@
 				<div class="col-12 text-center">
 					<!-- Title -->
 					<h1 class="text-white" style='text-shadow:1px 1px 1px black'>{{ $course->title }}</h1>
-					<p class="text-white mb-0" style='text-shadow:1px 1px 1px black'>{!! $course->description !!}</p>
+					<p class="text-white mb-0" style='text-shadow:1px 1px 1px black'>{!! Str::limit($course->description,50) !!}</p>
 				</div>
 			</div>
 		</div>
