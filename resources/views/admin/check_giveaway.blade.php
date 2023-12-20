@@ -37,7 +37,7 @@
             <a href='/all_ebooks'>
                 <div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
                     <h6>Lucky Numbers</h6>
-                    <h2 class="mb-0 fs-1 text-success">34,9,2,30,3</h2>
+                    <h2 class="mb-0 fs-1 text-success">{{ $giveaway->lucky_numbers }}</h2>
                 </div>
             </a>
         </div>

@@ -58,7 +58,7 @@
 							</div><br>
 							<a href='/preview_course/{{ $course->uid }}' class='btn btn-secondary btn-sm'>Preview Course</a>
 						
-							@if($user->package == "Basic" || $user->package == "Bronze" )
+							@if($user->package == "Basic" )
 							<a href='https://abovemarts.com/userpackages' class='btn btn-success btn-sm'>Upgrade For Scholarship</a>
 							@else 
 							<a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enrol Now</a>

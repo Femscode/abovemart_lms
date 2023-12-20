@@ -249,7 +249,28 @@ class ExamController extends Controller
     }
     public function admin_check_giveaway($id) {
         $data['user'] = $user = Auth::user();
-        $data['giveaway'] = Giveaway::where('id',$id)->first();
+        $giveaway = Giveaway::where('id',$id)->first();
+        $randomNumbers = collect([]);
+        // dd($giveaway);
+
+        while ($randomNumbers->count() < $giveaway->no_of_lucky_numbers) {
+            $randomNumber = rand(0, $giveaway->participant);
+            if (!$randomNumbers->contains($randomNumber)) {
+                $randomNumbers->push($randomNumber);
+            }
+        }
+
+      
+        // Serialize the array to a JSON-formatted string
+        $serializedData = json_encode($randomNumbers);
+        // dd($serializedData,$giveaway);
+        $giveaway->lucky_numbers = $serializedData;
+        $giveaway->save();
+     
+
+        // Store the serialized data in the database
+        $data['giveaway'] = $giveaway;
+      
         $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
