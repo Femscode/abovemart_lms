@@ -171,7 +171,7 @@
 								<!-- Divider -->
 								<hr>
 								<!-- Video item END -->
-								<h5>Assignments</h5>
+								<h5>Examination</h5>
 								@foreach(App\Models\Assignment::where('section_id',$section->id)->get() as
 								$ass)
 								<div class="d-flex justify-content-between align-items-center">
@@ -241,7 +241,7 @@
 										class="bi bi-plus-circle me-2"></i>Add
 									topic</a>
 								<a onclick='populate_c({{ $section->id}})' data-bs-toggle="modal"
-									data-bs-target="#addQuestion" class='btn btn-info btn-sm mb-0'>Create Assignment</a>
+									data-bs-target="#addQuestion" class='btn btn-info btn-sm mb-0'>Create Exam</a>
 								<a href='/announcement' class='btn btn-warning btn-sm mb-0'>Create Announcement</a>
 								<a onclick='return confirm("Are you sure you want to delete this section");'
 									class='btn btn-danger btn-sm mb-0' href='/deletesection/{{ $section->id }}'>Delete
@@ -301,7 +301,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
-				<h5 class="modal-title text-white" id="addQuestionLabel">Create Assignment</h5>
+				<h5 class="modal-title text-white" id="addQuestionLabel">Create Exam</h5>
 				<button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i
 						class="bi bi-x-lg"></i></button>
 			</div>
@@ -321,6 +321,11 @@
 						<label class="form-label">Description</label>
 						<textarea id='description' required class="form-control" rows="4"
 							placeholder="Input assignment description" spellcheck="false"></textarea>
+					</div>
+					<div class="col-12 mt-3">
+						<label class="form-label">Exam Price</label>
+						<input id='price' type='number' required class="form-control" rows="4"
+							placeholder="Input price of the examination" spellcheck="false"/>
 					</div>
 					<div class='row ml-4'>
 						<div class="form-check col-md-4">
@@ -620,6 +625,7 @@
 							
 							fd.append('title',  $("#title").val());
 							fd.append('description', $("#description").val());
+							fd.append('price', $("#price").val());
 						
 							fd.append('section_id', $("#my_section_id").val());
 							fd.append('course_id', $("#course_id").val());

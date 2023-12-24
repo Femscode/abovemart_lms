@@ -280,6 +280,7 @@ class CourseController extends Controller
                 'section_id' => $request->section_id,
                 'type' => $request->type,
                 'file' => $filename,
+                'price' => $request->price,
                 'ext' => $ext
             ]);
         } else {
@@ -292,6 +293,7 @@ class CourseController extends Controller
                 'section_id' => $request->section_id,
                 'type' => $request->type,
                 'minutes' => 10,
+                'price' => $request->price,
                 'link' => $request->link,
 
             ]);

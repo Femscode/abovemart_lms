@@ -234,11 +234,12 @@ aria-hidden="true">
                                             <!-- Divider -->
                                             <hr>
                                             @endforeach
-                                            <h5>Assignments</h5>
+                                            <h5>Examination</h5>
                                             <hr>
 
                                             @foreach(App\Models\Assignment::where('section_id',$section->id)->get() as
                                             $ass)
+                                           
                                             <div class="d-flex justify-content-between align-items-center">
                                              
                                                 <div class="position-relative">
@@ -271,7 +272,7 @@ aria-hidden="true">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                     @endif
-                                                    <span class=" ms-2 mb-0 h6 fw-light">{{ $ass->title }}</span>
+                                                    <span class=" ms-2 mb-0 h6 fw-light">{{ $ass->title }} (${{ number_format($ass->price) }})</span>
                                                     @if($ass->status == 0)
                                                     <a href="#"
                                                         class="btn btn-info-soft btn-round btn-sm mb-0 stretched-link position-static">
@@ -286,6 +287,7 @@ aria-hidden="true">
                                                 </div>
                                                 <!-- Edit and cancel button -->
                                                 <div>
+                                                    @if($ass->price == 0)
                                                     @if($ass->type == 'objectives')
                                                     <a href="/starttest/{{ $ass->id }}"
                                                         class="btn btn-sm btn btn-info-soft">Start Test</a>
@@ -315,8 +317,12 @@ aria-hidden="true">
                                                    
                                                         @endif
                                                     @endif
+                                                    @else 
+                                                    <a href='#' class='btn sm btn-success'>Pay For Exam</a>
+                                                    @endif
                                                 </div>
                                             </div>
+                                         
                                             <!-- Divider -->
                                             <hr>
                                             @endforeach
