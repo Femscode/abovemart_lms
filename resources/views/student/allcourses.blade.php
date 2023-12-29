@@ -1,6 +1,6 @@
 @extends('student.master')
 @section('head')
-@endsection 
+@endsection
 
 @section('content')
 <div class="col-xl-9">
@@ -22,16 +22,20 @@
 				<div class="col-sm-6 col-lg-4">
 					<div class="card shadow h-100">
 						<!-- Image -->
-						<img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="h-120px card-img-top" alt="course image">
-						{{-- <img src="/courseimage/{{ $course->image}}" class="h-120px card-img-top" alt="course image"> --}}
+						<img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}"
+							class="h-120px card-img-top" alt="course image">
+						{{-- <img src="/courseimage/{{ $course->image}}" class="h-120px card-img-top"
+							alt="course image"> --}}
 						<div class="card-body pb-0">
 							<!-- Badge and favorite -->
 							<div class="d-flex justify-content-between mb-2">
-								<a href="#" class="badge bg-success bg-opacity-10 text-success">{{ $course->cat->name ?? "" }}</a>
+								<a href="#" class="badge bg-success bg-opacity-10 text-success">{{ $course->cat->name ??
+									"" }}</a>
 								<a href="#" class="text-danger"><i class="fas fa-heart"></i></a>
 							</div>
 							<!-- Title -->
-							<h5 class="card-title fw-normal"><a href="/preview_course/{{ $course->uid }}">{{ $course->title }}</a></h5>
+							<h5 class="card-title fw-normal"><a href="/preview_course/{{ $course->uid }}">{{
+									$course->title }}</a></h5>
 							<p class="mb-2 text-truncate-2">{!! Str::limit($course->description,50) !!}</p>
 							<!-- Rating star -->
 							{{-- <ul class="list-inline mb-0">
@@ -39,7 +43,8 @@
 								<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
 								<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
 								<li class="list-inline-item me-0 small"><i class="fas fa-star text-warning"></i></li>
-								<li class="list-inline-item me-0 small"><i class="fas fa-star-half-alt text-warning"></i></li>
+								<li class="list-inline-item me-0 small"><i
+										class="fas fa-star-half-alt text-warning"></i></li>
 								<li class="list-inline-item ms-2 h6 fw-light mb-0">4.5/5.0</li>
 							</ul> --}}
 						</div>
@@ -47,21 +52,32 @@
 						<div class="card-footer pt-0 pb-3">
 							<hr>
 							<div class="d-flex justify-content-between">
-								<span class="h6 fw-light mb-0"><i class="far fa-clock text-danger me-2"></i>{{ $course->duration }}Hrs</span>
+								<span class="h6 fw-light mb-0"><i class="far fa-clock text-danger me-2"></i>{{
+									$course->duration }}Hrs</span>
 								@if($course->price == 0)
 								<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0"
-								for="option1">Free</label>@else 
-								<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0"
-								for="option1">	${{ number_format($course->price) }} <s>${{ number_format($course->slashed_price) }}</s>
-							</label>
+									for="option1">Free</label>@else
+								<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">
+									${{ number_format($course->price) }} <s>${{ number_format($course->slashed_price)
+										}}</s>
+								</label>
 								@endif
 							</div><br>
-							<a href='/preview_course/{{ $course->uid }}' class='btn btn-secondary btn-sm'>Preview Course</a>
-						
-							@if($user->package == "Basic" )
-							<a href='https://abovemarts.com/userpackages' class='btn btn-success btn-sm'>Upgrade For Scholarship</a>
-							@else 
+							<a href='/preview_course/{{ $course->uid }}' class='btn btn-secondary btn-sm'>Preview
+								Course</a>
+
+
+
+
+							@if(in_array($user->package, $course->packages ?? []))
 							<a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enrol Now</a>
+
+							@else
+
+
+							<a href='https://abovemarts.com/userpackages' class='btn btn-success btn-sm'>Upgrade For
+								Scholarship</a>
+							
 							@endif
 						</div>
 					</div>
@@ -73,7 +89,7 @@
 			</div>
 		</div>
 		<!-- Card body EMD -->
-	</div>  
+	</div>
 </div>
 @endsection
 @section('script')

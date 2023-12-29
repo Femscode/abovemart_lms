@@ -9,6 +9,9 @@ class Course extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'packages' => 'array',       
+    ];
     protected $table = 'courses';
 
     public function cat() {

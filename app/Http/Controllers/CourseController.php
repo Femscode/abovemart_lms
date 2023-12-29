@@ -401,7 +401,10 @@ class CourseController extends Controller
 
     public function createcourse(Request $request)
     {
-        // dd($request->all());
+       
+        $package = explode(', ', $request->package);
+       
+
         $user = Auth::user();
         $image = $request->file('image');
         $imageName = $image->hashName();
@@ -415,6 +418,7 @@ class CourseController extends Controller
             'price' => $request->price,
             'slashed_price' => $request->slashed_price,
             'category' => $request->category,
+            'packages' => $package,
             'image' => $imageName,
         ]);
         return $course;
@@ -428,22 +432,23 @@ class CourseController extends Controller
     }
     public function editcourse(Request $request)
     {
+        // dd($request->all());
         $course = Course::find($request->id);
+        $package = explode(', ', $request->package);
+        // $package = array($myarray);
         if ($request->has('image')) {
-
-
             $image = $request->file('image');
             $imageName = $image->hashName();
             $image->move(public_path() . '/courseimage/', $imageName);
             $course->image = $imageName;
         }
-
         $course->title = $request->title;
         $course->description = $request->description;
         $course->duration = $request->duration;
         $course->price = $request->price;
         $course->slashed_price = $request->slashed_price;
         $course->category = $request->category;
+        $course->packages = $package;
 
         $course->save();
 

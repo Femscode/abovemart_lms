@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="learn.abovemarts.com">
 	<meta name="description" content="Abovemarts Learning Portal">
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 	<!-- Favicon -->
 	{{--
@@ -360,56 +360,65 @@
 						</div>
 						<div class="modal-body">
 							<form id='create_course' class="row text-start g-3" enctype='multipart/form-data'>
-							{{-- <form method='post' action='/createcourse' class="row text-start g-3" enctype='multipart/form-data'>@csrf --}}
-								<!-- Question -->
-								<div class="col-12">
-									<label class="form-label">Title</label>
-									<input id='title' name='title' required class="form-control" type="text"
-										placeholder="Input course title">
-								</div>
+								{{-- <form method='post' action='/createcourse' class="row text-start g-3"
+									enctype='multipart/form-data'>@csrf --}}
+									<!-- Question -->
+									<div class="col-12">
+										<label class="form-label">Title</label>
+										<input id='title' name='title' required class="form-control" type="text"
+											placeholder="Input course title">
+									</div>
 
-								<div class="col-12">
-									<label class="form-label">Category</label>
-									<select id='category' name='category' required class='form-control'>
-										<option>--Select Category--</option>
-										@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
-										<option value='{{ $category->id }}'>{{ $category->name }}</option>
-									@endforeach
-									</select>
-								</div>
+									<div class="col-12">
+										<label class="form-label">Category</label>
+										<select id='category' name='category' required class='form-control'>
+											<option>--Select Category--</option>
+											@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
+											<option value='{{ $category->id }}'>{{ $category->name }}</option>
+											@endforeach
+										</select>
+									</div>
 
-								<div class="col-12 mt-3 mb-6">
-									<label class="form-label">Description</label>
-									<div id='description' name='description' required class="editor form-control" rows="4"
-										placeholder="Input course description" spellcheck="false"></div>
-								</div>
-
-
-								<div class="col-6">
-									<label class="form-label">Duration(Hrs)</label>
-									<input id='duration' name='duration' required class="form-control" type="text"
-										placeholder="Input course duration">
-								</div>
-
-								<div class="col-6">
-									<label class="form-label">Price($)</label>
-									<input id='price' name='price' required class="form-control" type="text"
-										placeholder="Enter 0 if the course is free">
-								</div>
-								
-								<div class="col-12">
-									<label class="form-label">Slashed <s>Price</s> ($)</label>
-									<input id='slashed_price' name='slashed_price' required class="form-control" type="text"
-										placeholder="Enter 0 if the course is free">
-								</div>
+									<div class="col-12 mt-3 mb-6">
+										<label class="form-label">Description</label>
+										<div id='description' name='description' required class="editor form-control"
+											rows="4" placeholder="Input course description" spellcheck="false"></div>
+									</div>
 
 
-								<div class="col-12">
-									<label class="form-label">Course Display Image</label>
+									<div class="col-6">
+										<label class="form-label">Duration(Hrs)</label>
+										<input id='duration' name='duration' required class="form-control" type="text"
+											placeholder="Input course duration">
+									</div>
 
-									<input id='image' name='image' required class="form-control" type="file" accept="image/*"
-										placeholder="Input course title">
-								</div>
+									<div class="col-6">
+										<label class="form-label">Price($)</label>
+										<input id='price' name='price' required class="form-control" type="text"
+											placeholder="Enter 0 if the course is free">
+									</div>
+
+									<div class="col-12">
+										<label class="form-label">Slashed <s>Price</s> ($)</label>
+										<input id='slashed_price' name='slashed_price' required class="form-control"
+											type="text" placeholder="Enter 0 if the course is free">
+									</div>
+									<div class="col-12">
+										<label class="form-label">Package Access</label><br>
+										<input id='package' name='package' value='Basic' type='checkbox'> Basic
+										<input id='package' name='package' value='Bronze' type='checkbox'> Bronze
+										<input id='package' name='package' value='Silver' type='checkbox'> Silver
+										<input id='package' name='package' value='Gold' type='checkbox'> Gold
+										<input id='package' name='package' value='Platinum' type='checkbox'> Platinum
+									</div>
+
+
+									<div class="col-12">
+										<label class="form-label">Course Display Image</label>
+
+										<input id='image' name='image' required class="form-control" type="file"
+											accept="image/*" placeholder="Input course title">
+									</div>
 
 
 
@@ -451,7 +460,7 @@
 										<option>--Select Category--</option>
 										@foreach(App\Models\CourseCategory::orderBy('name')->get() as $category)
 										<option value='{{ $category->id }}'>{{ $category->name }}</option>
-									@endforeach
+										@endforeach
 									</select>
 								</div>
 
@@ -477,6 +486,15 @@
 									<label class="form-label">Slashed <s>Price($)</s></label>
 									<input id='editslashedprice' required class="form-control" type="text"
 										placeholder="Enter 0 is the course is free">
+								</div>
+								<div class="col-12">
+									<label class="form-label">Package Access</label><br>
+									<div class='btn btn-success' id='editpackagelist'></div><br>
+									<input id='editpackage' name='editpackage' value='Basic' type='checkbox'> Basic
+									<input id='editpackage' name='editpackage' value='Bronze' type='checkbox'> Bronze
+									<input id='editpackage' name='editpackage' value='Silver' type='checkbox'> Silver
+									<input id='editpackage' name='editpackage' value='Gold' type='checkbox'> Gold
+									<input id='editpackage' name='editpackage' value='Platinum' type='checkbox'> Platinum
 								</div>
 
 
@@ -523,10 +541,10 @@
 	<script src="{{ asset('assets/jquery.js')}}"></script>
 	<script src="{{ asset('assets/sweetalert.js')}}"></script>
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-   
+
 </body>
 <script>
-	 var quill = new Quill('.editor', {
+	var quill = new Quill('.editor', {
         theme: 'snow',
 		readOnly: false // 'snow' is the standard theme with a white background
     });
@@ -563,6 +581,7 @@
 							$("#editprice").val(data.price)
 							$("#editslashedprice").val(data.slashed_price)
 							$("#editduration").val(data.duration)
+							$("#editpackagelist").html(data.packages)
 						
 							$("#editcourse_img").attr('src','https://learn.abovemarts.com/public/courseimage/'+data.image+'')
 						
@@ -570,6 +589,10 @@
 					})
     $("#create_course").on('submit', async function(e){
                 e.preventDefault();
+				var selectedPackages = $("input[name='package']:checked").map(function(){
+    				return $(this).val();
+				}).get();
+				var selectedPackagesString = selectedPackages.join(', ');
                 swal('Creating Course, please wait...');
                 $("#c_submit").attr('disabled',true)
 							fd = new FormData();
@@ -579,6 +602,7 @@
 							// fd.append('description', $("#description").val());
 							fd.append('category', $("#category").val());
 							fd.append('duration', $("#duration").val());
+							fd.append('package', selectedPackagesString);
 							fd.append('price', $("#price").val());
 							fd.append('slashed_price', $("#slashed_price").val());
 							if(image[0] != undefined) {
@@ -614,6 +638,10 @@
 							
     $("#editCourseForm").on('submit', async function(e){
                 e.preventDefault();
+				var selectedPackages = $("input[name='editpackage']:checked").map(function(){
+    				return $(this).val();
+				}).get();
+				var selectedPackagesString = selectedPackages.join(', ');
                 swal('Editing Course, please wait...');
                
 							fd = new FormData();
@@ -623,6 +651,7 @@
 							fd.append('description', quilledited.root.innerHTML);
 							fd.append('category', $("#editcategory").val());
 							fd.append('duration', $("#editduration").val());
+							fd.append('package', selectedPackagesString);
 							fd.append('price', $("#editprice").val());
 							fd.append('slashed_price', $("#editslashedprice").val());
 							if(image[0] != undefined) {
