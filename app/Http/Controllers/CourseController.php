@@ -413,6 +413,7 @@ class CourseController extends Controller
             'uid' => Str::uuid(),
             'user_id' => $user->id,
             'title' => $request->title,
+            'course_code' => $request->course_code,
             'description' => $request->description,
             'duration' => $request->duration,
             'price' => $request->price,
@@ -443,6 +444,7 @@ class CourseController extends Controller
             $course->image = $imageName;
         }
         $course->title = $request->title;
+        $course->course_code = $request->course_code;
         $course->description = $request->description;
         $course->duration = $request->duration;
         $course->price = $request->price;
@@ -462,6 +464,48 @@ class CourseController extends Controller
         $course->delete();
         return 'course deleted';
     }
+
+    public function searchCourse(Request $request)
+    {
+        $search = $request->search;
+        // dd($request->all(),$search);
+        $data['ann'] = Announcement::latest()->get();
+        $data['assignments'] = Assignment::latest()->get();
+        $data['user'] = $user =  Auth::user();
+              $data['courses'] = Course::where('title', 'like', '%' . $request->search . '%')
+            ->orWhere('course_code', '%like%', $search)
+            ->orWhere('description', '%like%', $search)
+            ->get();
+
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+        return view('admin.index', $data);
+    }
+    public function searchCourseStudent(Request $request)
+    {
+        $search = $request->search;
+        // dd($request->all(),$search);
+        $data['user'] = $user =  Auth::user();
+        // dd($request->search);
+
+        $data['courses'] = Course::where('title', 'like', '%' . $request->search . '%')
+            ->orWhere('course_code', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->paginate(9);
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+        // dd($data);
+        return view('student.allcourses', $data);
+    }
+    public function searchCourseTitle(Request $request)
+    {
+        $search = $request->search;
+        $Courses = Course::where('title', 'like', '%' . $request->search . '%')
+            ->orWhere('course_code', 'like', '%' . $request->search . '%')
+            ->orWhere('description', 'like', '%' . $request->search . '%')
+            ->get();
+        return response()->json($Courses);
+    }
+
+
     public function enroll($course_id)
     {
         $course = Course::where('uid',$course_id)->first();

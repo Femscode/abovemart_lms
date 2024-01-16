@@ -368,6 +368,11 @@
 										<input id='title' name='title' required class="form-control" type="text"
 											placeholder="Input course title">
 									</div>
+									<div class="col-12">
+										<label class="form-label">Course Code (Optional)</label>
+										<input id='course_code' name='course_code' required class="form-control" type="text"
+											placeholder="Input course code">
+									</div>
 
 									<div class="col-12">
 										<label class="form-label">Category</label>
@@ -452,6 +457,12 @@
 									<input type='hidden' id='course_id' />
 									<input id='edittitle' required class="form-control" type="text"
 										placeholder="Input course title">
+								</div>
+								<div class="col-12">
+									<label class="form-label">Course Code</label>
+									
+									<input id='editcoursecode' required class="form-control" type="text"
+										placeholder="Input course code">
 								</div>
 
 								<div class="col-12">
@@ -575,6 +586,7 @@
 							console.log(data)
 							$("#course_id").val(data.id)
 							$("#edittitle").val(data.title)
+							$("#editcoursecode").val(data.course_code)
 							// $("#editdescription").html(data.description)
 							quilledited.clipboard.dangerouslyPasteHTML(data.description)
 							$("#editcategory").val(data.category)
@@ -598,6 +610,7 @@
 							fd = new FormData();
 							image = $("#image")[0].files;
 							fd.append('title',  $("#title").val());
+							fd.append('course_code',  $("#course_code").val());
 							fd.append('description', quill.root.innerHTML);
 							// fd.append('description', $("#description").val());
 							fd.append('category', $("#category").val());
@@ -648,6 +661,7 @@
 							image = $("#editimage")[0].files;
 							fd.append('id',  $("#course_id").val());
 							fd.append('title',  $("#edittitle").val());
+							fd.append('course_code',  $("#editcoursecode").val());
 							fd.append('description', quilledited.root.innerHTML);
 							fd.append('category', $("#editcategory").val());
 							fd.append('duration', $("#editduration").val());

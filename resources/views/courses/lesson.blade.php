@@ -234,6 +234,8 @@ aria-hidden="true">
                                             <!-- Divider -->
                                             <hr>
                                             @endforeach
+                                            @if(count(App\Models\Assignment::where('section_id', $section->id)->get()) > 1)
+
                                             <h5>Examination</h5>
                                             <hr>
 
@@ -326,6 +328,8 @@ aria-hidden="true">
                                             <!-- Divider -->
                                             <hr>
                                             @endforeach
+
+                                            @endif
 
                                             <hr>
                                             <h5>Announcements</h5>

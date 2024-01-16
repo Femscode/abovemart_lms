@@ -86,6 +86,9 @@ Route::any('/createCourseCategory', [App\Http\Controllers\ExamController::class,
 Route::any('/searchEbook', [App\Http\Controllers\ExamController::class, 'searchEbook'])->name('searchEbook');
 Route::any('/searchEbookStudent', [App\Http\Controllers\ExamController::class, 'searchEbookStudent'])->name('searchEbookStudent');
 Route::any('/searchEbookTitle', [App\Http\Controllers\ExamController::class, 'searchEbookTitle'])->name('searchEbookTitle');
+Route::any('/searchCourse', [App\Http\Controllers\CourseController::class, 'searchCourse'])->name('searchCourse');
+Route::any('/searchCourseStudent', [App\Http\Controllers\CourseController::class, 'searchCourseStudent'])->name('searchCourseStudent');
+Route::any('/searchCourseTitle', [App\Http\Controllers\CourseController::class, 'searchCourseTitle'])->name('searchCourseTitle');
 Route::any('/edit_ebook/{id}', [App\Http\Controllers\ExamController::class, 'edit_ebook'])->name('edit_ebook');
 Route::any('/update_ebook', [App\Http\Controllers\ExamController::class, 'update_ebook'])->name('update_ebook');
 Route::any('/delete_ebook', [App\Http\Controllers\ExamController::class, 'delete_ebook'])->name('delete_ebook');

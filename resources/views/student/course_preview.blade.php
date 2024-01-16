@@ -750,19 +750,12 @@ Page content START -->
                                                                         course with the following conditions:</h5>
 
                                                                     <ul>
-                                                                        <li>The course must have been paid for,
-                                                                            alternatively you must be on a specifics
-                                                                            partnership plan with AboveMarts. Reach out
-                                                                            to us <a
-                                                                                href='https://wa.me/2347060818784'>here</a>
-                                                                            for more clarification</li>
-                                                                        <li>You must have completed all the lectures of
-                                                                            this course.</li>
-                                                                        <li>You must have completed all the tasks and
-                                                                            assignments attached to this course.</li>
-                                                                        <li>You must have paid for the final examination
-                                                                            of this course, and have a pass mark above
-                                                                            40%.</li>
+                                                                        <li>You must have completed all the lectures, tasks and assignments to unlock the Examination module.</li>
+                                                                       
+                                                                        <li>You must have paid and passed the exam with a score mark above 60% to get certified by our Partner Universities.</li>
+                                                                        <li>For physical or online facilitations, further inquiries, complain or technical support, contact Admin <a
+                                                                            href='https://wa.me/2347060818784'>here.</a>
+                                                                      </li>
                                                                     </ul>
                                                                 </div>
 
@@ -800,15 +793,15 @@ Page content START -->
                                                                 <ul class="dropdown-menu dropdown-w-sm dropdown-menu-end min-w-auto shadow rounded"
                                                                     aria-labelledby="dropdownShare">
                                                                     <li><a class="dropdown-item"
-                                                                            href="https://twitter.com/intent/tweet?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
+                                                                            href="https://twitter.com/intent/tweet?text=Hi, have you seen this insightful course at Abovemarts Academy?{{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
                                                                                 class="fab fa-twitter-square me-2"></i>Twitter</a>
                                                                     </li>
                                                                     <li><a class="dropdown-item"
-                                                                            href="https://www.facebook.com/sharer/sharer.php?u=https://learn.abovemarts.com/preview_course/{{ $course->uid }}&quote={{ $course->title }}"><i
+                                                                            href="https://www.facebook.com/sharer/sharer.php?u=https://learn.abovemarts.com/preview_course/{{ $course->uid }}&quote=Hi, have you seen this insightful course at Abovemarts Academy? {{ $course->title }}"><i
                                                                                 class="fab fa-facebook-square me-2"></i>Facebook</a>
                                                                     </li>
                                                                     <li><a class="dropdown-item"
-                                                                            href="https://api.whatsapp.com/send?text={{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
+                                                                            href="https://api.whatsapp.com/send?text=Hi, have you seen this insightful course at Abovemarts Academy? {{ $course->title }}&url=https://learn.abovemarts.com/preview_course/{{ $course->uid }}"><i
                                                                                 class="fab fa-whatsapp me-2"></i>Whatsapp</a>
                                                                     </li>
 
@@ -1202,7 +1195,7 @@ Footer START -->
                         <li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
                         </li>
                         <li class="list-inline-item ms-2"><a
-                                href="https://twitter.com/intent/tweet?text={{ $course->title }}&url={{ $course->uid }}"><i
+                                href="https://twitter.com/intent/tweet?text=Hi, have you seen this insightful course at Abovemarts Academy?{{ $course->title }}&url={{ $course->uid }}"><i
                                     class="text-white fab fa-twitter"></i></a></li>
                     </ul>
                 </div>

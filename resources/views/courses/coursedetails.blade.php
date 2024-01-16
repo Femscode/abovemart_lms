@@ -171,7 +171,9 @@
 								<!-- Divider -->
 								<hr>
 								<!-- Video item END -->
-								<h5>Examination</h5>
+								@if(count(App\Models\Assignment::where('section_id', $section->id)->get()) > 1)
+
+								<h5>Examination </h5>
 								@foreach(App\Models\Assignment::where('section_id',$section->id)->get() as
 								$ass)
 								<div class="d-flex justify-content-between align-items-center">
@@ -231,7 +233,7 @@
 								<!-- Divider -->
 								<hr>
 								@endforeach
-
+								@endif
 								<hr>
 								<h5>Announcements</h5>
 

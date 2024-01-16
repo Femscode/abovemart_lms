@@ -14,6 +14,20 @@
 		</div>
 		<!-- Card header END -->
 
+		<div class="col-md-12">
+
+			<form method='post' action='searchCourseStudent' class="rounded position-relative">@csrf
+				<div class="search-container">
+					<input required id="search-input" class="form-control bg-body" name='search'
+						placeholder='Search for course, course code, and description in 10,000+ courses' type="search"
+						placeholder="Search" aria-label="Search">
+					<ul id="suggestions"></ul>
+				</div>
+				<button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+					type="submit"><a class='btn btn-sm btn-success'><i class="fas fa-search fs-6 "></i>Search</a></button>
+			</form>
+		</div>
+
 		<!-- Card body START -->
 		<div class="card-body p-3 p-md-4">
 			<div class="row g-4">
@@ -93,4 +107,52 @@
 </div>
 @endsection
 @section('script')
+<script>
+	const searchInput = document.getElementById('search-input');
+const suggestionsList = document.getElementById('suggestions');
+const apiUrl = '/searchCourseTitle';
+// const apiUrl = 'https://your-api-endpoint.com/search?q=';
+
+searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim();
+	
+    
+    if (query === '') {
+        suggestionsList.style.display = 'none';
+        return;
+    }
+
+    // Fetch data from the API
+	fetch(apiUrl + '?search=' + query)
+        .then(response => response.json())
+        .then(data => {
+            // Clear previous suggestions
+            suggestionsList.innerHTML = '';
+
+            // Display new suggestions
+            data.forEach(item => {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.textContent = item.title;
+                suggestionItem.addEventListener('click', () => {
+                    searchInput.value = item.title;
+                    suggestionsList.style.display = 'none';
+                });
+                suggestionsList.appendChild(suggestionItem);
+            });
+
+            suggestionsList.style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+});
+
+// Close the suggestions when clicking outside the input and list
+document.addEventListener('click', function (event) {
+    if (event.target !== searchInput && event.target !== suggestionsList) {
+        suggestionsList.style.display = 'none';
+    }
+});
+
+</script>
 @endsection
