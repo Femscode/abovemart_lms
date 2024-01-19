@@ -328,12 +328,12 @@ Page content START -->
 										<div class="list-group list-group-dark list-group-borderless">
 											<a class="list-group-item active" href="/dashboard"><i
 													class="bi bi-ui-checks-grid fa-fw me-2"></i>Dashboard</a>
-											<a class="list-group-item" href="#"><i
-													class="bi bi-card-checklist fa-fw me-2"></i>My Subscriptions</a>
+											<a class="list-group-item" href="/dashboard"><i
+													class="bi bi-card-checklist fa-fw me-2"></i>My Enrolled Courses</a>
 											<a class="list-group-item" href="/allcourses"><i
 													class="bi bi-basket fa-fw me-2"></i>All Courses</a>
 											<a class="list-group-item" href="#"><i
-													class="bi bi-credit-card-2-front fa-fw me-2"></i>Payment & Certificates</a>
+													class="bi bi-credit-card-2-front fa-fw me-2"></i>Examination & Certificates</a>
 											<a class="list-group-item" href="/allebooks"><i
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Ebooks</a>
 											<a class="list-group-item" href="#"><i
