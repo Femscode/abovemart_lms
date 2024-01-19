@@ -818,11 +818,12 @@ Page content START -->
                                                             <a href='https://abovemarts.com/userpackages'
                                                                 class='btn btn-success btn-sm'>Upgrade For Scholarship</a>
                                                             @else
-                                                            <a href='/enroll/{{ $course->uid }}'
+                                                            {{-- <a href='/enroll/{{ $course->uid }}' --}}
+                                                            <a href='https://learn.abovemarts.com/allcourses'
                                                                 class='btn btn-success btn-sm'>Enroll Now</a>
                                                                 @endif
                                                                 @else 
-                                                                <a href='https://learn.abovemarts.com/login'
+                                                                <a href='https://learn.abovemarts.com/allcourses'
                                                                     class='btn btn-success btn-sm'>Login To Enroll</a>
 
                                                             @endif
