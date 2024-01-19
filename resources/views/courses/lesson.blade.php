@@ -69,7 +69,7 @@ aria-hidden="true">
                             <div id='imagecontent'>
                                 <img src="/courseimage/{{ $course->image}}" class="rounded" alt="">
                             </div>
-                            <p class='mb-3 mt-3'>{{ $course->description }}</p>
+                            <p class='mb-3 mt-3'>{!! $course->description !!}</p>
                             <ul class="list-group list-group-borderless">
                                 <li class="list-group-item">
                                     <span>Release date:</span>
@@ -106,7 +106,7 @@ aria-hidden="true">
                         <div class="col-md-6">
                             <div class="accordion accordion-icon accordion-bg-light" id="accordionExample2">
                                 <!-- Item START -->
-                                <div class="accordion-item mb-3">
+                                {{-- <div class="accordion-item mb-3">
                                     <h6 class="accordion-header font-base" id="heading-0">
                                         <button
                                             class="accordion-button fw-bold rounded d-inline-block collapsed d-block pe-5"
@@ -141,7 +141,7 @@ aria-hidden="true">
                                         </div>
                                         <!-- Topic END -->
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 @foreach($sections as $key => $section)
                                 <div class="accordion-item mb-3">
