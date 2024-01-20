@@ -1228,7 +1228,7 @@ aria-hidden="true">
             console.log(vid)
             $("#imagecontent").hide()
             $("#videocontent").show()
-            $("#divVideo video").attr('src','/sectionvideos/'+vid);
+            $("#divVideo video").attr('src','/public/sectionvideos/'+vid);
             $("#divVideo video")[0].load();
         })
         $(".playass").click(function() {
@@ -1236,7 +1236,7 @@ aria-hidden="true">
             console.log(vid)
             $("#imagecontent").hide()
             $("#videocontent").show()
-            $("#divVideo video").attr('src','/assignment_content/'+vid);
+            $("#divVideo video").attr('src','/public/assignment_content/'+vid);
             $("#divVideo video")[0].load();
         })
        
