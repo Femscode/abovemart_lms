@@ -171,7 +171,7 @@
 								<!-- Divider -->
 								<hr>
 								<!-- Video item END -->
-								@if(count(App\Models\Assignment::where('section_id', $section->id)->get()) > 1)
+								@if(count(App\Models\Assignment::where('section_id', $section->id)->get()) > 0)
 
 								<h5>Examination </h5>
 								@foreach(App\Models\Assignment::where('section_id',$section->id)->get() as

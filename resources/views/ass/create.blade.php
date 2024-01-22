@@ -21,35 +21,7 @@
     <div class="card bg-transparent border">
 
         <!-- Card header START -->
-        <div class="card-header bg-light border-bottom">
-            <!-- Search and select START -->
-            <div class="row g-3 align-items-center justify-content-between">
-                <!-- Search bar -->
-                <div class="col-md-8">
-                    <form class="rounded position-relative">
-                        <input required class="form-control bg-body" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <button class="btn bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
-                            type="submit"><i class="fas fa-search fs-6 "></i></button>
-                    </form>
-                </div>
-
-                <!-- Select option -->
-                <div class="col-md-3">
-                    <!-- Short by filter -->
-                    <form>
-                        <select class="form-select js-choice border-0 z-index-9" aria-label=".form-select-sm">
-                            <option value="">Sort by</option>
-                            <option>Newest</option>
-                            <option>Oldest</option>
-                            <option>Accepted</option>
-                            <option>Rejected</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-            <!-- Search and select END -->
-        </div>
+       
         <!-- Card header END -->
 
         <!-- Card body START -->
