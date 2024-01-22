@@ -289,7 +289,7 @@ aria-hidden="true">
                                                 </div>
                                                 <!-- Edit and cancel button -->
                                                 <div>
-                                                    @if($ass->price == 0)
+                                                    @if($ass->price !== 0)
                                                     @if($ass->type == 'objectives')
                                                     <a href="/starttest/{{ $ass->id }}"
                                                         class="btn btn-sm btn btn-info-soft">Start Test</a>
