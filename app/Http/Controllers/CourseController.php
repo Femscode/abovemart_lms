@@ -487,8 +487,10 @@ class CourseController extends Controller
         // dd($request->all(),$search);
         $data['user'] = $user =  Auth::user();
         // dd($request->search);
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
+        
 
-        $data['courses'] = Course::where('title', 'like', '%' . $request->search . '%')
+        $data['courses'] = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
             ->orWhere('course_code', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '%' . $search . '%')
             ->paginate(9);
@@ -499,7 +501,9 @@ class CourseController extends Controller
     public function searchCourseTitle(Request $request)
     {
         $search = $request->search;
-        $Courses = Course::where('title', 'like', '%' . $request->search . '%')
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
+       
+        $Courses = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
             ->orWhere('course_code', 'like', '%' . $request->search . '%')
             ->orWhere('description', 'like', '%' . $request->search . '%')
             ->get();
