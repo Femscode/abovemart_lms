@@ -66,7 +66,7 @@
 		<div class="card-body">
 
 			<!-- Search and select START -->
-			<div class="row g-3 align-items-center justify-content-between mb-4">
+			{{-- <div class="row g-3 align-items-center justify-content-between mb-4">
 				<!-- Content -->
 				<div class="col-md-8">
 					<form class="rounded position-relative">
@@ -92,7 +92,7 @@
 						</select>
 					</form>
 				</div>
-			</div>
+			</div> --}}
 			<!-- Search and select END -->
 
 			<!-- Course list table START -->

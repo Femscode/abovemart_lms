@@ -58,7 +58,7 @@ aria-hidden="true">
                     <!-- Course image and info START -->
                     <div class="row g-4">
                         <!-- Course image -->
-                        <div class="col-md-6">
+                        <div id='myvideocontent' class="col-md-6">
                             <div id='videocontent' style='display:none'>
                                 <div id="divVideo">
                                     <video controls>
@@ -67,7 +67,7 @@ aria-hidden="true">
                                 </div>
                             </div>
                             <div id='imagecontent'>
-                                <img src="public/courseimage/{{ $course->image}}" class="rounded" alt="">
+                                <img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="rounded" alt="">
                             </div>
                             <p class='mb-3 mt-3'>{!! $course->description !!}</p>
                             <ul class="list-group list-group-borderless">
@@ -202,7 +202,7 @@ aria-hidden="true">
                                                     @elseif($video->ext == 'mp4' || $video->ext == 'mkv' || $video->ext
                                                     == 'webm')
                                                     {{-- <a href="/downloadsectionvideo/{{ $video->id }}" --}} <a
-                                                        data-id='{{ $video->video }}' href='#videocontent'
+                                                        data-id='{{ $video->video }}' href='#myvideocontent'
                                                         class="playvideo btn btn-sm btn btn-danger-soft"> <i
                                                             class="fas fa-play"></i></a>
                                                     <a href="/markdone/{{ $course->id }}"

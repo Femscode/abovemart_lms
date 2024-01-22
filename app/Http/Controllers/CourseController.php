@@ -471,8 +471,9 @@ class CourseController extends Controller
         // dd($request->all(),$search);
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
         $data['user'] = $user =  Auth::user();
-              $data['courses'] = Course::where('title', 'like', '%' . $request->search . '%')
+              $data['courses'] = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
             ->orWhere('course_code', '%like%', $search)
             ->orWhere('description', '%like%', $search)
             ->get();
