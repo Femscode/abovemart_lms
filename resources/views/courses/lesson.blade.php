@@ -67,7 +67,7 @@ aria-hidden="true">
                                 </div>
                             </div>
                             <div id='imagecontent'>
-                                <img src="/courseimage/{{ $course->image}}" class="rounded" alt="">
+                                <img src="public/courseimage/{{ $course->image}}" class="rounded" alt="">
                             </div>
                             <p class='mb-3 mt-3'>{!! $course->description !!}</p>
                             <ul class="list-group list-group-borderless">
@@ -202,7 +202,7 @@ aria-hidden="true">
                                                     @elseif($video->ext == 'mp4' || $video->ext == 'mkv' || $video->ext
                                                     == 'webm')
                                                     {{-- <a href="/downloadsectionvideo/{{ $video->id }}" --}} <a
-                                                        data-id='{{ $video->video }}'
+                                                        data-id='{{ $video->video }}' href='#videocontent'
                                                         class="playvideo btn btn-sm btn btn-danger-soft"> <i
                                                             class="fas fa-play"></i></a>
                                                     <a href="/markdone/{{ $course->id }}"
