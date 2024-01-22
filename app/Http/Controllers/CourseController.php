@@ -55,11 +55,11 @@ class CourseController extends Controller
     public function dashboard()
     {
         $data['user'] = $user = Auth::user();
-        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
-        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
-        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
-     
+
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
@@ -124,7 +124,7 @@ class CourseController extends Controller
     public function lesson($id)
     {
         $data['user'] = Auth::user();
-        $data['course'] = $course = Course::where('uid',$id)->firstOrFail();
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
         $data['sections'] = Section::where('course_id', $course->id)->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
         return view('courses.lesson', $data);
@@ -139,7 +139,7 @@ class CourseController extends Controller
     }
     public function students($id)
     {
-        $data['course'] = $course = Course::where('uid',$id)->firstOrFail();
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
         $data['courses']  = Course::latest()->get();
         $user_id = Enroll::where('course_id', $course->id)->pluck('user_id');
         $data['users'] = User::whereIn('id', $user_id)->get();
@@ -188,7 +188,7 @@ class CourseController extends Controller
         //     'video' => ''
         // ])
         // dd($request->all());
-        if($request->has('video')) {
+        if ($request->has('video')) {
             foreach ($request->video as $key => $video) {
                 $videofile = $video;
                 $ext = $video->extension();
@@ -217,7 +217,7 @@ class CourseController extends Controller
                 'video' => null
             ]);
         }
-      
+
         return redirect()->back()->with('message', 'Materials Uploaded Successfully');
         return 'video uploaded successfully';
     }
@@ -262,7 +262,7 @@ class CourseController extends Controller
     }
     public function createassignment(Request $request)
     {
-        $user= Auth::user();
+        $user = Auth::user();
 
         // dd($request->all());
         if ($request->has('file') && $request->type == 'file') {
@@ -309,16 +309,14 @@ class CourseController extends Controller
     }
     public function viewass($id)
     {
-         $ann = Assignment::where('uid',$id)->firstOrFail();
-         if($ann->file == null) {
+        $ann = Assignment::where('uid', $id)->firstOrFail();
+        if ($ann->file == null) {
             return $ann->link;
-         }
-         else {
-           
+        } else {
+
             $path = public_path() . '/assignment_content/' . $ann->file;
             return response()->download($path);
-
-         }
+        }
     }
     public function editassignment(Request $request)
     {
@@ -370,7 +368,7 @@ class CourseController extends Controller
         $id = $request->id;
         $ann = Assignment::find($id);
         $ann->delete();
-        return redirect()->back()->with('message','Assignment deleted successfully!');
+        return redirect()->back()->with('message', 'Assignment deleted successfully!');
         return 'assignment deleted';
     }
 
@@ -391,19 +389,19 @@ class CourseController extends Controller
     public function live_preview($id)
     {
 
-      
+
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
         $data['sections'] = Section::where('course_id', $course->id)->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
-       
+
         return view('student.course_preview', $data);
     }
 
     public function createcourse(Request $request)
     {
-       
+
         $package = explode(', ', $request->package);
-       
+
 
         $user = Auth::user();
         $image = $request->file('image');
@@ -471,12 +469,16 @@ class CourseController extends Controller
         // dd($request->all(),$search);
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
-        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
         $data['user'] = $user =  Auth::user();
-              $data['courses'] = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
-            ->orWhere('course_code', '%like%', $search)
-            ->orWhere('description', '%like%', $search)
-            ->get();
+        $data['courses'] = Course::whereNotIn('id', $enroll)
+            ->where(function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('course_code', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            })
+            ->paginate(9);
+
 
         $data['categories'] = CourseCategory::orderBy('name')->get();
         return view('admin.index', $data);
@@ -487,13 +489,17 @@ class CourseController extends Controller
         // dd($request->all(),$search);
         $data['user'] = $user =  Auth::user();
         // dd($request->search);
-        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
-        
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
 
-        $data['courses'] = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
-            ->orWhere('course_code', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%')
+
+        $data['courses'] = Course::whereNotIn('id', $enroll)
+            ->where(function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('course_code', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            })
             ->paginate(9);
+
         $data['categories'] = CourseCategory::orderBy('name')->get();
         // dd($data);
         return view('student.allcourses', $data);
@@ -501,28 +507,36 @@ class CourseController extends Controller
     public function searchCourseTitle(Request $request)
     {
         $search = $request->search;
-        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');       
-       
-        $Courses = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
-            ->orWhere('course_code', 'like', '%' . $request->search . '%')
-            ->orWhere('description', 'like', '%' . $request->search . '%')
+        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
+        $Courses = Course::whereNotIn('id', $enroll)
+            ->where(function ($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%')
+                    ->orWhere('course_code', 'like', '%' . $request->search . '%')
+                    ->orWhere('description', 'like', '%' . $request->search . '%');
+            })
             ->get();
+
+
+        // $Courses = Course::whereNotIn('id', $enroll)->where('title', 'like', '%' . $request->search . '%')
+        //     ->orWhere('course_code', 'like', '%' . $request->search . '%')
+        //     ->orWhere('description', 'like', '%' . $request->search . '%')
+        //     ->get();
         return response()->json($Courses);
     }
 
 
     public function enroll($course_id)
     {
-        $course = Course::where('uid',$course_id)->first();
+        $course = Course::where('uid', $course_id)->first();
         $user = Auth::user();
-        if($course->price == 0) {
+        if ($course->price == 0) {
             Enroll::create([
                 'user_id' => $user->id,
                 'course_id' => $course->id
             ]);
             return redirect('/dashboard')->with('message', "You have been enrolled for the course:" . $course->title);
         }
-        
+
         return redirect()->back()->with('message', "You cannot enroll for this course because it requires payment!");
     }
 }
