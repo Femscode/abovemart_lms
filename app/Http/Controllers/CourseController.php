@@ -154,7 +154,12 @@ class CourseController extends Controller
 
         $data['balance'] = $walletamount - $expenses;
         // dd($ass);
-        if (in_array($user->id, $ass->paid_user)) {
+        if($ass->paid_user == null) {
+         $realass = array($ass->paid_user);   
+        } else {
+            $realass = $ass->paid_user;
+        }
+        if (in_array($user->id, $realass)) {
             $data['payment'] = true;
         }
 
