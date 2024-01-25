@@ -263,7 +263,8 @@ Page Banner START -->
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												{{-- <span class="h6">0</span>
 												<span class="text-body fw-light">points</span> --}}
-												<span class='text-success'> {{ $user->package }} Package ({{ $user->point ?? "0" }} Points)</span>
+												<span class='text-success'> {{ $user->package }} Package ({{ $user->point ?? "0" }} Points)</span><br>
+												<span class='text-success'>Wallet Balance : NGN{{ number_format($balance ?? "0", 2) }}</span>
 											</li>
 											<li class="list-inline-item me-3 mb-1 mb-sm-0">
 												<span class="h6">0</span>
@@ -326,7 +327,7 @@ Page content START -->
 									<div class="bg-dark border rounded-3 pb-0 p-3 w-100">
 										<!-- Dashboard menu -->
 										<div class="list-group list-group-dark list-group-borderless">
-											<a class="list-group-item active" href="/dashboard"><i
+											<a class="list-group-item" href="/dashboard"><i
 													class="bi bi-ui-checks-grid fa-fw me-2"></i>Dashboard</a>
 											<a class="list-group-item" href="/dashboard"><i
 													class="bi bi-card-checklist fa-fw me-2"></i>My Enrolled Courses</a>
@@ -336,8 +337,8 @@ Page content START -->
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Examination & Certificates</a>
 											<a class="list-group-item" href="/allebooks"><i
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Ebooks</a>
-											<a class="list-group-item" href="#"><i
-													class="bi bi-cart-check fa-fw me-2"></i>Wishlist</a>
+											<a class="list-group-item" href="https://abovemarts.com/fund"><i
+													class="bi bi-cart-check fa-fw me-2"></i>Fund Wallet</a>
 											<a class="list-group-item" href="https://abovemarts.com/profile"><i
 													class="bi bi-pencil-square fa-fw me-2"></i>Edit Profile</a>
 											<a class="list-group-item" href="#"><i

@@ -8,15 +8,16 @@ use App\Models\Answer;
 use App\Models\Course;
 use App\Models\Enroll;
 use App\Models\Result;
+use App\Models\Giveaway;
 use App\Models\Question;
 use Barryvdh\DomPDF\PDF;
 use App\Models\Assignment;
-use App\Models\CourseCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\EbookCategory;
-use App\Models\Giveaway;
+use App\Models\CourseCategory;
 use App\Models\UploadedAssessment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -207,6 +208,70 @@ class ExamController extends Controller
         $enroll->save();
         return redirect()->back()->with('message', 'Certificate Status Updated');
     }
+    public function payForExam($userId, $courseId)
+    {
+        // dd($userId,$courseId);
+        $user = Auth::user();
+        $exam = Assignment::find($courseId);
+        $paidUsers = $exam->paid_user ?? [];
+        // dd($paidUsers,$rand_no,$request->all());
+        $existingNumbers = $exam->paid_user ?? [];
+        $existingNumbers = array_merge($existingNumbers, array($userId));
+        // dd($paidUsers,$userId, array($userId));
+        $amount = $exam->price * 1300;
+
+
+        if (!in_array($userId, $paidUsers)) {
+            // check user balance
+
+            $expenses = DB::table('transactions')
+                ->where('userId', $user->userId)
+                ->where('transactionType', '!=', 'Deposit')
+                ->where('status', 'CONFIRM')
+                ->sum('amount');
+
+            $walletamount = DB::table('funds')
+                ->where('userId', $user->userId)
+                ->where('status', 'success')
+                ->sum('amount');
+
+            $balance = $walletamount - $expenses;
+           
+
+            if($balance < $amount) {
+                return redirect()->back()->with('error','Insufficient balance, kindly fund your wallet to pay for the examination');
+
+            }
+            //here should charge the user.  
+            DB::table('transactions')
+                ->where('userId', $user->userId)
+                ->insert([
+                    'transactionId' => $this->randomDigit(),
+                    'userId' => $user->userId,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'phoneNumber' => $user->phoneNumber,
+                    'amount' => $amount,
+                    'transactionType' => 'Examination',
+                    'transactionService' => 'Examination',
+                    'status' => 'CONFIRM',
+                    'paymentMethod' => 'wallet',
+                    'Admin' => 'None',
+                    "created_at" => date('Y-m-d H:i:s'),
+                    "updated_at" => date('Y-m-d H:i:s'),
+                ]);
+
+            $exam->update(['paid_user' => $existingNumbers]);
+        }
+
+
+        return redirect()->back()->with('message', 'Examination Payment Made Successfully!');
+    }
+    public function randomDigit()
+    {
+        $pass = substr(str_shuffle("01234561089abcDEfadsasfdasdfasdsfa3425542FGHIJnostXYZ"), 0, 30);
+        return $pass;
+    }
     public function admin_ebooks()
     {
         $data['user'] = $user = Auth::user();
@@ -233,7 +298,8 @@ class ExamController extends Controller
 
         return view('admin.giveaway', $data);
     }
-    public function admin_createGiveaway(Request $request) {
+    public function admin_createGiveaway(Request $request)
+    {
         $this->validate($request, [
             'name' => 'required'
         ]);
@@ -244,12 +310,13 @@ class ExamController extends Controller
             'user_id' => Auth::user()->id,
             'no_of_lucky_numbers' => $request->no_of_lucky_numbers,
         ]);
-        return redirect()->back()->with('message','Giveaway Created Successfully');
+        return redirect()->back()->with('message', 'Giveaway Created Successfully');
         dd($request->all());
     }
-    public function admin_check_giveaway($id) {
+    public function admin_check_giveaway($id)
+    {
         $data['user'] = $user = Auth::user();
-        $giveaway = Giveaway::where('id',$id)->first();
+        $giveaway = Giveaway::where('id', $id)->first();
         $randomNumbers = collect([]);
         // dd($giveaway);
 
@@ -260,21 +327,21 @@ class ExamController extends Controller
             }
         }
 
-      
+
         // Serialize the array to a JSON-formatted string
         $serializedData = json_encode($randomNumbers);
         // dd($serializedData,$giveaway);
         $giveaway->lucky_numbers = $serializedData;
         $giveaway->save();
-     
+
 
         // Store the serialized data in the database
         $data['giveaway'] = $giveaway;
-      
+
         $data['categories'] = EbookCategory::orderBy('name')->get();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
-        return view('admin.check_giveaway',$data);
+        return view('admin.check_giveaway', $data);
     }
     public function all_ebooks()
     {
@@ -456,7 +523,7 @@ class ExamController extends Controller
             $ebook->link = null;
         }
         if ($request->has('link') && $request->link !== null) {
-           
+
             $ebook->link = $request->link;
             $previous_file = $ebook->file;
             $previous_file_path = public_path('/ebooks/') . $previous_file;
@@ -540,14 +607,14 @@ class ExamController extends Controller
         if ($user->ebook_count < 1) {
             return redirect()->back()->with('message', 'Book cannot be download, kindly upgrade your plan!');
         }
-        if($user->type !== 1) {
+        if ($user->type !== 1) {
 
             $user->ebook_count -= 1;
             $user->save();
         }
-      
+
         $ebook = Ebook::where('uid', $id)->firstOrFail();
-        if($ebook->file == 'null') {
+        if ($ebook->file == 'null') {
             return redirect()->back()->with('message', "No file for this ebook");
         }
         $path = public_path() . '/ebooks/' . $ebook->file;
@@ -560,7 +627,7 @@ class ExamController extends Controller
         if ($user->ebook_count < 1) {
             return redirect()->back()->with('message', 'Book cannot be download, kindly upgrade your plan!');
         }
-        if($user->type !== 1) {
+        if ($user->type !== 1) {
 
             $user->ebook_count -= 1;
             $user->save();
@@ -571,7 +638,7 @@ class ExamController extends Controller
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         $ebook = Ebook::where('uid', $id)->firstOrFail();
-        if($ebook->file == null) {
+        if ($ebook->file == null) {
             return redirect($ebook->link);
         }
         $data['path'] = $path =  public_path() . '/ebooks/' . $ebook->file;

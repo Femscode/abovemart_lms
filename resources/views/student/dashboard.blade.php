@@ -33,7 +33,8 @@
 						<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0"
 							data-purecounter-end="0" data-purecounter-delay="200">0</h5>
 					</div>
-					<p class="mb-0 h6 fw-light">Complete lessons</p>
+					<p class="mb-0 h6 fw-light">Wallet Balance : NGN{{ number_format($balance) }}</p>
+					<a class='btn btn-info btn-sm' href='https://abovemarts.com/fund'>Fund Wallet</a>
 				</div>
 			</div>
 		</div>

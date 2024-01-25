@@ -9,9 +9,10 @@ use App\Models\Section;
 use App\Models\Assignment;
 use Illuminate\Support\Str;
 use App\Models\Announcement;
-use App\Models\CourseCategory;
 use App\Models\SectionVideo;
 use Illuminate\Http\Request;
+use App\Models\CourseCategory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
@@ -69,13 +70,25 @@ class CourseController extends Controller
     }
     public function student_dashboard()
     {
-        $data['user'] = Auth::user();
+        $data['user'] = $user = Auth::user();
         $data['courses'] = Course::latest()->get();
         $data['ann'] = Announcement::latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
         $data['assignments'] = Assignment::latest()->get();
         $data['course_enrolled'] = $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
         $status = [];
+        $expenses = DB::table('transactions')
+            ->where('userId', $user->userId)
+            ->where('transactionType', '!=', 'Deposit')
+            ->where('status', 'CONFIRM')
+            ->sum('amount');
+
+        $walletamount = DB::table('funds')
+            ->where('userId', $user->userId)
+            ->where('status', 'success')
+            ->sum('amount');
+
+        $data['balance'] = $walletamount - $expenses;
 
         $progress = Enroll::whereIn('course_id', $enroll)->get();
         foreach ($progress as $pro) {
@@ -123,9 +136,29 @@ class CourseController extends Controller
     }
     public function lesson($id)
     {
-        $data['user'] = Auth::user();
+        $data['user'] = $user = Auth::user();
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        $data['ass'] = $ass = Assignment::where('course_id', $course->id)->latest()->get()[0];
         $data['sections'] = Section::where('course_id', $course->id)->get();
+        $data['payment'] = false;
+        $expenses = DB::table('transactions')
+            ->where('userId', $user->userId)
+            ->where('transactionType', '!=', 'Deposit')
+            ->where('status', 'CONFIRM')
+            ->sum('amount');
+
+        $walletamount = DB::table('funds')
+            ->where('userId', $user->userId)
+            ->where('status', 'success')
+            ->sum('amount');
+
+        $data['balance'] = $walletamount - $expenses;
+        // dd($ass);
+        if (in_array($user->id, $ass->paid_user)) {
+            $data['payment'] = true;
+        }
+
+
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
         return view('courses.lesson', $data);
     }
@@ -142,7 +175,7 @@ class CourseController extends Controller
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
         $data['courses']  = Course::latest()->get();
         $user_id = Enroll::where('course_id', $course->id)->pluck('user_id');
-        $data['users'] = User::whereIn('id', $user_id)->get();
+        $data['users'] = User::whereIn('id', $user_id)->latest()->get();
         $data['user'] = Auth::user();
         return view('courses.courseusers', $data);
     }

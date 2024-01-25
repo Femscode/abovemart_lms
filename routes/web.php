@@ -43,6 +43,7 @@ Route::any('/markdone/{course_id}', [App\Http\Controllers\CourseController::clas
 Route::any('/students/{course_id}', [App\Http\Controllers\CourseController::class, 'students'])->name('students');
 Route::any('/view_assessment/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'viewAssessment'])->name('viewassessment');
 Route::any('/lock_certificate/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'lockCertificate'])->name('lockcertificate');
+Route::any('/payForExam/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'payForExam'])->name('payForExam');
 
 
 Route::any('/createcourse', [App\Http\Controllers\CourseController::class, 'createcourse'])->name('createcourse');

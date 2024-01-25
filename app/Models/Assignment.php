@@ -13,6 +13,9 @@ class Assignment extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'assignments';
+    protected $casts = [
+        'paid_user' => 'array',
+    ];
     public function course() {
         return $this->belongsTo('App\Models\Course');
     }

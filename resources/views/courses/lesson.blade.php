@@ -76,10 +76,10 @@ aria-hidden="true">
                                     <span class="h6 mb-0">{{ Date("M d,Y",strtotime($course->created_at)) }}</span>
                                 </li>
 
-                                <li class="list-group-item">
+                                {{-- <li class="list-group-item">
                                     <span>Total Hour:</span>
                                     <span class="h6 mb-0">{{ $course->duration }}Hrs</span>
-                                </li>
+                                </li> --}}
 
                                 <li class="list-group-item">
                                     <span>Total Enrolled:</span>
@@ -91,14 +91,14 @@ aria-hidden="true">
                                     <span>Certificate:</span>
                                     <span class="h6 mb-0">Yes</span>
                                 </li>
-                                @if($user->enr->completed == 1)
+                                {{-- @if($user->enr->completed == 1)
                                 <li class="list-group-item">
                                     <span>Download Certificate:</span>
                                     <a href='/download_certificate/{{ $course->uid }}' class="btn btn-sm btn-success h6 mb-0">Download</a>
                                 </li>
                                 @else 
                                 <div class='alert alert-danger'>Certificate not available</div>
-                                @endif
+                                @endif --}}
                             </ul>
                         </div>
 
@@ -289,7 +289,7 @@ aria-hidden="true">
                                                 </div>
                                                 <!-- Edit and cancel button -->
                                                 <div>
-                                                    @if($ass->price == 0)
+                                                    @if($ass->price == 0 || $payment == true)
                                                     @if($ass->type == 'objectives')
                                                     <a href="/starttest/{{ $ass->id }}"
                                                         class="btn btn-sm btn btn-info-soft">Start Test</a>
@@ -320,7 +320,7 @@ aria-hidden="true">
                                                         @endif
                                                     @endif
                                                     @else 
-                                                    <a href='#' class='btn sm btn-success'>Pay For Exam</a>
+                                                    <a href='/payForExam/{{ $user->id }}/{{ $ass->id }}' class='btn sm btn-success'>Pay For Exam</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -392,7 +392,8 @@ aria-hidden="true">
                         <!-- Card body -->
                         <div class="card-body p-0" style="position: relative;">
                             <div class="d-sm-flex justify-content-between p-4">
-                                <h4 class="text-blue mb-0">120+</h4>
+                                <h4 class="text-blue mb-0">{{
+                                    count(App\Models\Enroll::where('course_id',$course->id)->get()) }}+</h4>
                                 <p class="mb-0"><span class="text-success me-1">0.20%<i
                                             class="bi bi-arrow-up"></i></span>vs last Week</p>
                             </div>
@@ -746,7 +747,7 @@ aria-hidden="true">
         <!-- Chart END -->
 
         <!-- Student review START -->
-        <div class="col-12">
+        {{-- <div class="col-12">
             <div class="card bg-transparent border">
 
                 <!-- Card header START -->
@@ -1031,7 +1032,7 @@ aria-hidden="true">
                 </div>
                 <!-- Card footer END -->
             </div>
-        </div>
+        </div> --}}
         <!-- Student review END -->
 
     </div> <!-- Row END -->
