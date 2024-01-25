@@ -153,7 +153,7 @@ class CourseController extends Controller
             ->sum('amount');
 
         $data['balance'] = $walletamount - $expenses;
-        // dd($ass);
+        dd($ass,$ass->paid_user);
         if($ass->paid_user == null) {
          $realass = array($ass->paid_user);   
         } else {
