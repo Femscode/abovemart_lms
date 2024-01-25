@@ -138,6 +138,7 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        dd('check here');
         $data['ass'] = $ass = Assignment::where('course_id', $course->id)->latest()->get()[0];
         $data['sections'] = Section::where('course_id', $course->id)->get();
         $data['payment'] = false;
