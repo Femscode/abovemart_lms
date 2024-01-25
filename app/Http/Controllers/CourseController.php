@@ -138,8 +138,14 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
-        dd('check here');
-        $data['ass'] = $ass = Assignment::where('course_id', $course->id)->latest()->get()[0];
+
+        $data['ass'] = $ass = Assignment::where('course_id', $course->id)->latest()->get();
+
+
+        if ($ass->isNotEmpty()) {
+            $ass = $ass[0];
+        }
+        
         $data['sections'] = Section::where('course_id', $course->id)->get();
         $data['payment'] = false;
         $expenses = DB::table('transactions')
@@ -154,9 +160,9 @@ class CourseController extends Controller
             ->sum('amount');
 
         $data['balance'] = $walletamount - $expenses;
-        dd($ass,$ass->paid_user);
-        if($ass->paid_user == null) {
-         $realass = array($ass->paid_user);   
+      
+        if ($ass->paid_user == null) {
+            $realass = array($ass->paid_user);
         } else {
             $realass = $ass->paid_user;
         }
