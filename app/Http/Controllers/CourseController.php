@@ -140,14 +140,22 @@ class CourseController extends Controller
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
 
         $data['ass'] = $ass = Assignment::where('course_id', $course->id)->latest()->get();
-
+        $data['payment'] = false;
 
         if ($ass->isNotEmpty()) {
             $ass = $ass[0];
+            if ($ass->paid_user == null) {
+                $realass = array($ass->paid_user);
+            } else {
+                $realass = $ass->paid_user;
+            }
+            if (in_array($user->id, $realass)) {
+                $data['payment'] = true;
+            }
         }
         
         $data['sections'] = Section::where('course_id', $course->id)->get();
-        $data['payment'] = false;
+       
         $expenses = DB::table('transactions')
             ->where('userId', $user->userId)
             ->where('transactionType', '!=', 'Deposit')
@@ -161,14 +169,7 @@ class CourseController extends Controller
 
         $data['balance'] = $walletamount - $expenses;
       
-        if ($ass->paid_user == null) {
-            $realass = array($ass->paid_user);
-        } else {
-            $realass = $ass->paid_user;
-        }
-        if (in_array($user->id, $realass)) {
-            $data['payment'] = true;
-        }
+      
 
 
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
