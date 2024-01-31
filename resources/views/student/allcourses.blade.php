@@ -84,7 +84,7 @@
 
 
 							@if(in_array($user->package, $course->packages ?? []))
-							<a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enrol Now</a>
+							<a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enroll Now</a>
 
 							@else
 
