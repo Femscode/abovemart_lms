@@ -125,6 +125,8 @@
 						<!-- Menu item 7 -->
 						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="fas fa-user-cog fa-fw me-2"></i>Certificates</a></li>
+						<li class="nav-item"> <a class="nav-link" href="/admin_access"><i
+									class="fas fa-user-cog fa-fw me-2"></i>Admin Access</a></li>
 
 
 						<!-- Menu item 8 -->

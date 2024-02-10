@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Enroll;
 use App\Models\Section;
 use App\Models\Assignment;
+use App\Models\AdminAccess;
 use Illuminate\Support\Str;
 use App\Models\Announcement;
 use App\Models\SectionVideo;
@@ -19,10 +20,10 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $data['courses'] = Course::latest()->get();
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
-        $data['user'] = Auth::user();
+        $data['user'] = $user = Auth::user();
+        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
 
         if (Auth::user()->type == 1) {
 
@@ -66,6 +67,81 @@ class CourseController extends Controller
             return view('admin.index', $data);
         } else {
             return redirect()->route('student_dashboard');
+        }
+    }
+    public function admindashboard()
+    {
+        $data['user'] = $user = Auth::user();
+        $assignadmin = AdminAccess::where('admins', $user->id)->get();
+        // foreach ($assignadmin as $add) {
+
+        //     $data['courses'] = Course::whereIn('id', explode(',', $add->course_id))->get();
+        // }
+        $data['courses'] = [];
+
+        foreach ($assignadmin as $add) {
+            $courseIds = explode(',', $add->course_id);
+            // Retrieve courses for each admin and add them to the $data['courses'] array
+            $courses = Course::whereIn('id', $courseIds)->get();
+            $data['courses'] = array_merge($data['courses'], $courses->toArray());
+        }
+        
+        // Now $data['courses'] contains all courses associated with the admins linked to the user
+        // dd($data['courses']);
+
+        // Now $data['courses'] contains the courses associated with the admins linked to the user
+
+
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+        return view('student.admin', $data);
+    }
+    public function admin_access()
+    {
+        $data['user'] = $user = Auth::user();
+        $data['users'] = User::orderBy('firstname')->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
+        $data['admins'] = AdminAccess::where('user_id', $user->id)->latest()->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+
+        if (Auth::user()->type == 1) {
+
+            return view('admin.admin_access', $data);
+        } else {
+            return redirect()->route('student_dashboard');
+        }
+    }
+    public function assignadmin(Request $request)
+    {
+        $this->validate($request, [
+            'course_id' => 'required',
+            'access' => 'required',
+        ]);
+        $user = Auth::user();
+
+        // dd($request->all());
+        $access = AdminAccess::create([
+            'user_id' => $user->id,
+            'course_id' => $request->course_id,
+            'access' => $request->access,
+            'admins' => $request->admin,
+        ]);
+        return redirect()->back()->with('message', 'Access Granted Successfully!');
+    }
+    public function deleteAccess($id)
+    {
+        $access = AdminAccess::find($id);
+        $user = Auth::user();
+
+
+        if ($user->id !== $access->user_id) {
+            $access->delete();
+            return redirect()->back()->with('message', 'Access Deleteted Successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Access Denied');
         }
     }
     public function student_dashboard()
@@ -127,12 +203,21 @@ class CourseController extends Controller
     }
     public function coursedetails($id)
     {
-        $data['course'] = $course = Course::find($id);
+        $data['course'] = $course = Course::where('uid',$id)->first();
         $data['courses']  = Course::latest()->get();
-        $data['sections'] = Section::where('course_id', $course->id)->get();
+        $data['sections'] = Section::where('course_id', $course->id)->orderBy('rank')->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
         $data['user'] = Auth::user();
         return view('courses.coursedetails', $data);
+    }
+    public function admincoursedetails($id)
+    {
+        $data['course'] = $course = Course::where('uid',$id)->first();
+        $data['courses']  = Course::latest()->get();
+        $data['sections'] = Section::where('course_id', $course->id)->orderBy('rank')->get();
+        $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
+        $data['user'] = Auth::user();
+        return view('student.coursedetails', $data);
     }
     public function lesson($id)
     {
@@ -153,9 +238,9 @@ class CourseController extends Controller
                 $data['payment'] = true;
             }
         }
-        
+
         $data['sections'] = Section::where('course_id', $course->id)->get();
-       
+
         $expenses = DB::table('transactions')
             ->where('userId', $user->userId)
             ->where('transactionType', '!=', 'Deposit')
@@ -168,8 +253,8 @@ class CourseController extends Controller
             ->sum('amount');
 
         $data['balance'] = $walletamount - $expenses;
-      
-      
+
+
 
 
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
@@ -192,6 +277,15 @@ class CourseController extends Controller
         $data['user'] = Auth::user();
         return view('courses.courseusers', $data);
     }
+    public function coursestudents($id)
+    {
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        $data['courses']  = Course::latest()->get();
+        $user_id = Enroll::where('course_id', $course->id)->pluck('user_id');
+        $data['users'] = User::whereIn('id', $user_id)->latest()->get();
+        $data['user'] = Auth::user();
+        return view('student.coursestudent', $data);
+    }
     public function downloadsectionvideo($id)
     {
         $section = SectionVideo::find($id);
@@ -209,14 +303,14 @@ class CourseController extends Controller
         $this->validate($request, [
             'course_id' => 'required',
             'title' => 'required',
-            'description' => 'required',
+           
 
         ]);
         Section::create([
             'course_id' => $request->course_id,
             'user_id' => Auth::user()->id,
             'title' => $request->title,
-            'description' => $request->description
+           
         ]);
         return redirect()->back()->with('message', 'Section Created Successfully');
         return 'section created';
@@ -500,6 +594,26 @@ class CourseController extends Controller
 
 
         return $course;
+    }
+    public function loadsection(Request $request)
+    {
+        $id = $request->id;
+        $section = Section::find($id);
+        return $section;
+    }
+    public function editsection(Request $request)
+    {
+        // dd($request->all());
+        $section = Section::find($request->id);
+      
+        $section->title = $request->title;
+        $section->rank = $request->rank;
+       
+
+        $section->save();
+
+
+        return $section;
     }
     public function deletecourse(Request $request)
     {

@@ -3,6 +3,7 @@
 @endsection
 
 @section('content')
+
 <div class="page-content-wrapper border">
 
 	<!-- Title -->
@@ -96,6 +97,9 @@
 								aria-expanded="false" aria-controls="collapse-{{$key }}">
 								{{$section->title}}
 							</button>
+							<a data-id='{{ $section->id }}'
+								class="edit_section btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0"
+								data-bs-toggle="modal" data-bs-target="#editSection" class='btn btn-success btn-sm'>Edit</a>
 
 						</h6>
 
@@ -373,64 +377,37 @@
 	</div>
 </div>
 
-<div class="modal fade" id="editCourse" tabindex="-1" aria-labelledby="addQuestionLabel" aria-hidden="true">
+<div class="modal fade" id="editSection" tabindex="-1" aria-labelledby="addQuestionLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
-				<h5 class="modal-title text-white" id="addQuestionLabel">Edit Course</h5>
+				<h5 class="modal-title text-white" id="addQuestionLabel">Edit Section</h5>
 				<button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i
 						class="bi bi-x-lg"></i></button>
 			</div>
 			<div class="modal-body">
-				<form id='editCourseForm' class="row text-start g-3" enctype='multipart/form-data'>
+				<form id='editSectionForm' class="row text-start g-3" enctype='multipart/form-data'>
 					<!-- Question -->
 					<div class="col-12">
 						<label class="form-label">Title</label>
 
 						<input id='edittitle' required class="form-control" type="text"
-							placeholder="Input course title">
+							placeholder="Input section title">
 					</div>
 
-					<div class="col-12">
-						<label class="form-label">Category</label>
-						<select id='editcategory' class='form-control'>
-							<option value='Marketing'>Marketing</option>
-							<option value='Digital Network'>Digital Network</option>
-							<option value='Programming'>Programming</option>
-							<option value='Graphic Design'>Graphic Design</option>
-							<option value='Content Writing'>Content Writing</option>
-						</select>
-					</div>
+					
 
-					<div class="col-12 mt-3">
-						<label class="form-label">Description</label>
-						<textarea id='editdescription' required class="form-control" rows="4"
-							placeholder="Input course description" spellcheck="false"></textarea>
-					</div>
+				
 
 
 					<div class="col-6">
-						<label class="form-label">Duration(Hrs)</label>
-						<input id='editduration' required class="form-control" type="text"
-							placeholder="Input course title">
+						<label class="form-label">Rank</label>
+						<input id='editrank' required class="form-control" type="number"
+							placeholder="Input ranks">
 					</div>
 
-					<div class="col-6">
-						<label class="form-label">Price($)</label>
-						<input id='editprice' required class="form-control" type="text"
-							placeholder="Input course title">
-					</div>
+					
 
-
-					<div class="col-12">
-						<label class="form-label">Course Display Image <span
-								class='text-danger'>(Optional)</span></label>
-						<div class="rounded mx-auto d-block">
-							<img id='editcourse_img' class="rounded " style='height:100px;width:500px' alt="">
-						</div>
-						<input id='editimage' class="form-control" type="file" accept="image/*"
-							placeholder="Input course title">
-					</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
@@ -457,12 +434,7 @@
 						<input type="text" name='title' class="form-control" placeholder="Enter section title">
 						<input type="hidden" name='course_id' class="form-control" value="{{ $course->id }}">
 					</div>
-					<div class="col-12">
-						<label class="form-label">Title Description <span class="text-danger">*</span></label>
-						<input name='description' type="text" class="form-control"
-							placeholder="Enter section description">
-
-					</div>
+					
 
 			</div>
 			<div class="modal-footer">
@@ -749,6 +721,54 @@ $("#file_radio").click(function() {
 
 	
 })
+
+				$(".edit_section").click(function() {
+						
+						id = $(this).data('id');
+						
+						$.get("{{ route('loadsection') }}?id="+id, function(data) {
+							console.log(data)
+							$("#section_id").val(data.id)
+							$("#edittitle").val(data.title)							
+							$("#editrank").val(data.rank)
+						
+						})
+					})
+
+				$("#editSectionForm").on('submit', async function(e){
+                e.preventDefault();
+				
+                swal('Editing Section, please wait...');
+               
+							fd = new FormData();
+							
+							fd.append('id',  $("#section_id").val());
+							fd.append('title',  $("#edittitle").val());
+							fd.append('rank', $("#editrank").val());
+							$.ajax({
+                                type: 'POST',
+                                url: "{{ route('editsection') }}",
+                                data: fd,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                success: (data) => {
+                                    swal.close()
+                                    swal("Success", 'Section Updated successfully', 'success');
+                                    console.log(data)
+									window.location.reload();
+
+
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    swal("Oops!", 'Section not Updated', 'error');
+                                }
+                            });
+                            });
+
+   
+
 function populate_c(section_id) {
 	
 	$("#my_section_id").val(section_id)

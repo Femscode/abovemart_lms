@@ -871,46 +871,7 @@ Page content START -->
                                                 <div class="accordion accordion-icon accordion-bg-light"
                                                     id="accordionExample2">
                                                     <!-- Item START -->
-                                                    <div class="accordion-item mb-3">
-                                                        <h6 class="accordion-header font-base" id="heading-0">
-                                                            <button
-                                                                class="accordion-button fw-bold rounded d-inline-block collapsed d-block pe-5"
-                                                                type="button" data-bs-toggle="collapse"
-                                                                data-bs-target="#collapse-0" aria-expanded="false"
-                                                                aria-controls="collapse-0">
-                                                                Course Introduction
-                                                            </button>
-                                                        </h6>
-
-                                                        <div id="collapse-0" class="accordion-collapse collapse show"
-                                                            aria-labelledby="heading-0"
-                                                            data-bs-parent="#accordionExample2">
-                                                            <!-- Topic START -->
-                                                            <div class="accordion-body mt-3">
-                                                                <!-- Video item START -->
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center">
-                                                                    <div class="position-relative">
-                                                                        <a href="#"
-                                                                            class="btn btn-danger-soft btn-round btn-sm mb-0 stretched-link position-static"><i
-                                                                                class="fas fa-play"></i></a>
-                                                                        <span
-                                                                            class="ms-2 mb-0 h6 fw-light">Introduction</span>
-                                                                    </div>
-                                                                    <!-- Edit and cancel button -->
-                                                                    <div>
-
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Divider -->
-                                                                <hr>
-
-                                                                <!-- Add topic -->
-
-                                                            </div>
-                                                            <!-- Topic END -->
-                                                        </div>
-                                                    </div>
+                                                  
 
                                                     @foreach($sections as $key => $section)
                                                     <div class="accordion-item mb-3">

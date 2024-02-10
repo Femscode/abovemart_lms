@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="learn.abovemarts.com">
 	<meta name="description" content="Abovemarts Learning Portal">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!-- Favicon -->
 	{{-- <link rel="shortcut icon" href="assets/images/favicon.ico"> --}}
@@ -278,9 +279,8 @@ Page Banner START -->
 									</div>
 									<!-- Button -->
 									<div class="mt-2 mt-sm-0">
-										<a href="https://abovemarts.com/dashboard" target="_blank" class="btn btn-info mb-2 mt-2">AboveMarts Backoffice</a>
-										<a href="/allcourses" class="btn btn-primary mb-2 mt-2">AboveMarts E-Courses</a>
-										<a href="/allebooks" class="btn btn-success mb-2">AboveMarts E-Library</a>
+										<a href="/dashboard" class="btn btn-info mb-2 mt-2">Student Dashboard</a>
+										<a href="/admindashboard" class="btn btn-primary mb-2 mt-2">Admin Dashboard</a>
 									</div>
 								</div>
 							</div>
