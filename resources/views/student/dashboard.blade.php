@@ -16,7 +16,7 @@
 					<div class="d-flex">
 						<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0"
 							data-purecounter-end="{{ count($course_enrolled) }}"
-							data-purecounter-delay="200">0</h5>
+							data-purecounter-delay="200">{{ count($course_enrolled) }}</h5>
 					</div>
 					<p class="mb-0 h6 fw-light">Total Enrolled Courses</p>
 				</div>
@@ -27,8 +27,11 @@
 				class="d-flex justify-content-center align-items-center p-4 bg-primary bg-opacity-15 rounded-3">
 				<span class="display-6 lh-1 text-primary mb-0"><i class="fas fa-tv fa-fw"></i></span>
 				<div class="ms-4">
-					
-					<a class="mb-0 h6 fw-light" href='/allcourses'>Abovemart E-Courses</a>
+					<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0"
+							data-purecounter-end="{{ count($allcourses) }}"
+							data-purecounter-delay="200">{{ count($allcourses) }}</h5>
+					<a class="mb-0 h6 fw-light" href='/allcourses'>E-Courses</a>
+					<a class='btn btn-primary btn-sm' href='/allcourses'>Visit E-Library</a>
 				</div>
 			</div>
 		</div>
@@ -53,8 +56,11 @@
 				<span class="display-6 lh-1 text-purple mb-0"><i
 						class="fas fa-book fa-fw"></i></span>
 				<div class="ms-4">
+					<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0"
+							data-purecounter-end="{{ count($allebooks) }}"
+							data-purecounter-delay="200">{{ count($allebooks) }}</h5>
 					
-					<p class="mb-0 h6 fw-light">Abovemarts <br>E-Library</p>
+					<p class="mb-0 h6 fw-light">E-Library</p>
 					<a class='btn btn-purple btn-sm' href='/allebooks'>Visit E-Library</a>
 				</div>
 			</div>
@@ -69,7 +75,7 @@
 						class="fas fa-home fa-fw"></i></span>
 				<div class="ms-4">
 					
-					<p class="mb-0 h6 fw-light">Abovemart Backoffice</p>
+					<p class="mb-0 h6 fw-light">Backoffice</p>
 					<a class='btn btn-secondary btn-sm' href='https://abovemarts.com'>Visit Backoffice</a>
 				</div>
 			</div>

@@ -13,6 +13,7 @@ use App\Models\Announcement;
 use App\Models\SectionVideo;
 use Illuminate\Http\Request;
 use App\Models\CourseCategory;
+use App\Models\Ebook;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,10 +59,12 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['allcourses'] = Course::latest()->get();
+        $data['allebooks'] = Ebook::latest()->get();
         $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
         $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
-
+       
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
@@ -148,6 +151,8 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
         $data['courses'] = Course::latest()->get();
+        $data['allcourses'] = Course::latest()->get();
+        $data['allebooks'] = Ebook::latest()->get();
         $data['ann'] = Announcement::latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
         $data['assignments'] = Assignment::latest()->get();
