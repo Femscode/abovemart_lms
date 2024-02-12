@@ -70,13 +70,13 @@
 
 		<div class="col-sm-6 col-lg-4 mb-3 mb-lg-0 mt-2">
 			<div
-				class="d-flex justify-content-center align-items-center p-4 bg-secondary bg-opacity-15 rounded-3">
+				class="d-flex justify-content-center align-items-center p-4 bg-danger bg-opacity-15 rounded-3">
 				<span class="display-6 lh-1 text-secondary mb-0"><i
 						class="fas fa-home fa-fw"></i></span>
 				<div class="ms-4">
 					
 					<p class="mb-0 h6 fw-light">Backoffice</p>
-					<a class='btn btn-secondary btn-sm' href='https://abovemarts.com'>Visit Backoffice</a>
+					<a class='btn btn-danger btn-sm' href='https://abovemarts.com'>Visit Backoffice</a>
 				</div>
 			</div>
 		</div>
@@ -87,10 +87,10 @@
 				<span class="display-6 lh-1 text-info mb-0"><i
 						class="fas fa-wallet fa-fw"></i></span>
 				<div class="ms-4">
-					<div class="d-flex">
+					{{-- <div class="d-flex">
 						<h5 class="purecounter mb-0 fw-bold" data-purecounter-start="0"
 							data-purecounter-end="0" data-purecounter-delay="200">0</h5>
-					</div>
+					</div> --}}
 					<p class="mb-0 h6 fw-light">Wallet Balance : NGN{{ number_format($balance) }}</p>
 					<a class='btn btn-info btn-sm' href='https://abovemarts.com/fund'>Fund Wallet</a>
 				</div>
