@@ -31,7 +31,7 @@
 							data-purecounter-end="{{ count($allcourses) }}"
 							data-purecounter-delay="200">{{ count($allcourses) }}</h5>
 					<a class="mb-0 h6 fw-light" href='/allcourses'>E-Courses</a>
-					<a class='btn btn-primary btn-sm' href='/allcourses'>Visit E-Library</a>
+					<a class='btn btn-primary btn-sm' href='/allcourses'>Visit E-Courses</a>
 				</div>
 			</div>
 		</div>

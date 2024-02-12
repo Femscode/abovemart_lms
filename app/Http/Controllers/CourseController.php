@@ -536,7 +536,7 @@ class CourseController extends Controller
 
 
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
-        $data['sections'] = Section::where('course_id', $course->id)->get();
+        $data['sections'] = Section::where('course_id', $course->id)->orderBy('rank')->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
 
         return view('student.course_preview', $data);
