@@ -24,7 +24,7 @@ class CourseController extends Controller
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
         $data['user'] = $user = Auth::user();
-        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
 
         if (Auth::user()->type == 1) {
 
@@ -64,7 +64,7 @@ class CourseController extends Controller
         $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
         $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
         $data['categories'] = CourseCategory::orderBy('name')->get();
-       
+
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
@@ -88,7 +88,7 @@ class CourseController extends Controller
             $courses = Course::whereIn('id', $courseIds)->get();
             $data['courses'] = array_merge($data['courses'], $courses->toArray());
         }
-        
+
         // Now $data['courses'] contains all courses associated with the admins linked to the user
         // dd($data['courses']);
 
@@ -208,7 +208,7 @@ class CourseController extends Controller
     }
     public function coursedetails($id)
     {
-        $data['course'] = $course = Course::where('uid',$id)->first();
+        $data['course'] = $course = Course::where('uid', $id)->first();
         $data['courses']  = Course::latest()->get();
         $data['sections'] = Section::where('course_id', $course->id)->orderBy('rank')->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
@@ -217,7 +217,7 @@ class CourseController extends Controller
     }
     public function admincoursedetails($id)
     {
-        $data['course'] = $course = Course::where('uid',$id)->first();
+        $data['course'] = $course = Course::where('uid', $id)->first();
         $data['courses']  = Course::latest()->get();
         $data['sections'] = Section::where('course_id', $course->id)->orderBy('rank')->get();
         $data['sectionvideos'] = SectionVideo::where('course_id', $course->id)->get();
@@ -308,14 +308,14 @@ class CourseController extends Controller
         $this->validate($request, [
             'course_id' => 'required',
             'title' => 'required',
-           
+
 
         ]);
         Section::create([
             'course_id' => $request->course_id,
             'user_id' => Auth::user()->id,
             'title' => $request->title,
-           
+
         ]);
         return redirect()->back()->with('message', 'Section Created Successfully');
         return 'section created';
@@ -610,10 +610,10 @@ class CourseController extends Controller
     {
         // dd($request->all());
         $section = Section::find($request->id);
-      
+
         $section->title = $request->title;
         $section->rank = $request->rank;
-       
+
 
         $section->save();
 
@@ -688,7 +688,11 @@ class CourseController extends Controller
         //     ->get();
         return response()->json($Courses);
     }
-
+    public function randomDigit()
+    {
+        $pass = substr(str_shuffle("0123456789abcnost"), 0, 12);
+        return $pass;
+    }
 
     public function enroll($course_id)
     {
@@ -701,7 +705,60 @@ class CourseController extends Controller
             ]);
             return redirect('/dashboard')->with('message', "You have been enrolled for the course:" . $course->title);
         }
+        // dd($course);
 
-        return redirect()->back()->with('message', "You cannot enroll for this course because it requires payment!");
+        //Here is where you charge the user for the course, create transaction for the course, after that
+        // Enroll::create([
+        //     'user_id' => $user->id,
+        //     'course_id' => $course->id
+        // ]);
+
+        $expenses = DB::table('transactions')
+            ->where('userId', $user->userId)
+            ->where('transactionType', '!=', 'Deposit')
+            ->where('status', 'CONFIRM')
+            ->sum('amount');
+        $capital = DB::table('funds')
+            ->where('userId', $user->userId)
+            ->where('status', 'success')
+            ->sum('amount');
+        $bonusamount = DB::table('bonuses')
+            ->where('sponsor', $user->mySponsorId)
+            ->sum('amount');
+        $balance = $capital + 0 - $expenses;
+        
+
+        if ($balance >= $course->price) {
+
+
+
+            $transactionId = $this->randomDigit();
+            $transactionServiceId = $this->randomDigit();
+
+
+            DB::table('transactions')->insert([
+                'transactionId' => $transactionId,
+                'userId' => $user->userId,
+                'username' => $user->username,
+                'email' => $user->email,
+                'phoneNumber' => $user->phoneNumber,
+                'amount' => $course->price,
+                'transactionType' => 'Course Purchase',
+                'transactionService' => 'Course Purchase',
+                'status' => 'CONFIRM',
+                'paymentMethod' => 'wallet',
+                'Admin' => 'None',
+                "created_at" => date('Y-m-d H:i:s'),
+                "updated_at" => date('Y-m-d H:i:s'),
+            ]);
+            Enroll::create([
+                'user_id' => $user->id,
+                'course_id' => $course->id
+            ]);
+            return redirect()->back()->with('message', "Course enrolled for successfully!");
+        } else {
+
+            return redirect()->back()->with('message', "Insufficient balance to enroll for this course!");
+        }
     }
 }

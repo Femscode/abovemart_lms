@@ -337,8 +337,10 @@ Page content START -->
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Examination & Certificates</a>
 											<a class="list-group-item" href="/allebooks"><i
 													class="bi bi-credit-card-2-front fa-fw me-2"></i>Ebooks</a>
-											<a class="list-group-item" href="https://abovemarts.com/fund"><i
+											@if($user->package !== "Basic")
+													<a class="list-group-item" href="https://abovemarts.com/fund"><i
 													class="bi bi-cart-check fa-fw me-2"></i>Fund Wallet</a>
+												@endif
 											<a class="list-group-item" href="https://abovemarts.com/profile"><i
 													class="bi bi-pencil-square fa-fw me-2"></i>Edit Profile</a>
 											<a class="list-group-item" href="#"><i
