@@ -274,7 +274,7 @@ aria-hidden="true">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                     @endif
-                                                    <span class=" ms-2 mb-0 h6 fw-light">{{ $ass->title }} (${{ number_format($ass->price) }})</span>
+                                                    <span class=" ms-2 mb-0 h6 fw-light">{{ $ass->title }} (₦{{ number_format($ass->price) }})</span>
                                                     @if($ass->status == 0)
                                                     <a href="#"
                                                         class="btn btn-info-soft btn-round btn-sm mb-0 stretched-link position-static">

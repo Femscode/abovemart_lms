@@ -218,7 +218,7 @@ class ExamController extends Controller
         $existingNumbers = $exam->paid_user ?? [];
         $existingNumbers = array_merge($existingNumbers, array($userId));
         // dd($paidUsers,$userId, array($userId));
-        $amount = $exam->price * 1300;
+        $amount = floatval($exam->price);
 
 
         if (!in_array($userId, $paidUsers)) {
@@ -252,8 +252,8 @@ class ExamController extends Controller
                     'email' => $user->email,
                     'phoneNumber' => $user->phoneNumber,
                     'amount' => $amount,
-                    'transactionType' => 'Examination',
-                    'transactionService' => 'Examination',
+                    'transactionType' => 'Examination Payment',
+                    'transactionService' => 'Examination Payment',
                     'status' => 'CONFIRM',
                     'paymentMethod' => 'wallet',
                     'Admin' => 'None',

@@ -728,14 +728,9 @@ class CourseController extends Controller
         $balance = $capital + 0 - $expenses;
         
 
-        if ($balance >= $course->price) {
-
-
-
+        if ($balance >= floatval($course->price)) {
             $transactionId = $this->randomDigit();
             $transactionServiceId = $this->randomDigit();
-
-
             DB::table('transactions')->insert([
                 'transactionId' => $transactionId,
                 'userId' => $user->userId,
