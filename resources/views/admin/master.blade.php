@@ -400,13 +400,13 @@
 									</div>
 
 									<div class="col-6">
-										<label class="form-label">Price($)</label>
+										<label class="form-label">Price(₦)</label>
 										<input id='price' name='price' required class="form-control" type="text"
 											placeholder="Enter 0 if the course is free">
 									</div>
 
 									<div class="col-12">
-										<label class="form-label">Slashed <s>Price</s> ($)</label>
+										<label class="form-label">Slashed <s>Price</s> (₦)</label>
 										<input id='slashed_price' name='slashed_price' required class="form-control"
 											type="text" placeholder="Enter 0 if the course is free">
 									</div>

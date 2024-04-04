@@ -72,7 +72,7 @@
 								<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0"
 									for="option1">Free</label>@else
 								<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">
-									${{ number_format($course->price) }} <s>${{ number_format($course->slashed_price)
+									₦{{ number_format($course->price) }} <s>₦{{ number_format($course->slashed_price)
 										}}</s>
 								</label>
 								@endif

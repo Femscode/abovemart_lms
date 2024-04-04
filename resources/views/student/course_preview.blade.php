@@ -720,8 +720,8 @@ Page content START -->
                                                             <div class="mt-4">
                                                                 <h6>How much is this course?</h6>
                                                                 <p class="mb-0">The discounted price for this course is
-                                                                    <b>${{ number_format($course->price) }}</b>, of
-                                                                    which the real price is <b>${{
+                                                                    <b>₦{{ number_format($course->price) }}</b>, of
+                                                                    which the real price is <b>₦{{
                                                                         number_format($course->slashed_price) }}</b>
                                                                 </p>
                                                             </div>
@@ -729,7 +729,7 @@ Page content START -->
                                                                 <h6>How much is the course for Abovemart's Platinum
                                                                     members?</h6>
                                                                 <p class="mb-0">For Platinun members, the course is
-                                                                    brought down to <b>${{ number_format($course->price
+                                                                    brought down to <b>₦{{ number_format($course->price
                                                                         /2) }}</b>.</p>
                                                             </div>
                                                             <div class="mt-4">
@@ -776,9 +776,9 @@ Page content START -->
                                                         <!-- Price and share button -->
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <!-- Price -->
-                                                            <h3 class="fw-bold mb-0 me-2">${{
+                                                            <h3 class="fw-bold mb-0 me-2">₦{{
                                                                 number_format($course->price, 2) }} <span
-                                                                    class='text-danger'><s>${{
+                                                                    class='text-danger'><s>₦{{
                                                                         number_format($course->slashed_price, 2)
                                                                         }}</s></span></h3>
                                                             <!-- Share button with dropdown -->
