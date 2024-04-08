@@ -233,11 +233,19 @@
 											class="btn btn-sm btn-danger-soft btn-round mb-0"><i
 												class="fas fa-fw fa-times"></i></a>
 									</div>
+									<div>
+										<h5>Paid By</h5>
+										@foreach($ass->paid_user as $pd)
+										
+										{{ $ass->fetchpaidusers($pd) }}<br>
+										@endforeach
+									</div>
 								</div>
 								<!-- Divider -->
 								<hr>
 								@endforeach
 								@endif
+								
 								<hr>
 								<h5>Announcements</h5>
 

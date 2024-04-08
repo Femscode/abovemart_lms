@@ -85,5 +85,8 @@ class Assignment extends Model
         
         return $attemptTest;
     }
-
+    public function fetchpaidusers($id) {
+        $user = User::find($id);
+        return $user->email;
+    }
 }

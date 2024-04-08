@@ -299,8 +299,9 @@ aria-hidden="true">
                                                     @if($ass->link !== null)
                                                     {{ $ass->uploaded($user->id,$ass->id)->is_done ?? "Not Done"  }}
                                                   
-                                                    <a onclick="return swal('{{ $ass->link }}','Copy Assignment Link','info')"
-                                                        class="btn btn-sm btn btn-info-soft">View Link</a>
+                                                    {{-- <a onclick="return swal('{{ $ass->link }}','Copy Assignment Link','info')"
+                                                        class="btn btn-sm btn btn-info-soft">View Link</a> --}}
+                                                    <a target="_blank" href='{{ $ass->link }}' class="btn btn-sm btn btn-info-soft">Write Exam</a>
                                                         <a data-section="{{ $section->id }}" data-title = '{{ $ass->title }}' data-id='{{ $ass->id }}' data-user_id = "{{ $user->id }}"  data-bs-toggle="modal" data-bs-target="#uploadAss" class='upload_ass btn btn-sm btn-info'><i class='fa fa-upload'></i></a>
                                                     @elseif($ass->ext == 'mp4' || $ass->ext == 'mkv' || $ass->ext
                                                     == 'webm')

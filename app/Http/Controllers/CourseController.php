@@ -44,9 +44,10 @@ class CourseController extends Controller
     }
     public function course()
     {
-        $data['courses'] = Course::latest()->get();
-        $data['ann'] = Announcement::latest()->get();
-        $data['assignments'] = Assignment::latest()->get();
+        $user = Auth::user();
+        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
 
         if (Auth::user()->type == 1) {
 
@@ -186,10 +187,12 @@ class CourseController extends Controller
 
     public function ann()
     {
-        $data['ann'] = Announcement::latest()->get();
-        $data['courses'] = Course::latest()->get();
-        $data['user'] = Auth::user();
-        $data['assignments'] = Assignment::latest()->get();
+    
+        $data['user'] = $user = Auth::user();
+        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+
         return view('ann.index', $data);
     }
     public function createann(Request $request)
@@ -399,10 +402,12 @@ class CourseController extends Controller
 
     public function assignment()
     {
-        $data['user'] = Auth::user();
-        $data['ann'] = Announcement::latest()->get();
-        $data['courses'] = Course::latest()->get();
-        $data['assignments'] = Assignment::latest()->get();
+        $data['user'] = $user = Auth::user();
+
+        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+
         return view('ass.index', $data);
     }
     public function createassignment(Request $request)

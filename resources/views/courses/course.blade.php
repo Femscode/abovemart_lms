@@ -567,9 +567,9 @@
 
 										<!-- Table data -->
 										<td>
-											<a href='coursedetails/{{ $course->id }}' class="edit_course btn btn-sm btn-info-soft me-1 mb-1 mb-md-0"
+											<a href='coursedetails/{{ $course->uid }}' class="edit_course btn btn-sm btn-info-soft me-1 mb-1 mb-md-0"
 												>Lectures</a>
-											<a href='students/{{ $course->id }}' class="edit_course btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0"
+											<a href='students/{{ $course->uid }}' class="edit_course btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0"
 													>Students</a>
 											<a data-id='{{ $course->id }}'
 												class="edit_course btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0"
