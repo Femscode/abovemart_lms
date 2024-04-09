@@ -233,13 +233,14 @@
 											class="btn btn-sm btn-danger-soft btn-round mb-0"><i
 												class="fas fa-fw fa-times"></i></a>
 									</div>
+									@if(is_array($ass->paid_user) && count($ass->paid_user) > 0)
 									<div>
 										<h5>Paid By</h5>
 										@foreach($ass->paid_user as $pd)
-										
-										{{ $ass->fetchpaidusers($pd) }}<br>
+											{{ $ass->fetchpaidusers($pd) }}<br>
 										@endforeach
 									</div>
+									@endif
 								</div>
 								<!-- Divider -->
 								<hr>
