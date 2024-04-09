@@ -321,7 +321,7 @@ aria-hidden="true">
                                                         @endif
                                                     @endif
                                                     @else 
-                                                    <a href='/payForExam/{{ $user->id }}/{{ $ass->id }}' class='btn sm btn-success'>Pay For Exam</a>
+                                                    <a href='/payForExam/{{ $user->id }}/{{ $ass->id }}' class='btn sm btn-success'>Take Exam</a>
                                                     @endif
                                                 </div>
                                             </div>
