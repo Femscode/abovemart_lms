@@ -813,15 +813,16 @@ Page content START -->
                                                         <div class="mt-3 d-grid">
                                                             @if(Auth::check())
 
-                                                            @if(Auth::user()->package == "Basic" || Auth::user()->package == "Bronze"
-                                                            )
-                                                            <a href='https://abovemarts.com/userpackages'
-                                                                class='btn btn-success btn-sm'>Upgrade For Scholarship</a>
+                                                            @if(in_array($user->package, $course->packages ?? []))
+                                                            <a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enroll Now</a>
+
                                                             @else
-                                                            {{-- <a href='/enroll/{{ $course->uid }}' --}}
-                                                            <a href='https://learn.abovemarts.com/allcourses'
-                                                                class='btn btn-success btn-sm'>Enroll Now</a>
-                                                                @endif
+                                
+                                
+                                                            <a href='https://abovemarts.com/userpackages' class='btn btn-success btn-sm'>Upgrade For
+                                                                Scholarship</a>
+                                                            
+                                                            @endif
                                                                 @else 
                                                                 <a href='https://learn.abovemarts.com/allcourses'
                                                                     class='btn btn-success btn-sm'>Login To Enroll</a>
