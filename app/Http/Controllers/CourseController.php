@@ -530,8 +530,9 @@ class CourseController extends Controller
     public function allcourses()
     {
         $data['user'] = Auth::user();
-        $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
-        $data['courses'] = Course::whereNotIn('id', $enroll)->latest()->get();
+        // $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
+        // $data['courses'] = Course::whereNotIn('id', $enroll)->latest()->get();
+        $data['courses'] = Course::latest()->get();
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
         return view('student.allcourses', $data);
