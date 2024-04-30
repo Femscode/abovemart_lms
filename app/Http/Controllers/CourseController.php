@@ -759,7 +759,7 @@ class CourseController extends Controller
             return redirect()->back()->with('message', "Course enrolled for successfully!");
         } else {
 
-            return redirect()->back()->with('message', "Insufficient balance to enroll for this course!");
+            return redirect()->back()->with('error', "Insufficient balance to enroll for this course!");
         }
     }
 }
