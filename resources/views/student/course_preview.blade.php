@@ -750,12 +750,18 @@ Page content START -->
                                                                         course with the following conditions:</h5>
 
                                                                     <ul>
-                                                                        <li>You must have completed all the lectures, tasks and assignments to unlock the Examination module.</li>
-                                                                       
-                                                                        <li>You must have paid and passed the exam with a score mark above 60% to get certified by our Partner Universities.</li>
-                                                                        <li>For physical or online facilitations, further inquiries, complain or technical support, contact Admin <a
-                                                                            href='https://wa.me/2347060818784'>here.</a>
-                                                                      </li>
+                                                                        <li>You must have completed all the lectures,
+                                                                            tasks and assignments to unlock the
+                                                                            Examination module.</li>
+
+                                                                        <li>You must have paid and passed the exam with
+                                                                            a score mark above 60% to get certified by
+                                                                            our Partner Universities.</li>
+                                                                        <li>For physical or online facilitations,
+                                                                            further inquiries, complain or technical
+                                                                            support, contact Admin <a
+                                                                                href='https://wa.me/2347060818784'>here.</a>
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
 
@@ -814,18 +820,24 @@ Page content START -->
                                                             @if(Auth::check())
 
                                                             @if(in_array($user->package, $course->packages ?? []))
-                                                            <a href='/enroll/{{ $course->uid }}' class='btn btn-success btn-sm'>Enroll Now</a>
-
+                                                            @if($course->isEnrolled($course->id))
+                                                            <span class='btn btn-secondary btn-sm'>Already
+                                                                Enrolled</span>
                                                             @else
-                                
-                                
-                                                            <a href='https://abovemarts.com/userpackages' class='btn btn-success btn-sm'>Upgrade For
-                                                                Scholarship</a>
-                                                            
+                                                            <a href='/enroll/{{ $course->uid }}'
+                                                                class='btn btn-success btn-sm'>Enroll Now</a>
                                                             @endif
-                                                                @else 
-                                                                <a href='https://learn.abovemarts.com/allcourses'
-                                                                    class='btn btn-success btn-sm'>Login To Enroll</a>
+                                                            @else
+
+
+                                                            <a href='https://abovemarts.com/userpackages'
+                                                                class='btn btn-success btn-sm'>Upgrade For
+                                                                Scholarship</a>
+
+                                                            @endif
+                                                            @else
+                                                            <a href='https://learn.abovemarts.com/allcourses'
+                                                                class='btn btn-success btn-sm'>Login To Enroll</a>
 
                                                             @endif
                                                         </div>
@@ -872,7 +884,7 @@ Page content START -->
                                                 <div class="accordion accordion-icon accordion-bg-light"
                                                     id="accordionExample2">
                                                     <!-- Item START -->
-                                                  
+
 
                                                     @foreach($sections as $key => $section)
                                                     <div class="accordion-item mb-3">
