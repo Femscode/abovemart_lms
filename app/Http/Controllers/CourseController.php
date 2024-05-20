@@ -104,8 +104,8 @@ class CourseController extends Controller
     public function admin_access()
     {
         $data['user'] = $user = Auth::user();
-        $data['users'] = User::orderBy('firstname')->get();
-        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['users'] = User::orderBy('email')->get();
+        $data['courses'] = Course::where('user_id', $user->id)->orderBy('title')->latest()->get();
         $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
         $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
         $data['admins'] = AdminAccess::where('user_id', $user->id)->latest()->get();
