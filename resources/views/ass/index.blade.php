@@ -18,8 +18,8 @@
 	<!-- Course boxes START -->
 	<div class="row g-4 mb-4">
 		<!-- Course item -->
-		<div class="col-sm-6 col-lg-4">
-			<a href='/courses'>
+		<div class="col-sm-6 col-lg-6">
+			<a href='/dashboard'>
 				<div class="text-center p-4 bg-primary bg-opacity-10 border border-primary rounded-3">
 					<h6>Total Courses</h6>
 					<h2 class="mb-0 fs-1 text-primary">{{ count($courses) }}</h2>
@@ -29,20 +29,20 @@
 
 		<!-- Course item -->
 
-		<div class="col-sm-6 col-lg-4">
+		{{-- <div class="col-sm-6 col-lg-4">
 			<a href='/announcement'>
 				<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
 					<h6>Announcements</h6>
 					<h2 class="mb-0 fs-1 text-success">{{ count($ann) }}</h2>
 				</div>
 			</a>
-		</div>
+		</div> --}}
 
 		<!-- Course item -->
-		<div class="col-sm-6 col-lg-4">
+		<div class="col-sm-6 col-lg-6">
 			<div class="text-center p-4  bg-warning bg-opacity-15 border border-warning rounded-3">
 				<h6>Assignments</h6>
-				<h2 class="mb-0 fs-1 text-warning">{{ count($assignments) }}</h2>
+				<h2 class="mb-0 fs-1 text-warning">{{ $totalass }}</h2>
 			</div>
 		</div>
 	</div>
@@ -162,20 +162,7 @@
 		<div class="card-footer bg-transparent pt-0">
 			<!-- Pagination START -->
 			<div class="d-sm-flex justify-content-sm-between align-items-sm-center">
-				<!-- Content -->
-				<p class="mb-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
-				<!-- Pagination -->
-				<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
-					<ul class="pagination pagination-sm pagination-primary-soft mb-0 pb-0">
-						<li class="page-item mb-0"><a class="page-link" href="#" tabindex="-1"><i
-									class="fas fa-angle-left"></i></a></li>
-						<li class="page-item mb-0"><a class="page-link" href="#">1</a></li>
-						<li class="page-item mb-0 active"><a class="page-link" href="#">2</a></li>
-						<li class="page-item mb-0"><a class="page-link" href="#">3</a></li>
-						<li class="page-item mb-0"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
-						</li>
-					</ul>
-				</nav>
+				{{ $assignments->links('pagination::bootstrap-4') }}
 			</div>
 			<!-- Pagination END -->
 		</div>

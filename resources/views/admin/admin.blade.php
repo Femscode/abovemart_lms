@@ -3,18 +3,77 @@
 @endsection
 
 @section('content')
+<div class="modal fade" id="addAdmin" tabindex="-1" aria-labelledby="addAdminLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header bg-dark">
+            <h5 class="modal-title text-white" id="addAdminLabel">Admin Dashboard</h5>
+            <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal"
+                aria-label="Close"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-body">
+                <form method='post' action='/assignadmin' class="row text-start g-3"
+                    enctype='multipart/form-data'>@csrf
+                    <!-- Question -->
+                  
+                   
+
+                    <div class="col-12">
+                        <label class="form-label">Course</label>
+                        <select id='course_id' name='course_id' required class='form-control'>
+                            <option>--Select Course--</option>
+                            @foreach($courses as $course)
+                            <option value='{{ $course->id }}'>{{ $course->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">User</label>
+                        <select id='admin' name='admin' required class='form-control'>
+                            <option>--Select User--</option>
+                            @foreach($users as $user)
+                            <option value='{{ $user->id }}'>{{ $user->firstname }} - {{ $user->lastname }}({{ $user->email }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                 
+                    <div class="col-12">
+                        <label class="form-label">Access</label><br>
+                        <input id='access' name='access[]' value='Lectures' type='checkbox'> Manage Lectures
+                        <input id='access' name='access[]' value='Students' type='checkbox'> Manage Students
+                        <input id='access' name='access[]' value='Edit' type='checkbox'> Edit Course
+                       </div>
+
+
+                   
+
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger-soft my-0"
+                data-bs-dismiss="modal">Close</button>
+            <button id='c_submita' type="submit" class="btn btn-success my-0">Assign</button>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
 
 <div class="page-content-wrapper border">
 
 	<!-- Title -->
 	<div class="row mb-3">
 		<div class="col-12 d-sm-flex justify-content-between align-items-center">
-			<h1 class="h3 mb-2 mb-sm-0">Courses</h1>
-			<div>
+			<h1 class="h3 mb-2 mb-sm-0">Admin Dashboard</h1>
 			<a href="#" class="btn btn-sm btn-primary mb-0" data-bs-toggle="modal"
-				data-bs-target="#addQuestion"><i class="bi bi-plus-circle me-2"></i>Create Course</a>
-			<a href="/admin_access" class="btn btn-sm btn-info mb-0"><i class="bi bi-plus-circle me-2"></i>Admin Access</a>
-			</div>
+				data-bs-target="#addAdmin"><i class="bi bi-plus-circle me-2"></i>Assign Admin</a>
+
 		</div>
 	</div>
 
@@ -22,33 +81,25 @@
 	<div class="row g-4 mb-4">
 		<!-- Course item -->
 		<div class="col-sm-6 col-lg-6">
-			<a href='/dashboard'>
+			<a href='#'>
 			<div class="text-center p-4 bg-primary bg-opacity-10 border border-primary rounded-3">
 				<h6>Total Courses</h6>
-				<h2 class="mb-0 fs-1 text-primary">{{ $coursesall }}</h2>
+				<h2 class="mb-0 fs-1 text-primary">{{ $allcourses }}</h2>
 			</div>
 		</a>
 		</div>
 
 		<!-- Course item -->
-		{{-- <div class="col-sm-6 col-lg-4">
-			<a href='/announcement'>
-			<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
-				<h6>Announcements</h6>
-				<h2 class="mb-0 fs-1 text-success">{{ count($ann) }}</h2>
-			</div>
-			</a>
-		</div> --}}
-
-		<!-- Course item -->
 		<div class="col-sm-6 col-lg-6">
-			<a href='/assignment'>
-			<div class="text-center p-4  bg-warning bg-opacity-15 border border-warning rounded-3">
-				<h6>Assignments</h6>
-				<h2 class="mb-0 fs-1 text-warning">{{ count($assignments) }}</h2>
+			<a href='#'>
+			<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
+				<h6>Admins</h6>
+				<h2 class="mb-0 fs-1 text-success">{{ count($admins) }}</h2>
 			</div>
 			</a>
 		</div>
+
+		
 	</div>
 	<!-- Course boxes END -->
 
@@ -60,7 +111,7 @@
 			<!-- Search and select START -->
 			<div class="row g-3 align-items-center justify-content-between">
 				<!-- Search bar -->
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<form method='post' action='searchCourse' class="rounded position-relative">@csrf
 						<div class="search-container">
 							<input required id="search-input" class="form-control bg-body" name='search'
@@ -74,19 +125,7 @@
 				</div>
 
 				<!-- Select option -->
-				<div class="col-md-3">
-					<!-- Short by filter -->
-					<form>
-						<select class="form-select js-choice border-0 z-index-9"
-							aria-label=".form-select-sm">
-							<option value="">Sort by</option>
-							<option>Newest</option>
-							<option>Oldest</option>
-							<option>Accepted</option>
-							<option>Rejected</option>
-						</select>
-					</form>
-				</div>
+				
 			</div>
 			<!-- Search and select END -->
 		</div>
@@ -97,7 +136,8 @@
 			<!-- Course table START -->
 			<div class="table-responsive border-0 rounded-3">
 				<!-- Table START -->
-				<table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
+				
+                <table class="table table-dark-gray align-middle p-4 mb-0 table-hover">
 					<!-- Table head -->
 					<thead>
 						<tr>
@@ -189,8 +229,6 @@
 					</tbody>
 					<!-- Table body END -->
 				</table>
-				<!-- Table END -->
-		
 			</div>
 			<!-- Course table END -->
 		</div>
@@ -200,11 +238,7 @@
 		<div class="card-footer bg-transparent pt-0">
 			<!-- Pagination START -->
 			<div class="d-sm-flex justify-content-sm-between align-items-sm-center">
-				
-				<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
-					{{ $courses->links('pagination::bootstrap-4') }}
-
-				</nav>
+                {{ $courses->links('pagination::bootstrap-4') }}
 			</div>
 			<!-- Pagination END -->
 		</div>

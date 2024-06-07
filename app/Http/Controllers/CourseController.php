@@ -45,9 +45,9 @@ class CourseController extends Controller
     public function course()
     {
         $user = Auth::user();
-        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
-        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
-        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
 
         if (Auth::user()->type == 1) {
 
@@ -59,8 +59,8 @@ class CourseController extends Controller
     public function dashboard()
     {
         $data['user'] = $user = Auth::user();
-        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
-        $data['allcourses'] = Course::latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->paginate(5);
+        $data['coursesall'] = Course::where('user_id', $user->id)->count();
         $data['allebooks'] = Ebook::latest()->get();
         $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
         $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
@@ -114,6 +114,24 @@ class CourseController extends Controller
         if (Auth::user()->type == 1) {
 
             return view('admin.admin_access', $data);
+        } else {
+            return redirect()->route('student_dashboard');
+        }
+    }
+    public function admin()
+    {
+        $data['user'] = $user = Auth::user();
+        $data['users'] = User::orderBy('email')->get();
+        $data['courses'] = Course::orderBy('title')->latest()->paginate(10);
+        $data['allcourses'] = Course::orderBy('title')->count();
+        $data['ann'] = Announcement::latest()->get();
+        $data['assignments'] = Assignment::latest()->get();
+        $data['admins'] = AdminAccess::latest()->get();
+        $data['categories'] = CourseCategory::orderBy('name')->get();
+
+        if (Auth::user()->type == 1) {
+
+            return view('admin.admin', $data);
         } else {
             return redirect()->route('student_dashboard');
         }
@@ -187,11 +205,11 @@ class CourseController extends Controller
 
     public function ann()
     {
-    
+
         $data['user'] = $user = Auth::user();
-        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
-        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
-        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->get();
 
         return view('ann.index', $data);
     }
@@ -404,9 +422,10 @@ class CourseController extends Controller
     {
         $data['user'] = $user = Auth::user();
 
-        $data['courses'] = Course::where('user_id',$user->id)->latest()->get();
-        $data['ann'] = Announcement::where('user_id',$user->id)->latest()->get();
-        $data['assignments'] = Assignment::where('user_id',$user->id)->latest()->get();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
+        $data['ann'] = Announcement::where('user_id', $user->id)->latest()->get();
+        $data['assignments'] = Assignment::where('user_id', $user->id)->latest()->paginate(5);
+        $data['totalass'] = Assignment::where('user_id', $user->id)->count();
 
         return view('ass.index', $data);
     }
@@ -641,6 +660,7 @@ class CourseController extends Controller
         // dd($request->all(),$search);
         $data['ann'] = Announcement::latest()->get();
         $data['assignments'] = Assignment::latest()->get();
+        $data['coursesall'] = Course::count();
         $enroll = Enroll::where('user_id', Auth::user()->id)->pluck('course_id');
         $data['user'] = $user =  Auth::user();
         $data['courses'] = Course::whereNotIn('id', $enroll)
@@ -733,7 +753,7 @@ class CourseController extends Controller
             ->where('sponsor', $user->mySponsorId)
             ->sum('amount');
         $balance = $capital + 0 - $expenses;
-        
+
 
         if ($balance >= floatval($course->price)) {
             $transactionId = $this->randomDigit();

@@ -91,7 +91,7 @@ aria-hidden="true">
 
 		<!-- Course item -->
 		<div class="col-sm-6 col-lg-6">
-			<a href='/announcement'>
+			<a href='#'>
 			<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
 				<h6>Admins</h6>
 				<h2 class="mb-0 fs-1 text-success">{{ count($admins) }}</h2>

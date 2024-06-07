@@ -44,7 +44,7 @@
 
 			<!-- Navbar brand for xl START -->
 			<div class="d-flex align-items-center">
-				<a class="navbar-brand" href="index-2.html">
+				<a class="navbar-brand" href="/dashboard">
 					{{-- <img class="navbar-brand-item" src="assets/images/logo-white.jpg" style='' alt=""> --}}
 				</a>
 			</div>
@@ -58,7 +58,7 @@
 					<ul class="navbar-nav flex-column" id="navbar-sidebar">
 
 						<!-- Menu item 1 -->
-						<li class="nav-item"><a href="admin-dashboard.html" class="nav-link"><i
+						<li class="nav-item"><a href="/dashboard" class="nav-link"><i
 									class="bi bi-house fa-fw me-2"></i>Dashboard</a></li>
 
 						<!-- Title -->
@@ -73,16 +73,16 @@
 							<!-- Submenu -->
 							<ul class="nav collapse flex-column show" id="collapsepage"
 								data-bs-parent="#navbar-sidebar">
-								<li class="nav-item"> <a class="nav-link active" href="admin-course-list.html">All
+								<li class="nav-item"> <a class="nav-link active" href="/courses">All
 										Courses</a></li>
-								<li class="nav-item"> <a class="nav-link" href="admin-course-category.html">Course
+								<li class="nav-item"> <a class="nav-link" href="/course_categories">Course
 										Category</a></li>
 								<li class="nav-item"> <a class="nav-link" href="/announcement">Announcements</a></li>
 							</ul>
 						</li>
 
 						<!-- Menu item 3 -->
-						<li class="nav-item"> <a class="nav-link" href="admin-student-list.html"><i
+						<li class="nav-item"> <a class="nav-link" href="/"><i
 									class="fas fa-user-graduate fa-fw me-2"></i>Students</a></li>
 
 						<!-- Menu item 4 -->
@@ -95,11 +95,11 @@
 							<ul class="nav collapse flex-column" id="collapseinstructors"
 								data-bs-parent="#navbar-sidebar">
 								<li class="nav-item"> <a class="nav-link"
-										href="admin-instructor-list.html">Instructors</a></li>
-								<li class="nav-item"> <a class="nav-link" href="admin-instructor-detail.html">Instructor
+										href="#">Instructors</a></li>
+								<li class="nav-item"> <a class="nav-link" href="#">Instructor
 										Detail</a></li>
 								<li class="nav-item">
-									<a class="nav-link" href="admin-instructor-request.html">Instructor requests
+									<a class="nav-link" href="#">Instructor requests
 										<span class="badge bg-success text-white rounded-circle ms-2">2</span>
 									</a>
 								</li>
@@ -107,15 +107,15 @@
 						</li>
 
 						<!-- Menu item 5 -->
-						<li class="nav-item"> <a class="nav-link" href="admin-review.html"><i
+						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="far fa-comment-dots fa-fw me-2"></i>Reviews</a></li>
 
 						<!-- Menu item 6 -->
-						<li class="nav-item"> <a class="nav-link" href="admin-earning.html"><i
+						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="far fa-chart-bar fa-fw me-2"></i>Earnings</a></li>
 
 						<!-- Menu item 7 -->
-						<li class="nav-item"> <a class="nav-link" href="admin-setting.html"><i
+						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="fas fa-user-cog fa-fw me-2"></i>Admin Settings</a></li>
 
 						<!-- Menu item 8 -->
@@ -127,11 +127,11 @@
 							<!-- Submenu -->
 							<ul class="nav collapse flex-column" id="collapseauthentication"
 								data-bs-parent="#navbar-sidebar">
-								<li class="nav-item"> <a class="nav-link" href="sign-up.html">Sign Up</a></li>
-								<li class="nav-item"> <a class="nav-link" href="sign-in.html">Sign In</a></li>
-								<li class="nav-item"> <a class="nav-link" href="forgot-password.html">Forgot
+								<li class="nav-item"> <a class="nav-link" href="/register">Sign Up</a></li>
+								<li class="nav-item"> <a class="nav-link" href="/login">Sign In</a></li>
+								<li class="nav-item"> <a class="nav-link" href="/login">Forgot
 										Password</a></li>
-								<li class="nav-item"> <a class="nav-link" href="admin-error-404.html">Error 404</a></li>
+								<li class="nav-item"> <a class="nav-link" href="/">Error 404</a></li>
 							</ul>
 						</li>
 
@@ -139,11 +139,11 @@
 						<li class="nav-item ms-2 my-2">Documentation</li>
 
 						<!-- Menu item 9 -->
-						<li class="nav-item"> <a class="nav-link" href="docs/index.html"><i
+						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="far fa-clipboard fa-fw me-2"></i>Documentation</a></li>
 
 						<!-- Menu item 10 -->
-						<li class="nav-item"> <a class="nav-link" href="docs/changelog.html"><i
+						<li class="nav-item"> <a class="nav-link" href="#"><i
 									class="fas fa-sitemap fa-fw me-2"></i>Changelog</a></li>
 					</ul>
 					<!-- Sidebar menu end -->
@@ -151,15 +151,15 @@
 					<!-- Sidebar footer START -->
 					<div class="px-3 mt-auto pt-3">
 						<div class="d-flex align-items-center justify-content-between text-primary-hover">
-							<a class="h5 mb-0 text-body" href="admin-setting.html" data-bs-toggle="tooltip"
+							<a class="h5 mb-0 text-body" href="#" data-bs-toggle="tooltip"
 								data-bs-placement="top" title="Settings">
 								<i class="bi bi-gear-fill"></i>
 							</a>
-							<a class="h5 mb-0 text-body" href="index-2.html" data-bs-toggle="tooltip"
+							<a class="h5 mb-0 text-body" href="/dashboard" data-bs-toggle="tooltip"
 								data-bs-placement="top" title="Home">
 								<i class="bi bi-globe"></i>
 							</a>
-							<a class="h5 mb-0 text-body" href="sign-in.html" data-bs-toggle="tooltip"
+							<a class="h5 mb-0 text-body" href="/register" data-bs-toggle="tooltip"
 								data-bs-placement="top" title="Sign out">
 								<i class="bi bi-power"></i>
 							</a>
@@ -182,7 +182,7 @@
 
 						<!-- Logo START -->
 						<div class="d-flex align-items-center d-xl-none">
-							<a class="navbar-brand" href="index-2.html">
+							<a class="navbar-brand" href="/dashboard">
 								<img class="light-mode-item navbar-brand-item h-30px"
 									src="assets/images/logo-mobile.svg" alt="">
 								<img class="dark-mode-item navbar-brand-item h-30px"
@@ -428,7 +428,7 @@
 				<!-- Course boxes START -->
 				<div class="row g-4 mb-4">
 					<!-- Course item -->
-					<div class="col-sm-6 col-lg-4">
+					<div class="col-sm-6 col-lg-6">
 						<a href='/courses'>
 						<div class="text-center p-4 bg-primary bg-opacity-10 border border-primary rounded-3">
 							<h6>Total Courses</h6>
@@ -438,17 +438,17 @@
 					</div>
 
 					<!-- Course item -->
-					<div class="col-sm-6 col-lg-4">
+					{{-- <div class="col-sm-6 col-lg-4">
 						<a href='/announcement'>
 						<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
 							<h6>Announcements</h6>
 							<h2 class="mb-0 fs-1 text-success">{{ count($ann) }}</h2>
 						</div>
 						</a>
-					</div>
+					</div> --}}
 
 					<!-- Course item -->
-					<div class="col-sm-6 col-lg-4">
+					<div class="col-sm-6 col-lg-6">
 						<a href='/assignment'>
 						<div class="text-center p-4  bg-warning bg-opacity-15 border border-warning rounded-3">
 							<h6>Assignments</h6>
