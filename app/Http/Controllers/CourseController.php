@@ -25,7 +25,7 @@ class CourseController extends Controller
         $data['assignments'] = Assignment::latest()->get();
         $data['user'] = $user = Auth::user();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->get();
-
+        $data['coursesall'] = Course::count();
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
