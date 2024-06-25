@@ -100,10 +100,10 @@
 									<!-- Payments -->
 									<div class="d-flex justify-content-between align-items-center mb-3">
 										<div class="d-flex align-items-center">
-											<div class="icon-md bg-success bg-opacity-10 text-success rounded-circle flex-shrink-0"><i class="bi bi-currency-dollar fa-fw"></i></div>
+											<div class="icon-md bg-success bg-opacity-10 text-success rounded-circle flex-shrink-0">₦</div>
 											<h6 class="mb-0 ms-2 fw-light">Payments</h6>
 										</div>
-										<span class="mb-0 fw-bold">${{ number_format($course->price,2) }}</span>
+										<span class="mb-0 fw-bold">₦{{ number_format($course->price,2) }}</span>
 									</div>
 
 									<!-- Total courses -->
@@ -147,7 +147,7 @@
 											<a href="mailto:{{ $user->email }}" class="btn btn-link text-body p-0 mb-0 me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Message" aria-label="Message">
 												<i class="bi bi-envelope-fill"></i>
 											</a>
-											<a href="tel:{{ $user->phone }}" class="btn btn-link text-body p-0 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Block" aria-label="Block">
+											<a href="tel:{{ $user->phoneNumber }}" class="btn btn-link text-body p-0 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Block" aria-label="Block">
 												<i class="fas fa-phone"></i>
 											</a>
 										</div>
@@ -216,7 +216,7 @@
 									<td>21</td>
 
 									<!-- Table data -->
-									<td>$0.00</td>
+									<td>₦0.00</td>
 
 									<!-- Table data -->
 									<td>
