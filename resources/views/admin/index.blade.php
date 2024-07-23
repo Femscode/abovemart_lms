@@ -171,12 +171,14 @@
 
 							<!-- Table data -->
 							<td>
-								<a href='preview_course/{{ $course->uid }}' class='btn btn-sm btn-primary-soft'>Share</a>
+								<a href='preview_course/{{ $course->uid }}' class='btn btn-sm btn-primary-soft  me-1 mb-1 mb-md-0'>Share</a>
                                
 								<a href='coursedetails/{{ $course->uid }}' class="edit_course btn btn-sm btn-info-soft me-1 mb-1 mb-md-0"
 									>Lectures</a>
 								<a href='students/{{ $course->uid }}' class="edit_course btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0"
 										>Students</a>
+								<a href='installment/{{ $course->uid }}' class="edit_course btn btn-sm btn-primary me-1 mb-1 mb-md-0"
+										>Installmental Payment</a>
 								<a data-id='{{ $course->id }}'
 									class="edit_course btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0"
 									data-bs-toggle="modal" data-bs-target="#editCourse">Edit</a>

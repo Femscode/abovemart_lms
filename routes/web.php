@@ -42,11 +42,14 @@ Route::any('/deletesectionvideo', [App\Http\Controllers\CourseController::class,
 Route::any('/deletesection/{id}', [App\Http\Controllers\CourseController::class, 'deletesection'])->name('deletesection');
 
 //route for course enrollment
+Route::any('/confirm_enroll/{course_id}', [App\Http\Controllers\CourseController::class, 'confirm_enroll'])->name('confirm_enroll');
 Route::any('/enroll/{course_id}', [App\Http\Controllers\CourseController::class, 'enroll'])->name('enroll');
 Route::any('/lesson/{course_id}', [App\Http\Controllers\CourseController::class, 'lesson'])->name('lesson');
 Route::any('/markdone/{course_id}', [App\Http\Controllers\CourseController::class, 'markdone'])->name('markdone');
 Route::any('/students/{course_id}', [App\Http\Controllers\CourseController::class, 'students'])->name('students');
 Route::any('/coursestudents/{course_id}', [App\Http\Controllers\CourseController::class, 'coursestudents'])->name('coursestudents');
+Route::any('/installment/{course_id}', [App\Http\Controllers\CourseController::class, 'installment'])->name('installment');
+Route::any('/updateInstallment', [App\Http\Controllers\CourseController::class, 'updateInstallment'])->name('updateInstallment');
 Route::any('/view_assessment/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'viewAssessment'])->name('viewassessment');
 Route::any('/lock_certificate/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'lockCertificate'])->name('lockcertificate');
 Route::any('/payForExam/{userId}/{course_id}', [App\Http\Controllers\ExamController::class, 'payForExam'])->name('payForExam');

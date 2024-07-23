@@ -23,5 +23,23 @@ class Course extends Model
         
         return in_array($courseId, $enrolledCourses);
     }
+    public function install($course_id) {
+        $plan = Installment::where('course_id',$course_id)->first();
+        if(!empty($plan)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public function installdetails($course_id) {
+        $plan = Installment::where('course_id',$course_id)->first();
+        if(!empty($plan)) {
+            return $plan;
+        }
+        else {
+            return false;
+        }
+    }
     
 }

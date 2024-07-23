@@ -14,6 +14,7 @@ use App\Models\SectionVideo;
 use Illuminate\Http\Request;
 use App\Models\CourseCategory;
 use App\Models\Ebook;
+use App\Models\Installment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,7 @@ class CourseController extends Controller
         $data['user'] = $user = Auth::user();
         $data['courses'] = Course::where('user_id', $user->id)->latest()->paginate(10);
         $data['coursesall'] = Course::count();
+       
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
@@ -303,6 +305,17 @@ class CourseController extends Controller
         $data['user'] = Auth::user();
         return view('courses.courseusers', $data);
     }
+    public function installment($id)
+    {
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        $data['courses']  = Course::latest()->get();
+        $user_id = Enroll::where('course_id', $course->id)->pluck('user_id');
+        $data['users'] = User::whereIn('id', $user_id)->latest()->get();
+        $data['user'] = Auth::user();
+        $data['plan'] = Installment::where('course_id',$id)->first();
+        return view('courses.installment', $data);
+    }
+ 
     public function coursestudents($id)
     {
         $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
@@ -626,6 +639,36 @@ class CourseController extends Controller
 
         return $course;
     }
+    public function updateinstallment(Request $request)
+    {
+        // dd($request->all());
+       $plan = Installment::where('course_id', $request->course_id)->first();
+       $course = Course::where('uid', $request->course_id)->firstOrFail();
+       $total = intval($request->first) + intval($request->second) + intval($request->third);
+      
+       if(intval($course->price) !== $total) {
+        return redirect()->back()->with('error','The sum of installment payments does not tally with the course price');
+       }
+       
+       if (empty($plan)) {
+            Installment::create([
+                'course_id' => $request->course_id,
+                'first' => $request->first,
+                'second' => $request->second,
+                'third' => $request->third,
+            ]);
+        }
+       else {
+        $plan->first = $request->first;
+        $plan->second = $request->second;
+        $plan->third = $request->third;
+        $plan->save();
+        
+       }
+       
+
+       return redirect()->back()->with('message','Installment Plan Updated Successfully!');
+    }
     public function loadsection(Request $request)
     {
         $id = $request->id;
@@ -721,10 +764,27 @@ class CourseController extends Controller
         return $pass;
     }
 
+    public function confirm_enroll($id)
+    {
+        $data['course'] = $course = Course::where('uid', $id)->firstOrFail();
+        $data['courses']  = Course::latest()->get();
+        $user_id = Enroll::where('course_id', $course->id)->pluck('user_id');
+        $data['users'] = User::whereIn('id', $user_id)->latest()->get();
+        $data['user'] = Auth::user();
+        $data['plan'] = Installment::where('course_id',$id)->first();
+        return view('courses.enroll', $data);
+    }
+
     public function enroll($course_id)
     {
         $course = Course::where('uid', $course_id)->first();
         $user = Auth::user();
+        $plan = Installment::where('course_id',$course_id)->first();
+        if(!empty($plan)) {
+            $first = $plan->first;
+        } else {
+            $first = $course->price;
+        }
         if ($course->price == 0) {
             Enroll::create([
                 'user_id' => $user->id,
@@ -755,7 +815,7 @@ class CourseController extends Controller
         $balance = $capital + 0 - $expenses;
 
 
-        if ($balance >= floatval($course->price)) {
+        if ($balance >= floatval($course->price) || $balance >= floatval($first)) {
             $transactionId = $this->randomDigit();
             $transactionServiceId = $this->randomDigit();
             DB::table('transactions')->insert([

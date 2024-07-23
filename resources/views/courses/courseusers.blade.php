@@ -11,7 +11,7 @@
 			<h1 class="h3 mb-2 mb-sm-0">{{ $course->title }} (Students) </h1>
 		</div>
 	</div>
-		
+
 	<div class="card bg-transparent">
 
 		<!-- Card header START -->
@@ -64,7 +64,7 @@
 						<!-- Card item START -->
 						@foreach($users as $user)
 						<div class="col-md-6 col-xxl-4">
-							<div class="card bg-transparent border h-100"> 
+							<div class="card bg-transparent border h-100">
 								<!-- Card header -->
 								<div class="card-header bg-transparent border-bottom d-flex justify-content-between">
 									<div class="d-sm-flex align-items-center">
@@ -116,15 +116,14 @@
 											count(App\Models\SectionVideo::where('course_id',$course->id)->get())
 											}}</span> --}}
 									</div>
-									
+
 									<!-- Progress -->
-									{{-- <div class="overflow-hidden">
-										<h6 class="mb-0">0%</h6>
-										<div class="progress progress-sm bg-primary bg-opacity-10">
-											<div class="progress-bar bg-primary aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-											</div>
+									<div class="overflow-hidden">
+										<div class="d-flex align-items-center">
+											<div class="icon-md bg-danger bg-opacity-10 text-red rounded-circle flex-shrink-0"><i class="fas fa-phone fa-fw"></i></div>
+											<h6 class="mb-0 ms-2 fw-light">{{ $user->phoneNumber }}</h6>
 										</div>
-									</div> --}}
+									</div>
 								</div>
 
 								<!-- Card footer -->
@@ -271,6 +270,5 @@
 @endsection
 
 @section('script')
-	<script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
 @endsection
-

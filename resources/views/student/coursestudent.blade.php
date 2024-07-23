@@ -112,13 +112,12 @@
 									</div>
 									
 									<!-- Progress -->
-									{{-- <div class="overflow-hidden">
-										<h6 class="mb-0">0%</h6>
-										<div class="progress progress-sm bg-primary bg-opacity-10">
-											<div class="progress-bar bg-primary aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-											</div>
+									<div class="overflow-hidden">
+										<div class="d-flex align-items-center">
+											<div class="icon-md bg-danger bg-opacity-10 text-red rounded-circle flex-shrink-0"><i class="fas fa-phone fa-fw"></i></div>
+											<h6 class="mb-0 ms-2 fw-light">{{ $user->phoneNumber }}</h6>
 										</div>
-									</div> --}}
+									</div>
 								</div>
 
 								<!-- Card footer -->
