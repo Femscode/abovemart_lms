@@ -25,9 +25,9 @@
                         <div class="alert alert-primary">
                             Installment Payment Allowed For This Course.
                             <ul>
-                                <li>First Payment : <b>NGN{{$plan->first}}</b></li>
-                                <li>Second Payment : <b>NGN{{$plan->second}}</b></li>
-                                <li>Third Payment : <b>NGN{{$plan->third}}</b></li>
+                                <li>First Payment : <b>NGN{{number_format($plan->first)}}</b></li>
+                                <li>Second Payment : <b>NGN{{number_format($plan->secon)d}}</b></li>
+                                <li>Third Payment : <b>NGN{{number_format($plan->third)}}</b></li>
                                 <a  href='/enroll/{{ $course->uid }}' class='btn btn-primary'>Make First Payment (NGN{{number_format($course->installdetails($course->uid)->first) ?? ''}})</a>
                                 <a  href='/enroll/{{ $course->uid }}' class='btn btn-success'>Make Full Payment (NGN{{ number_format($course->price) }})</a>
                             </ul>
