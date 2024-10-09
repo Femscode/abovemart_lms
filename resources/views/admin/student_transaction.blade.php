@@ -9,51 +9,8 @@
 	<!-- Title -->
 	<div class="row mb-3">
 		<div class="col-12 d-sm-flex justify-content-between align-items-center">
-			<h1 class="h3 mb-2 mb-sm-0">Courses</h1>
-			<div>
-			<a href="#" class="btn btn-sm btn-primary mb-0" data-bs-toggle="modal"
-				data-bs-target="#addQuestion"><i class="bi bi-plus-circle me-2"></i>Create Course</a>
-			<a href="/admin_access" class="btn btn-sm btn-info mb-0"><i class="bi bi-plus-circle me-2"></i>Admin Access</a>
-			</div>
-		</div>
-	</div>
-
-	<!-- Course boxes START -->
-	<div class="row g-4 mb-4">
-		<!-- Course item -->
-		<div class='alert alert-success' style='border:1.5px dashed #155724'>
-			Escrow Wallet : <span style='color:red'>₦{{ number_format($user->escrowWallet,2) }}</span>
-			<br><a class='btn btn-primary' href='/student_transaction'>Course Purchase Transactions</a>
-			<a class='btn btn-success' href='https://wa.me/2347060818784'>Withdraw Funds</a>
-		</div>
-		<div class="col-sm-6 col-lg-6">
-			<a href='/dashboard'>
-			<div class="text-center p-4 bg-primary bg-opacity-10 border border-primary rounded-3">
-				<h6>Total Courses</h6>
-				<h2 class="mb-0 fs-1 text-primary">{{ $coursesall }}</h2>
-			</div>
-		</a>
-		</div>
-
-		<!-- Course item -->
-		{{-- <div class="col-sm-6 col-lg-4">
-			<a href='/announcement'>
-			<div class="text-center p-4 bg-success bg-opacity-10 border border-success rounded-3">
-				<h6>Announcements</h6>
-				<h2 class="mb-0 fs-1 text-success">{{ count($ann) }}</h2>
-			</div>
-			</a>
-		</div> --}}
-		
-
-		<!-- Course item -->
-		<div class="col-sm-6 col-lg-6">
-			<a href='/assignment'>
-			<div class="text-center p-4  bg-warning bg-opacity-15 border border-warning rounded-3">
-				<h6>Assignments</h6>
-				<h2 class="mb-0 fs-1 text-warning">{{ count($assignments) }}</h2>
-			</div>
-			</a>
+			<h1 class="h3 mb-2 mb-sm-0">Course Purchases Transactions</h1>
+			
 		</div>
 	</div>
 	<!-- Course boxes END -->
@@ -70,7 +27,7 @@
 					<form method='post' action='searchCourse' class="rounded position-relative">@csrf
 						<div class="search-container">
 							<input required id="search-input" class="form-control bg-body" name='search'
-								placeholder='Search for course, course code, and description in 10,000+ courses' type="search"
+								placeholder='Search for course or student' type="search"
 								placeholder="Search" aria-label="Search">
 							<ul id="suggestions"></ul>
 						</div>
@@ -107,12 +64,10 @@
 					<!-- Table head -->
 					<thead>
 						<tr>
-							<th scope="col" class="border-0 rounded-start">Course Name</th>
-							{{-- <th scope="col" class="border-0">Instructor</th> --}}
-							<th scope="col" class="border-0">Added Date</th>
-							<th scope="col" class="border-0">Type</th>
+							<th scope="col" class="border-0 rounded-start">Name</th>
+						
+							<th scope="col" class="border-0">Purchased Date</th>
 							<th scope="col" class="border-0">Price</th>
-							{{-- <th scope="col" class="border-0">Status</th> --}}
 							<th scope="col" class="border-0 rounded-end">Action</th>
 						</tr>
 					</thead>
@@ -121,75 +76,37 @@
 					<tbody>
 
 						<!-- Table row -->
-						@foreach($courses as $course)
+						@foreach($transactions as $tranx)
 						<tr>
 							<!-- Table data -->
 							<td>
 								<div class="d-flex align-items-center position-relative">
-									<!-- Image -->
-									<div class="w-60px">
-										<img src="https://learn.abovemarts.com/public/courseimage/{{ $course->image}}" class="rounded" alt="">
-										{{-- <img src="/courseimage/{{ $course->image}}" class="rounded" alt=""> --}}
-									</div>
+									
 									<!-- Title -->
 									<h6 class="mb-0 ms-2">
-										<a href="#" class="stretched-link">{{ $course->title }} ({{ $course->course_code }})</a>
+										<a href="#" class="stretched-link">{{ $tranx->course->title }} - {{ $tranx->username }}</a>
 									</h6>
 								</div>
 							</td>
 
 
 							<!-- Table data -->
-							{{-- <td>
-								<div class="d-flex align-items-center mb-3">
-									
-									<div class="avatar avatar-xs flex-shrink-0">
-										<img class="avatar-img rounded-circle"
-											src="assets/images/avatar/09.jpg" alt="avatar">
-									</div>
-								
-									<div class="ms-2">
-										<h6 class="mb-0 fw-light">Fasanya Pelumi</h6>
-									</div>
-								</div>
-							</td> --}}
+						
 
 							<!-- Table data -->
-							<td>{{ Date('j F Y',strtotime($course->created_at)) }}</td>
+							<td>{{ Date('j F Y',strtotime($tranx->created_at)) }}</td>
 
 							<!-- Table data -->
-							<td> <span class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">{{
-									$course->cat->name ?? "not specified" }}</span> </td>
+							<td> <span class="btn btn-sm btn-success-soft me-1 mb-1 mb-md-0">N{{
+									$tranx->price }}</span> </td>
 
-							<!-- Table data -->
+							
 							<td>
-								@if($course->price == 0)
-								<label class="btn-primary-soft-check border-0 m-0"
-								for="option1">Free</label>
-								@else 
-								₦{{ number_format($course->price) }} <s>₦{{ number_format($course->slashed_price) }}</s>
-								@endif
-							</td>
-
-							<!-- Table data -->
-							{{-- <td> <span class="badge bg-warning bg-opacity-15 text-warning">Pending</span>
-							</td> --}}
-
-							<!-- Table data -->
-							<td>
-								<a href='preview_course/{{ $course->uid }}' class='btn btn-sm btn-primary-soft  me-1 mb-1 mb-md-0'>Share</a>
+								<a href='tel:{{ $tranx->phone }}' class='btn btn-sm btn-primary  me-1 mb-1 mb-md-0'>Call</a>
                                
-								<a href='coursedetails/{{ $course->uid }}' class="edit_course btn btn-sm btn-info-soft me-1 mb-1 mb-md-0"
-									>Lectures</a>
-								<a href='students/{{ $course->uid }}' class="edit_course btn btn-sm btn-warning-soft me-1 mb-1 mb-md-0"
-										>Students</a>
-								<a href='installment/{{ $course->uid }}' class="edit_course btn btn-sm btn-primary me-1 mb-1 mb-md-0"
-										>Installmental Payment</a>
-								<a data-id='{{ $course->id }}'
-									class="edit_course btn btn-sm btn-primary-soft me-1 mb-1 mb-md-0"
-									data-bs-toggle="modal" data-bs-target="#editCourse">Edit</a>
-								<button id='delete_course' data-id='{{ $course->id }}'
-									class="btn btn-sm btn-danger-soft mb-0">Delete</button>
+								<a href='mailto:{{ $tranx->user->email }}' class="edit_course btn btn-sm btn-info me-1 mb-1 mb-md-0"
+									>Message</a>
+								
 							</td>
 						</tr>
 						@endforeach
@@ -210,7 +127,7 @@
 			<div class="d-sm-flex justify-content-sm-between align-items-sm-center">
 				
 				<nav class="d-flex justify-content-center mb-0" aria-label="navigation">
-					{{ $courses->links('pagination::bootstrap-4') }}
+					{{ $transactions->links('pagination::bootstrap-4') }}
 
 				</nav>
 			</div>

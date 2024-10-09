@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Course;
-use App\Models\Enroll;
-use App\Models\Section;
-use App\Models\Assignment;
 use App\Models\AdminAccess;
-use Illuminate\Support\Str;
 use App\Models\Announcement;
-use App\Models\SectionVideo;
-use Illuminate\Http\Request;
+use App\Models\Assignment;
+use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Ebook;
+use App\Models\Enroll;
 use App\Models\Installment;
-use Illuminate\Support\Facades\DB;
+use App\Models\Purchase;
+use App\Models\Section;
+use App\Models\SectionVideo;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -31,6 +32,20 @@ class CourseController extends Controller
         if (Auth::user()->type == 1) {
 
             return view('admin.index', $data);
+        } else {
+            return redirect()->route('student_dashboard');
+        }
+    }
+    public function student_transaction()
+    {
+        $data['ann'] = Announcement::latest()->get();
+        $data['assignments'] = Assignment::latest()->get();
+        $data['user'] = $user = Auth::user();
+        $data['courses'] = Course::where('user_id', $user->id)->latest()->paginate(10);
+        $data['transactions'] = Purchase::where('vendor_id',$user->id)->where('type','course')->latest()->paginate(10);
+        $data['coursesall'] = Course::count();
+        if (Auth::user()->type == 1) {
+            return view('admin.student_transaction', $data);
         } else {
             return redirect()->route('student_dashboard');
         }
@@ -799,7 +814,7 @@ class CourseController extends Controller
         //     'user_id' => $user->id,
         //     'course_id' => $course->id
         // ]);
-
+        $vendor = User::find($course->user_id);
         $expenses = DB::table('transactions')
             ->where('userId', $user->userId)
             ->where('transactionType', '!=', 'Deposit')
@@ -815,7 +830,7 @@ class CourseController extends Controller
         $balance = $capital + 0 - $expenses;
 
 
-        if ($balance >= floatval($course->price) || $balance >= floatval($first)) {
+        if ($balance >= floatval($first) || $balance >= floatval($first)) {
             $transactionId = $this->randomDigit();
             $transactionServiceId = $this->randomDigit();
             DB::table('transactions')->insert([
@@ -824,7 +839,7 @@ class CourseController extends Controller
                 'username' => $user->username,
                 'email' => $user->email,
                 'phoneNumber' => $user->phoneNumber,
-                'amount' => $course->price,
+                'amount' => $first,
                 'transactionType' => 'Course Purchase',
                 'transactionService' => 'Course Purchase',
                 'status' => 'CONFIRM',
@@ -833,11 +848,37 @@ class CourseController extends Controller
                 "created_at" => date('Y-m-d H:i:s'),
                 "updated_at" => date('Y-m-d H:i:s'),
             ]);
+
+            Purchase::create([
+                'uid' => Str::uuid(),
+                'user_id' => $user->id,
+                'vendor_id' => $course->user_id,
+                'product_id' => $course->id,
+                'image' => $course->image,
+                'name' => $course->title,
+                'price' =>  $first,
+                'status' => 1,
+                'username' => $user->username,
+                'phone' => $user->phoneNumber,
+                'address' => $user->address,
+                // 'state' => $request->state,
+                'country' => $user->country,
+                // 'quantity' => $request->quantity,
+                // 'downloadURL' => $product->downloadURL,
+                // 'info' => $request->info,
+                'type' => 'course'
+            ]);
             Enroll::create([
                 'user_id' => $user->id,
                 'course_id' => $course->id
             ]);
-            return redirect()->back()->with('message', "Course enrolled for successfully!");
+            $platformShare = $first * 20 / 100;
+            $vendorShare = $first - $platformShare;
+           
+            //Hi sage, this is where you distribute the platform price as needed.
+            $vendor->escrowWallet += $vendorShare;
+            $vendor->save();
+            return redirect('/dashboard')->with('message', "Course enrolled for successfully!");
         } else {
 
             return redirect()->back()->with('error', "Insufficient balance to enroll for this course!");

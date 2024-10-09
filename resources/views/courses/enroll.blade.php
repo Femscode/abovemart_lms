@@ -22,18 +22,18 @@
                     <div class="col-md-8">
                         <h4 class='text-danger'>Total Course Price : NGN{{number_format($course->price,2)}}</h4><br>
                         @if( $course->install($course->uid) )
-                        <div class="alert alert-primary">
+                        <div class="alert alert-success">
                             Installment Payment Allowed For This Course.
                             <ul>
                                 <li>First Payment : <b>NGN{{number_format($plan->first)}}</b></li>
-                                <li>Second Payment : <b>NGN{{number_format($plan->secon)d}}</b></li>
+                                <li>Second Payment : <b>NGN{{number_format($plan->second)}}</b></li>
                                 <li>Third Payment : <b>NGN{{number_format($plan->third)}}</b></li>
                                 <a  href='/enroll/{{ $course->uid }}' class='btn btn-primary'>Make First Payment (NGN{{number_format($course->installdetails($course->uid)->first) ?? ''}})</a>
                                 <a  href='/enroll/{{ $course->uid }}' class='btn btn-success'>Make Full Payment (NGN{{ number_format($course->price) }})</a>
                             </ul>
                         </div>
                         @else 
-                        <div class="alert alert-primary">
+                        <div class="alert alert-success">
                             Installment Payment Not Allowed For This Course.
                             <ul>
                                  <a  href='/enroll/{{ $course->uid }}' class='btn btn-success'>Make Full Payment (NGN{{ number_format($course->price) }})</a>

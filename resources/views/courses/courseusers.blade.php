@@ -68,11 +68,7 @@
 								<!-- Card header -->
 								<div class="card-header bg-transparent border-bottom d-flex justify-content-between">
 									<div class="d-sm-flex align-items-center">
-										<!-- Avatar -->
-										<div class="avatar avatar-md flex-shrink-0">
-											<img class="avatar-img rounded-circle" src="{{ asset('assets/images/avatar/01.jpg')}}" alt="avatar">
-										</div>
-										<!-- Info -->
+									
 										<div class="ms-0 ms-sm-2 mt-2 mt-sm-0">
 											<h5 class="mb-0"><a href="#">{{ $user->firstName }} {{ $user->lastName }}</a></h5>
 											<span class="text-body small"><i class="fas fa-fw fa-map-marker-alt me-1 mt-1"></i>Nigerian</span>
@@ -101,9 +97,9 @@
 									<div class="d-flex justify-content-between align-items-center mb-3">
 										<div class="d-flex align-items-center">
 											<div class="icon-md bg-success bg-opacity-10 text-success rounded-circle flex-shrink-0">₦</div>
-											<h6 class="mb-0 ms-2 fw-light">Payments</h6>
+											<h6 class="mb-0 ms-2 fw-light">Payments : ₦{{ number_format($course->price,2) }} </h6>
 										</div>
-										<span class="mb-0 fw-bold">₦{{ number_format($course->price,2) }}</span>
+										<span class="mb-0 fw-bold"></span>
 									</div>
 
 									<!-- Total courses -->
@@ -112,18 +108,14 @@
 											<div class="icon-md bg-purple bg-opacity-10 text-purple rounded-circle flex-shrink-0"><i class="fas fa-book fa-fw"></i></div>
 											<h6 class="mb-0 ms-2 fw-light">{{ $user->email }}</h6>
 										</div>
-										{{-- <span class="mb-0 fw-bold">	{{
-											count(App\Models\SectionVideo::where('course_id',$course->id)->get())
-											}}</span> --}}
-									</div>
-
-									<!-- Progress -->
-									<div class="overflow-hidden">
 										<div class="d-flex align-items-center">
 											<div class="icon-md bg-danger bg-opacity-10 text-red rounded-circle flex-shrink-0"><i class="fas fa-phone fa-fw"></i></div>
 											<h6 class="mb-0 ms-2 fw-light">{{ $user->phoneNumber }}</h6>
 										</div>
+										
 									</div>
+
+								
 								</div>
 
 								<!-- Card footer -->
@@ -168,10 +160,9 @@
 							<thead>
 								<tr>
 									<th scope="col" class="border-0 rounded-start">Student name</th>
-									<th scope="col" class="border-0">Enrolled date</th>
+									<th scope="col" class="border-0">Email</th>
+									<th scope="col" class="border-0">Phone</th>
 									<th scope="col" class="border-0">Progress</th>
-									<th scope="col" class="border-0">Courses</th>
-									<th scope="col" class="border-0">Payments</th>
 									<th scope="col" class="border-0 rounded-end">Action</th>
 								</tr>
 							</thead>
@@ -185,49 +176,46 @@
 									<!-- Table data -->
 									<td>
 										<div class="d-flex align-items-center position-relative">
-											<!-- Image -->
-											<div class="avatar avatar-md">
-												<img src="assets/images/avatar/09.jpg" class="rounded-circle" alt="">
-											</div>
+											
+											
 											<div class="mb-0 ms-3">
 												<!-- Title -->
-												<h6 class="mb-0"><a href="#" class="stretched-link">{{ $user->name }}</a></h6>
-												<span class="text-body small"><i class="fas fa-fw fa-map-marker-alt me-1 mt-1"></i>Nigeria</span>
+												<h6 class="mb-0"><a href="#" class="stretched-link">{{ $user->firstName }} {{ $user->lastName }}</a></h6>
+												<span class="text-body small"><i class="fas fa-fw fa-map-marker-alt me-1 mt-1"></i>₦{{ number_format($course->price,2) }}</span>
 											</div>
 										</div>
 									</td>
 
 									<!-- Table data -->
-									<td>{{ Date('d M, Y',strtotime($user->created_at)) }}</td>
+									<td>{{ $user->email }}</td>
+									<td>{{ $user->phoneNumber }}</td>
 
 									<!-- Table data -->
 									<td class="text-center text-sm-start">
 										<div class="overflow-hidden">
-											<h6 class="mb-0">85%</h6>
+											<h6 class="mb-0">0%</h6>
 											<div class="progress progress-sm bg-primary bg-opacity-10">
-												<div class="progress-bar bg-primary aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+												<div class="progress-bar bg-primary aos" role="progressbar" data-aos="slide-right" data-aos-delay="200" data-aos-duration="1000" data-aos-easing="ease-in-out" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 												</div>
 											</div>
 										</div>
 									</td>
 
-									<!-- Table data -->
-									<td>21</td>
-
-									<!-- Table data -->
-									<td>₦0.00</td>
-
-									<!-- Table data -->
+									
 									<td>
-										<a href="#" class="btn btn-light btn-round me-1 mb-1 mb-md-0" data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-											<i class="bi bi-eye"></i>
-										</a>
-										<a href="mailto:{{ $user->email }}" class="btn btn-light btn-round me-1 mb-1 mb-md-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Message">
-											<i class="bi bi-envelope"></i>
-										</a>
-										<button class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Block">
-											<i class="fas fa-phone"></i>
-										</button>
+									<a href="mailto:{{ $user->email }}" class="btn btn-link text-body p-0 mb-0 me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Message" aria-label="Message">
+												<i class="bi bi-envelope-fill"></i>
+											</a>
+											<a href="tel:{{ $user->phoneNumber }}" class="btn btn-link text-body p-0 mb-0" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Block" aria-label="Block">
+												<i class="fas fa-phone"></i>
+											</a>
+											<a class="btn btn-link text-body p-0 mb-0" href="/view_assessment/{{ $user->id }}/{{ $course->uid }}"><i class="bi bi-eye fa-fw me-2"></i>View Assessments</a>
+											@if($user->enr->completed == 1)
+											<a class="btn btn-link text-body p-0 mb-0" href="/lock_certificate/{{ $user->id }}/{{ $course->id }}"><i class="bi bi-lock fa-fw me-2"></i>Lock Certificate</a>
+											@else
+											<a class="btn btn-link text-body p-0 mb-0" href="/lock_certificate/{{ $user->id }}/{{ $course->id }}"><i class="bi bi-unlock fa-fw me-2"></i>Unlock Certificate</a>
+											@endif
+										
 									</td>
 								</tr>
 								@endforeach
